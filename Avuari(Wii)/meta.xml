@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<app version="1">
+	<name>Avuari</name>
+	<version>1.00</version>
+	<release_date>20260611000000</release_date>
+	<coder>ColdHorizon</coder>
+	<short_description>A simple shmup</short_description>
+	<long_description>Fight with the new prototype for Falcon 4 with the new Proton Catalyst Cannon to battle against the final wave of Eradicators with their group of five motherships and their army.     Controls:  2:Shoot   1:Boost    Dpad: Move   You use the pointer to go  in the menus.
+</long_description>
+</app>

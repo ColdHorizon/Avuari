@@ -419,7 +419,26 @@ int main(int argc, char **argv){
                     int enemytype;
                     enemytype = rand()%(10+1);
                     
-                    if(level >= 5){
+                    if(level >= 10){
+                        if((level == 10 || level == 20 || level == 30 || level == 40 || level == 50) && boss == 0){
+                        struct ennemy typeZ = {(rand()%(540-100 + 1)+100)-50,(rand()%(-10-200 +1)-200),52,52,50,1,1,0,0x101010FF,'Z',TypeZIMG};
+                        enemyCount.ennemybase[i] = typeZ;
+                        boss = 1;
+                        }
+                        else if(enemytype == 10){
+                            struct ennemy typeB = {(rand()%(540-100 + 1)+100)-30,(rand()%(-10-200 +1)-200),32,32,5,1,1,0,0x0000FFFF,'B',TypeBIMG};
+                            enemyCount.ennemybase[i] = typeB;
+                        }
+                        else if(enemytype == 9){
+                            struct ennemy typeC = {(rand()%(540-100 + 1)+100)-20,(rand()%(-10-200 +1)-200),20,20,1,2,1,0,0xFF0000FF,'C',TypeCIMG};
+                            enemyCount.ennemybase[i] = typeC;
+                        }
+                        else{
+                            struct ennemy typeA = {(rand()%(540-100 + 1)+100)-20,(rand()%(-10-200 +1)-200),20,20,1,2,1,0,0xFF0000FF,'A',TypeAIMG};
+                            enemyCount.ennemybase[i] = typeA;
+                        }
+                    }
+                    else if(level >= 5){
                         if((level == 10 || level == 20 || level == 30 || level == 40 || level == 50) && boss == 0){
                         struct ennemy typeZ = {(rand()%(540-100 + 1)+100)-50,(rand()%(-10-200 +1)-200),52,52,50,1,1,0,0x101010FF,'Z',TypeZIMG};
                         enemyCount.ennemybase[i] = typeZ;
@@ -433,11 +452,13 @@ int main(int argc, char **argv){
                             struct ennemy typeA = {(rand()%(540-100 + 1)+100)-20,(rand()%(-10-200 +1)-200),20,20,1,2,1,0,0xFF0000FF,'A',TypeAIMG};
                             enemyCount.ennemybase[i] = typeA;
                         }
+
                     }
                     else{
                         struct ennemy typeA = {(rand()%(540-100 + 1)+100)-20,(rand()%(-10-200 +1)-200),20,20,1,2,1,0,0xFF0000FF,'A',TypeAIMG};
                         enemyCount.ennemybase[i] = typeA;
                     }
+                    
                 enemytype = 0;       
                 enemyCounter++;
                 }

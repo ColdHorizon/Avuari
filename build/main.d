@@ -87,6 +87,7 @@ main.o: C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/source/main.c \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeA_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeB_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeC_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeZ_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Wall_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Upgrade_png.h \
@@ -179,6 +180,7 @@ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/button_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeA_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeB_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeC_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeZ_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Wall_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Upgrade_png.h:

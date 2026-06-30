@@ -11,6 +11,7 @@
 #include "Falcon_png.h"
 #include "TypeA_png.h"
 #include "TypeB_png.h"
+#include "TypeC_png.h"
 #include "TypeZ_png.h"
 #include "Wall_png.h"
 #include "Upgrade_png.h"
@@ -107,6 +108,7 @@ int main(int argc, char **argv){
     GRRLIB_texImg *FalconIMG = GRRLIB_LoadTexture(Falcon_png);
     GRRLIB_texImg *TypeAIMG = GRRLIB_LoadTexture(TypeA_png);
     GRRLIB_texImg *TypeBIMG = GRRLIB_LoadTexture(TypeB_png);
+    GRRLIB_texImg *TypeCIMG = GRRLIB_LoadTexture(TypeC_png);
     GRRLIB_texImg *TypeZIMG = GRRLIB_LoadTexture(TypeZ_png);
     GRRLIB_texImg *WallIMG = GRRLIB_LoadTexture(Wall_png);
     GRRLIB_texImg *UpgradeIMG = GRRLIB_LoadTexture(Upgrade_png);
@@ -448,48 +450,61 @@ int main(int argc, char **argv){
 
         for(int i=0;i<level;i++){
             {
-                
                 if(enemyCount.ennemybase[i].active == 1)
                 {
-                    if(enemyCount.ennemybase[i].type == 'Z'){
+                    switch(enemyCount.ennemybase[i].type){
+
+                        case 'Z':
                         //*GRRLIB_Rectangle(enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize,enemyCount.ennemybase[i].color, 1);
                         GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
                         enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;  
+
                         if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize,
                         Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize) ){
                         gameend =1;
-                        break;
                         }
-                    }
-                    else
-                    {
-                        //*GRRLIB_Rectangle(enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize,enemyCount.ennemybase[i].color, 1);
-                        GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].imgName , 0, 1, 1, 0xFFFFFFFF);
-                        enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;  
-                        if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
-                        enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
-                        gameend =1;
+
                         break;
-                        }
+
+                    default:
+                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].imgName , 0, 1, 1, 0xFFFFFFFF);
+                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;  
+
+                    if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
+                    enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
+                    gameend =1;
                     }
+
+                    break;
+                    
                 }
+            }
+
+
                 else if(enemyCount.ennemybase[i].dead == 0){
                     enemyCount.ennemybase[i].dead = 1;
                     enemyCounter-=1;
-                    if(enemyCount.ennemybase[i].type == 'Z'){
+                    switch(enemyCount.ennemybase[i].type){
+                        case 'Z':
                         score += 10;
-                    }
-                    else if(enemyCount.ennemybase[i].type == 'B'){
+                        break;
+                        case 'B':
                         score += 5;
-                    }
-                    else{
+                        break;
+                        default:
                         score+=1;
+                        break;
+
                     }
                 }
-                
 
+
+
+                    
+                            
             }
         }
+ 
         /*
         ?Power Up Turn
         */

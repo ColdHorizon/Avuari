@@ -1,4 +1,4 @@
-main.o: C:/grr/GRRLIB-4.6.1/Game1/source/main.c \
+main.o: C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/source/main.c \
  C:/devkitPro/portlibs/wii/include/grrlib.h \
  C:/devkitPro/libogc/include/gccore.h \
  C:/devkitPro/libogc/include/ogc/dsp.h \
@@ -81,16 +81,16 @@ main.o: C:/grr/GRRLIB-4.6.1/Game1/source/main.c \
  C:/devkitPro/libogc/include/ogc/lwp_watchdog.h \
  C:/devkitPro/libogc/include/ogcsys.h \
  C:/devkitPro/libogc/include/tuxedo/ppc/clock.h \
- C:/grr/GRRLIB-4.6.1/Game1/build/OlivettiThin_ttf.h \
- C:/grr/GRRLIB-4.6.1/Game1/build/expo_it.h \
- C:/grr/GRRLIB-4.6.1/Game1/build/button_png.h \
- C:/grr/GRRLIB-4.6.1/Game1/build/Falcon_png.h \
- C:/grr/GRRLIB-4.6.1/Game1/build/TypeA_png.h \
- C:/grr/GRRLIB-4.6.1/Game1/build/TypeB_png.h \
- C:/grr/GRRLIB-4.6.1/Game1/build/TypeZ_png.h \
- C:/grr/GRRLIB-4.6.1/Game1/build/Wall_png.h \
- C:/grr/GRRLIB-4.6.1/Game1/build/Upgrade_png.h \
- C:/grr/GRRLIB-4.6.1/Game1/build/Bullet_png.h
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/OlivettiThin_ttf.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/expo_it.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/button_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeA_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeB_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeZ_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Wall_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Upgrade_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Bullet_png.h
 C:/devkitPro/portlibs/wii/include/grrlib.h:
 C:/devkitPro/libogc/include/gccore.h:
 C:/devkitPro/libogc/include/ogc/dsp.h:
@@ -173,13 +173,13 @@ C:/devkitPro/libogc/include/bte/bd_addr.h:
 C:/devkitPro/libogc/include/ogc/lwp_watchdog.h:
 C:/devkitPro/libogc/include/ogcsys.h:
 C:/devkitPro/libogc/include/tuxedo/ppc/clock.h:
-C:/grr/GRRLIB-4.6.1/Game1/build/OlivettiThin_ttf.h:
-C:/grr/GRRLIB-4.6.1/Game1/build/expo_it.h:
-C:/grr/GRRLIB-4.6.1/Game1/build/button_png.h:
-C:/grr/GRRLIB-4.6.1/Game1/build/Falcon_png.h:
-C:/grr/GRRLIB-4.6.1/Game1/build/TypeA_png.h:
-C:/grr/GRRLIB-4.6.1/Game1/build/TypeB_png.h:
-C:/grr/GRRLIB-4.6.1/Game1/build/TypeZ_png.h:
-C:/grr/GRRLIB-4.6.1/Game1/build/Wall_png.h:
-C:/grr/GRRLIB-4.6.1/Game1/build/Upgrade_png.h:
-C:/grr/GRRLIB-4.6.1/Game1/build/Bullet_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/OlivettiThin_ttf.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/expo_it.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/button_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeA_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeB_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeZ_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Wall_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Upgrade_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Bullet_png.h:

@@ -662,10 +662,19 @@ int main(int argc, char **argv){
                     enemyCounter-=1;
                     switch(enemyCount.ennemybase[i].type){
                         case 'Z':
-                        score += 10;
+                        score += 50;
                         break;
                         case 'B':
                         score += 5;
+                        break;
+                        case 'C':
+                        score += 5;
+                        break;
+                        case 'D':
+                        score += 5;
+                        break;
+                        case 'E':
+                        score += 10;
                         break;
                         default:
                         score+=1;

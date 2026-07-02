@@ -447,7 +447,7 @@ int main(int argc, char **argv){
                             
                         }
                         else if(enemytype == 8){
-                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,1,4,4,1,0,0xFF0000FF,'D',TypeDIMG};
+                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,2,2,1,0,0xFF0000FF,'D',TypeDIMG};
                             enemyCount.ennemybase[i] = typeD;
                         }
                         else{
@@ -556,16 +556,38 @@ int main(int argc, char **argv){
                         }
                         break;
 
+                        case 'D':
+                        GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].imgName , 0, 1, 1, 0xFFFFFFFF);
+                        if(enemyCount.ennemybase[i].yposition < Falcon.yposition){
+                            enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed; 
+                        }
+                        else if (enemyCount.ennemybase[i].yposition > Falcon.yposition){
+                            enemyCount.ennemybase[i].yposition -= enemyCount.ennemybase[i].speed; 
+                        }
+
+                        if(enemyCount.ennemybase[i].xposition < Falcon.xposition){
+                            enemyCount.ennemybase[i].xposition += enemyCount.ennemybase[i].speed; 
+                        }
+                        else if (enemyCount.ennemybase[i].xposition > Falcon.xposition){
+                            enemyCount.ennemybase[i].xposition -= enemyCount.ennemybase[i].speed; 
+                        }
+                        
+                        if(GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
+                        enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
+                        gameend =1;
+                        }
+                        break;
+
                         default:
                         GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].imgName , 0, 1, 1, 0xFFFFFFFF);
                         enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;  
 
-                    if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
-                    enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
-                    gameend =1;
-                    }
+                        if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
+                        enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
+                        gameend =1;
+                        }
 
-                    break;
+                        break;
                     
                 }
             }

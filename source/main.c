@@ -13,6 +13,7 @@
 #include "TypeB_png.h"
 #include "TypeC_png.h"
 #include "TypeD_png.h"
+#include "TypeE_png.h"
 #include "TypeZ_png.h"
 #include "Wall_png.h"
 #include "Upgrade_png.h"
@@ -112,6 +113,7 @@ int main(int argc, char **argv){
     GRRLIB_texImg *TypeBIMG = GRRLIB_LoadTexture(TypeB_png);
     GRRLIB_texImg *TypeCIMG = GRRLIB_LoadTexture(TypeC_png);
     GRRLIB_texImg *TypeDIMG = GRRLIB_LoadTexture(TypeD_png);
+    GRRLIB_texImg *TypeEIMG = GRRLIB_LoadTexture(TypeE_png);
     GRRLIB_texImg *TypeZIMG = GRRLIB_LoadTexture(TypeZ_png);
     GRRLIB_texImg *WallIMG = GRRLIB_LoadTexture(Wall_png);
     GRRLIB_texImg *UpgradeIMG = GRRLIB_LoadTexture(Upgrade_png);
@@ -420,11 +422,53 @@ int main(int argc, char **argv){
                     enemytype = rand()%(10+1);
 
                     /*
+                    ?Level 30
+                    */
+
+                    if(level >= 30){
+                        if((level == 10 || level == 20 || level == 30 || level == 40 || level == 50) && boss == 0){
+                        struct ennemy typeZ = {(rand()%(488-80 + 1)+80),(rand()%(-10-200 +1)-200),52,52,50,1,1,1,0,0x101010FF,'Z',TypeZIMG};
+                        enemyCount.ennemybase[i] = typeZ;
+                        boss = 1;
+                        }
+                        else if(enemytype == 10){
+                            struct ennemy typeB = {(rand()%(508-80 + 1)+80),(rand()%(-10-200 +1)-200),32,32,5,1,1,1,0,0x0000FFFF,'B',TypeBIMG};
+                            enemyCount.ennemybase[i] = typeB;
+                        }
+                        else if(enemytype == 9){
+                            int side = rand()%(2+1);
+                            if(side == 1){
+                            struct ennemy typeC = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,1,4,2,1,0,0xFF0000FF,'C',TypeCIMG};
+                            enemyCount.ennemybase[i] = typeC;
+                            }
+                            else{
+                            struct ennemy typeC = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,1,4,-2,1,0,0xFF0000FF,'C',TypeCIMG};
+                            enemyCount.ennemybase[i] = typeC;
+                            }
+                            
+                        }
+                        else if(enemytype == 8){
+                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,2,2,1,0,0xFF0000FF,'D',TypeDIMG};
+                            enemyCount.ennemybase[i] = typeD;
+                        }
+                        else if(enemytype == 7 ){
+                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,10,5,1,0,0xFF0000FF,'E',TypeEIMG};
+                            enemyCount.ennemybase[i] = typeE;
+                        }
+                        else{
+                            struct ennemy typeA = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,1,2,2,1,0,0xFF0000FF,'A',TypeAIMG};
+                            enemyCount.ennemybase[i] = typeA;
+                        }
+                    }
+
+
+
+                    /*
                     ?Level 20
                     */
 
 
-                    if(level >= 20){
+                    else if(level >= 20){
                         if((level == 10 || level == 20 || level == 30 || level == 40 || level == 50) && boss == 0){
                         struct ennemy typeZ = {(rand()%(488-80 + 1)+80),(rand()%(-10-200 +1)-200),52,52,50,1,1,1,0,0x101010FF,'Z',TypeZIMG};
                         enemyCount.ennemybase[i] = typeZ;
@@ -575,6 +619,26 @@ int main(int argc, char **argv){
                         if(GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
                         enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
                         gameend =1;
+                        }
+                        break;
+
+                        case 'E':
+
+                        GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].imgName , 0, 1, 1, 0xFFFFFFFF);
+                        enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
+                         if(enemyCount.ennemybase[i].xposition < Falcon.xposition){
+                            enemyCount.ennemybase[i].xposition += enemyCount.ennemybase[i].speedY; 
+                        }
+                        else if (enemyCount.ennemybase[i].xposition > Falcon.xposition){
+                            enemyCount.ennemybase[i].xposition -= enemyCount.ennemybase[i].speedY; 
+                        }
+
+                        if(GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
+                        enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
+                        gameend =1;
+                        }
+                        if(enemyCount.ennemybase[i].yposition >= 550){
+                            enemyCount.ennemybase[i].active = 0;
                         }
                         break;
 

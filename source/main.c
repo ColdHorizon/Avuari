@@ -14,10 +14,12 @@
 #include "TypeC_png.h"
 #include "TypeD_png.h"
 #include "TypeE_png.h"
+#include "TypeF_png.h"
 #include "TypeZ_png.h"
 #include "Wall_png.h"
 #include "Upgrade_png.h"
 #include "Bullet_png.h"
+#include "Bullet2_png.h"
 /*
 ?Creation of the object items
 */
@@ -114,10 +116,12 @@ int main(int argc, char **argv){
     GRRLIB_texImg *TypeCIMG = GRRLIB_LoadTexture(TypeC_png);
     GRRLIB_texImg *TypeDIMG = GRRLIB_LoadTexture(TypeD_png);
     GRRLIB_texImg *TypeEIMG = GRRLIB_LoadTexture(TypeE_png);
+    GRRLIB_texImg *TypeFIMG = GRRLIB_LoadTexture(TypeF_png);
     GRRLIB_texImg *TypeZIMG = GRRLIB_LoadTexture(TypeZ_png);
     GRRLIB_texImg *WallIMG = GRRLIB_LoadTexture(Wall_png);
     GRRLIB_texImg *UpgradeIMG = GRRLIB_LoadTexture(Upgrade_png);
     GRRLIB_texImg *BulletIMG = GRRLIB_LoadTexture(Bullet_png);
+    GRRLIB_texImg *Bullet2IMG = GRRLIB_LoadTexture(Bullet2_png);
     //ActionTimer dodgeTimer = {0};
     int musicActivation =1;
     int mainMenu =1;
@@ -448,7 +452,7 @@ int main(int argc, char **argv){
                             
                         }
                         else if(enemytype == 8){
-                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,2,2,1,0,0xFF0000FF,'D',TypeDIMG};
+                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,4,4,1,0,0xFF0000FF,'D',TypeDIMG};
                             enemyCount.ennemybase[i] = typeD;
                         }
                         else if(enemytype == 7 ){
@@ -491,7 +495,7 @@ int main(int argc, char **argv){
                             
                         }
                         else if(enemytype == 8){
-                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,2,2,1,0,0xFF0000FF,'D',TypeDIMG};
+                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,4,4,1,0,0xFF0000FF,'D',TypeDIMG};
                             enemyCount.ennemybase[i] = typeD;
                         }
                         else{

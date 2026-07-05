@@ -138,7 +138,7 @@ int main(int argc, char **argv){
     struct storage enemyCount;
     struct levelSystem MenuSystem ={1,0,0,0};
     int enemyCounter = 0;
-    int level = 50;
+    int level = 0;
     int score =0;
     int win =0;
     int gameend =0;
@@ -756,28 +756,35 @@ int main(int argc, char **argv){
                                     case 1:
                                     for(int b =0;b<level;b++)
                                     {
+                                        int spawn;
+                                        if(cannon ==1){
+                                            spawn = 120;
+                                        }
+                                        else{
+                                            spawn = 480;
+                                        }
                                         if(enemyCount.ennemybase[b].active == 0){
                                             if(unit ==1){
-                                            struct ennemy typeZ = {(rand()%(488-80 + 1)+80),(rand()%(-10-200 +1)-200),52,52,50,1,1,1,0,0x101010FF,'Z',TypeZIMG,time(NULL)};
+                                            struct ennemy typeZ = {spawn,170,52,52,50,1,1,1,0,0x101010FF,'Z',TypeZIMG,time(NULL)};
                                             enemyCount.ennemybase[b] = typeZ;
                                             }
                                             else if(unit == 2){
-                                                struct ennemy typeF = {(rand()%(508-80 + 1)+80),(rand()%(-10-200 +1)-200),32,32,20,1,1,1,0,0x0000FFFF,'F',TypeFIMG,time(NULL)};
+                                                struct ennemy typeF = {spawn,132,32,32,20,1,1,1,0,0x0000FFFF,'F',TypeFIMG,time(NULL)};
                                                 enemyCount.ennemybase[b] = typeF;
                                             }
                                             else if(unit == 3){
                                                 
-                                                struct ennemy typeC = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,1,4,2,1,0,0xFF0000FF,'C',TypeCIMG,time(NULL)};
+                                                struct ennemy typeC = {spawn,120,20,20,1,4,2,1,0,0xFF0000FF,'C',TypeCIMG,time(NULL)};
                                                 enemyCount.ennemybase[b] = typeC;
                                             
                                                 
                                             }
                                             else if(unit == 4){
-                                                struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
+                                                struct ennemy typeD = {spawn,120,20,20,10,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
                                                 enemyCount.ennemybase[b] = typeD;
                                             }
                                             else{
-                                                struct ennemy typeC = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,1,4,-2,1,0,0xFF0000FF,'C',TypeCIMG,time(NULL)};
+                                                struct ennemy typeC = {spawn,120,20,20,1,4,-2,1,0,0xFF0000FF,'C',TypeCIMG,time(NULL)};
                                                 enemyCount.ennemybase[b] = typeC;
                                             }      
                                             break; 
@@ -789,20 +796,22 @@ int main(int argc, char **argv){
                                     break;
 
                                     case 2:
+                                    for(int b=0;b<10;b++){
                                         for(int j=0;j<count;j++){
                                             if(bulletCount.ennemyBox[j].active == 0){
-                                            struct bullet ennemyBullet = {(enemyCount.ennemybase[i].xposition+enemyCount.ennemybase[i].xsize/2), (enemyCount.ennemybase[i].yposition+enemyCount.ennemybase[i].ysize),8,12,-4,1,1};
+                                            struct bullet ennemyBullet = {(rand()%(300+1)+150), (enemyCount.ennemybase[i].yposition+enemyCount.ennemybase[i].ysize),8,12,-4,1,1};
                                             bulletCount.ennemyBox[j] = ennemyBullet;
                                             break;
                                             }
                                         }
+                                    }
                                     break;
 
                                     default:
                                     for(int b =0;b<level;b++)
                                     {
                                         if(enemyCount.ennemybase[b].active == 0){
-                                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,6,5,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
+                                            struct ennemy typeE = {320,110,20,32,1000,6,5,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
                                             enemyCount.ennemybase[b] = typeE;
                                             break;
                                         }

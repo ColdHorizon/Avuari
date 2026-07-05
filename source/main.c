@@ -154,7 +154,7 @@ int main(int argc, char **argv){
     Falcon.ysize = 24;
     Falcon.power = 0;
     Falcon.speed=5;
-    Falcon.life =5;
+    Falcon.life =10;
     int count = sizeof(bulletCount.box) / sizeof(bulletCount.box[0]);
     int sizeOfEnemies = sizeof(enemyCount.ennemybase) / sizeof(enemyCount.ennemybase[0]);
     //// DO NOT CHANGE THE BULLET AMOUNT BEFORE CHANGING THIS
@@ -195,7 +195,7 @@ int main(int argc, char **argv){
             Falcon.ysize = 24;
             Falcon.power = 0;
             Falcon.speed=5;
-            Falcon.life =5;
+            Falcon.life =10;
             powerUp.active =0;
             for (int i = 0; i < count; i++) {
                 bulletCount.box[i].active = 0;
@@ -241,6 +241,7 @@ int main(int argc, char **argv){
         GRRLIB_PrintfTTF(420,320,font,"Information",18,0xFFFFFFFF);
         GRRLIB_DrawImg(100, 300, button, 0, 2, 2, 0xFFFFFFFF);
         GRRLIB_PrintfTTF(110,320,font,"Music(On/Off)",18,0xFFFFFFFF);
+        GRRLIB_PrintfTTF(520,460,font,"Version 1.10",16,0xFFFFFFFF);
         if(pressed & WPAD_BUTTON_A){
             if(GRRLIB_RectOnRect(credits.xposition,credits.yposition,credits.xsize,credits.ysize,ir.x, ir.y, 20, 20)){
                 mainMenu =0;
@@ -415,7 +416,7 @@ int main(int argc, char **argv){
                             if(enemyCount.ennemybase[j].health <= 0){
                                 int object = 0;
                                 enemyCount.ennemybase[j].active = 0;
-                                object = rand() %(6 +1);
+                                object = rand() %(6+1);
                                 if(object == 6 && powerUp.active == 0){
                                     powerUp.xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize/2;
                                     powerUp.yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize/2;
@@ -489,7 +490,7 @@ int main(int argc, char **argv){
                             
                         }
                         else if(enemytype == 8){
-                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
+                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,20,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
                             enemyCount.ennemybase[i] = typeD;
                         }
                         else if(enemytype == 7 ){
@@ -529,7 +530,7 @@ int main(int argc, char **argv){
                             
                         }
                         else if(enemytype == 8){
-                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
+                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,20,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
                             enemyCount.ennemybase[i] = typeD;
                         }
                         else if(enemytype == 7 ){
@@ -572,7 +573,7 @@ int main(int argc, char **argv){
                             
                         }
                         else if(enemytype == 8){
-                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
+                            struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,20,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
                             enemyCount.ennemybase[i] = typeD;
                         }
                         else{
@@ -793,7 +794,7 @@ int main(int argc, char **argv){
                                                 
                                             }
                                             else if(unit == 4){
-                                                struct ennemy typeD = {spawn,120,20,20,10,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
+                                                struct ennemy typeD = {spawn,120,20,20,20,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
                                                 enemyCount.ennemybase[b] = typeD;
                                             }
                                             else{

@@ -166,6 +166,7 @@ int main(int argc, char **argv){
     int battleMode =0;
     int attackMode = rand()%(3+1);
     int unit = rand()%(5+1);
+    int cannon = rand()%(2+1);
     /*
     ?The SYS loop starts here
     */
@@ -202,6 +203,7 @@ int main(int argc, char **argv){
             battleMode =0;
             attackMode = rand()%(3+1);
             unit = rand()%(5+1);
+            cannon = rand()%(2+1);
         }
     /*
     ?main menu loop starts here
@@ -752,6 +754,37 @@ int main(int argc, char **argv){
                             if(difftime(time(NULL),enemyCount.ennemybase[i].time)>= 2){
                                 switch(attackMode){
                                     case 1:
+                                    for(int b =0;b<level;b++)
+                                    {
+                                        if(enemyCount.ennemybase[b].active == 0){
+                                            if(unit ==1){
+                                            struct ennemy typeZ = {(rand()%(488-80 + 1)+80),(rand()%(-10-200 +1)-200),52,52,50,1,1,1,0,0x101010FF,'Z',TypeZIMG,time(NULL)};
+                                            enemyCount.ennemybase[b] = typeZ;
+                                            }
+                                            else if(unit == 2){
+                                                struct ennemy typeF = {(rand()%(508-80 + 1)+80),(rand()%(-10-200 +1)-200),32,32,20,1,1,1,0,0x0000FFFF,'F',TypeFIMG,time(NULL)};
+                                                enemyCount.ennemybase[b] = typeF;
+                                            }
+                                            else if(unit == 3){
+                                                
+                                                struct ennemy typeC = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,1,4,2,1,0,0xFF0000FF,'C',TypeCIMG,time(NULL)};
+                                                enemyCount.ennemybase[b] = typeC;
+                                            
+                                                
+                                            }
+                                            else if(unit == 4){
+                                                struct ennemy typeD = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,10,4,4,1,0,0xFF0000FF,'D',TypeDIMG,time(NULL)};
+                                                enemyCount.ennemybase[b] = typeD;
+                                            }
+                                            else{
+                                                struct ennemy typeC = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,1,4,-2,1,0,0xFF0000FF,'C',TypeCIMG,time(NULL)};
+                                                enemyCount.ennemybase[b] = typeC;
+                                            }      
+                                            break; 
+                                        }
+                                    }                         
+                                    unit = rand()%(5+1);
+                                    cannon = rand()%(2+1);
 
                                     break;
 
@@ -766,6 +799,14 @@ int main(int argc, char **argv){
                                     break;
 
                                     default:
+                                    for(int b =0;b<level;b++)
+                                    {
+                                        if(enemyCount.ennemybase[b].active == 0){
+                                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,6,5,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
+                                            enemyCount.ennemybase[b] = typeE;
+                                            break;
+                                        }
+                                    }
 
                                     break;
                                 }

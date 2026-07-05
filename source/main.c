@@ -15,6 +15,7 @@
 #include "TypeC_png.h"
 #include "TypeD_png.h"
 #include "TypeE_png.h"
+#include "TypeE2_png.h"
 #include "TypeF_png.h"
 #include "TypeX_png.h"
 #include "TypeZ_png.h"
@@ -34,6 +35,7 @@ struct player{
     int ysize;
     int power;
     int speed;
+    int life;
 };
 struct bullet{
     int xposition;
@@ -120,6 +122,7 @@ int main(int argc, char **argv){
     GRRLIB_texImg *TypeCIMG = GRRLIB_LoadTexture(TypeC_png);
     GRRLIB_texImg *TypeDIMG = GRRLIB_LoadTexture(TypeD_png);
     GRRLIB_texImg *TypeEIMG = GRRLIB_LoadTexture(TypeE_png);
+    GRRLIB_texImg *TypeE2IMG = GRRLIB_LoadTexture(TypeE2_png);
     GRRLIB_texImg *TypeFIMG = GRRLIB_LoadTexture(TypeF_png);
     GRRLIB_texImg *TypeXIMG = GRRLIB_LoadTexture(TypeX_png);
     GRRLIB_texImg *TypeZIMG = GRRLIB_LoadTexture(TypeZ_png);
@@ -144,12 +147,14 @@ int main(int argc, char **argv){
     int gameend =0;
     char levelCounter[20];
     char scoreCounter[20];
+    char lives[10];
     Falcon.xposition = 300;
     Falcon.yposition = 240;
     Falcon.xsize = 20;
     Falcon.ysize = 24;
     Falcon.power = 0;
     Falcon.speed=5;
+    Falcon.life =5;
     int count = sizeof(bulletCount.box) / sizeof(bulletCount.box[0]);
     int sizeOfEnemies = sizeof(enemyCount.ennemybase) / sizeof(enemyCount.ennemybase[0]);
     //// DO NOT CHANGE THE BULLET AMOUNT BEFORE CHANGING THIS
@@ -190,6 +195,7 @@ int main(int argc, char **argv){
             Falcon.ysize = 24;
             Falcon.power = 0;
             Falcon.speed=5;
+            Falcon.life =5;
             powerUp.active =0;
             for (int i = 0; i < count; i++) {
                 bulletCount.box[i].active = 0;
@@ -310,9 +316,11 @@ int main(int argc, char **argv){
         GRRLIB_DrawImg(560,0,WallIMG,0,1,1,0xFFFFFFFF);
         GRRLIB_DrawImg(Falcon.xposition, Falcon.yposition, FalconIMG, 0, 1, 1, 0xFFFFFFFF);
         sprintf(levelCounter,"level:%d",level);
-        sprintf(scoreCounter,"score:%d",score);
+        sprintf(scoreCounter,"lives:%d",Falcon.life);
+        sprintf(lives,"score:%d",score);
         GRRLIB_PrintfTTF(5,40,font,levelCounter,20,0x000000FF);
         GRRLIB_PrintfTTF(5,80,font,scoreCounter,16,0x000000FF);
+        GRRLIB_PrintfTTF(5,120,font,lives,16,0x000000FF);
         /*
         ?Movement system
         */
@@ -441,7 +449,7 @@ int main(int argc, char **argv){
                 win =1;
             }
             else if(level == 51){
-                struct ennemy typeX = {120,-150,400,100,2000,1,1,1,0,0xFF0000FF,'X',TypeXIMG,time(NULL)};
+                struct ennemy typeX = {120,-150,400,100,4000,1,1,1,0,0xFF0000FF,'X',TypeXIMG,time(NULL)};
                 enemyCount.ennemybase[0] = typeX;
                 enemyCounter++;
             }
@@ -485,7 +493,7 @@ int main(int argc, char **argv){
                             enemyCount.ennemybase[i] = typeD;
                         }
                         else if(enemytype == 7 ){
-                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,6,5,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
+                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,6,2,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
                             enemyCount.ennemybase[i] = typeE;
                         }
                         else{
@@ -525,7 +533,7 @@ int main(int argc, char **argv){
                             enemyCount.ennemybase[i] = typeD;
                         }
                         else if(enemytype == 7 ){
-                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,6,5,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
+                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,6,2,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
                             enemyCount.ennemybase[i] = typeE;
                         }
                         else{
@@ -651,7 +659,8 @@ int main(int argc, char **argv){
 
                         if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize,
                         Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize) ){
-                        gameend =1;
+                        Falcon.life-=1;
+                        enemyCount.ennemybase[i].active = 0;
                         }
                         break;
 
@@ -669,7 +678,8 @@ int main(int argc, char **argv){
                         enemyCount.ennemybase[i].xposition += enemyCount.ennemybase[i].speedY;
                         if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize,
                         Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize) ){
-                        gameend =1;
+                        Falcon.life-=1;
+                        enemyCount.ennemybase[i].active = 0;
                         }
                         break;
 
@@ -691,7 +701,8 @@ int main(int argc, char **argv){
                         
                         if(GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
                         enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
-                        gameend =1;
+                        Falcon.life-=1;
+                        enemyCount.ennemybase[i].active = 0;
                         }
                         break;
 
@@ -708,7 +719,8 @@ int main(int argc, char **argv){
 
                         if(GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
                         enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
-                        gameend =1;
+                        Falcon.life-=1;
+                        enemyCount.ennemybase[i].active = 0;
                         }
                         if(enemyCount.ennemybase[i].yposition >= 550){
                             enemyCount.ennemybase[i].active = 0;
@@ -733,7 +745,8 @@ int main(int argc, char **argv){
 
                         if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
                         enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
-                        gameend =1;
+                        Falcon.life-=1;
+                        enemyCount.ennemybase[i].active = 0;
                         }
                         break;
                         
@@ -786,7 +799,8 @@ int main(int argc, char **argv){
                                             else{
                                                 struct ennemy typeC = {spawn,120,20,20,1,4,-2,1,0,0xFF0000FF,'C',TypeCIMG,time(NULL)};
                                                 enemyCount.ennemybase[b] = typeC;
-                                            }      
+                                            } 
+                                            enemyCounter++;     
                                             break; 
                                         }
                                     }                         
@@ -811,8 +825,9 @@ int main(int argc, char **argv){
                                     for(int b =0;b<level;b++)
                                     {
                                         if(enemyCount.ennemybase[b].active == 0){
-                                            struct ennemy typeE = {320,110,20,32,1000,6,5,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
-                                            enemyCount.ennemybase[b] = typeE;
+                                            struct ennemy typeE2 = {320,110,20,32,1000,6,5,1,0,0xFF0000FF,'E',TypeE2IMG,time(NULL)};
+                                            enemyCount.ennemybase[b] = typeE2;
+                                            enemyCounter++; 
                                             break;
                                         }
                                     }
@@ -828,7 +843,7 @@ int main(int argc, char **argv){
 
                         if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize,
                         Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize) ){
-                        gameend =1;
+                        Falcon.life-=1;
                         }
                         
 
@@ -840,7 +855,8 @@ int main(int argc, char **argv){
 
                         if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
                         enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
-                        gameend =1;
+                        Falcon.life-=1;
+                        enemyCount.ennemybase[i].active = 0;
                         }
 
                         break;
@@ -850,8 +866,14 @@ int main(int argc, char **argv){
 
 
                 else if(enemyCount.ennemybase[i].dead == 0){
+                    if(enemyCount.ennemybase[i].type == 'X'){
+                    enemyCount.ennemybase[i].dead = 1;
+                    enemyCounter=0;
+                    }
+                    else{
                     enemyCount.ennemybase[i].dead = 1;
                     enemyCounter-=1;
+                    }
                     switch(enemyCount.ennemybase[i].type){
                         case 'Z':
                         score += 50;
@@ -903,13 +925,21 @@ int main(int argc, char **argv){
             if(GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
             bulletCount.ennemyBox[i].xposition,bulletCount.ennemyBox[i].yposition,bulletCount.ennemyBox[i].bxsize,bulletCount.ennemyBox[i].bysize) ){
             bulletCount.ennemyBox[i].active = 0;
-            gameend =1;
+            Falcon.life-=1;
             }
             if(bulletCount.ennemyBox[i].yposition >= 550)
             {
                 bulletCount.ennemyBox[i].active = 0;
             }
             }
+        }
+
+        /*
+        ?when you lose all lives
+        */
+
+        if(Falcon.life ==0){
+            gameend=1;
         }
  
         /*
@@ -924,7 +954,7 @@ int main(int argc, char **argv){
             if(GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
             powerUp.xposition,powerUp.yposition,powerUp.xsize,powerUp.ysize) ){
                 powerUp.active =0;
-                if(Falcon.power ==3){
+                if(Falcon.power >=5){
                 score +=5;
                 }
                 else{

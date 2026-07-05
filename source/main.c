@@ -463,7 +463,7 @@ int main(int argc, char **argv){
                             enemyCount.ennemybase[i] = typeD;
                         }
                         else if(enemytype == 7 ){
-                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,10,5,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
+                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,6,5,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
                             enemyCount.ennemybase[i] = typeE;
                         }
                         else{
@@ -503,7 +503,7 @@ int main(int argc, char **argv){
                             enemyCount.ennemybase[i] = typeD;
                         }
                         else if(enemytype == 7 ){
-                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,10,5,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
+                            struct ennemy typeE = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,32,1000,6,5,1,0,0xFF0000FF,'E',TypeEIMG,time(NULL)};
                             enemyCount.ennemybase[i] = typeE;
                         }
                         else{
@@ -602,7 +602,7 @@ int main(int argc, char **argv){
 
                     }
                     else{
-                        struct ennemy typeA = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,1,2,2,1,0,0xFF0000FF,'F',TypeAIMG,time(NULL)};
+                        struct ennemy typeA = {(rand()%(540-80 + 1)+80),(rand()%(-10-200 +1)-200),20,20,1,2,2,1,0,0xFF0000FF,'A',TypeAIMG,time(NULL)};
                         enemyCount.ennemybase[i] = typeA;
                     }
                     
@@ -698,11 +698,12 @@ int main(int argc, char **argv){
                         enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed; 
                         
                         
-                        if(time(NULL) >= enemyCount.ennemybase[i].time +2){
-                            for(int i=0;i<count;i++){
-                                if(bulletCount.ennemyBox[i].active == 0){
-                                struct bullet enemyBullet = {(enemyCount.ennemybase[i].xposition+enemyCount.ennemybase[i].xsize/2), (enemyCount.ennemybase[i].yposition+enemyCount.ennemybase[i].ysize),8,12,-4,1,1};
-                                bulletCount.ennemyBox[i] = enemyBullet;
+                        if(difftime(time(NULL),enemyCount.ennemybase[i].time)>= 2){
+                            for(int j=0;j<count;j++){
+                                if(bulletCount.ennemyBox[j].active == 0){
+                                struct bullet ennemyBullet = {(enemyCount.ennemybase[i].xposition+enemyCount.ennemybase[i].xsize/2), (enemyCount.ennemybase[i].yposition+enemyCount.ennemybase[i].ysize),8,12,-4,1,1};
+                                bulletCount.ennemyBox[j] = ennemyBullet;
+                                break;
                                 }
                             }
                             enemyCount.ennemybase[i].time = time(NULL);

@@ -16,6 +16,7 @@
 #include "TypeD_png.h"
 #include "TypeE_png.h"
 #include "TypeF_png.h"
+#include "TypeX_png.h"
 #include "TypeZ_png.h"
 #include "Wall_png.h"
 #include "Upgrade_png.h"
@@ -120,6 +121,7 @@ int main(int argc, char **argv){
     GRRLIB_texImg *TypeDIMG = GRRLIB_LoadTexture(TypeD_png);
     GRRLIB_texImg *TypeEIMG = GRRLIB_LoadTexture(TypeE_png);
     GRRLIB_texImg *TypeFIMG = GRRLIB_LoadTexture(TypeF_png);
+    GRRLIB_texImg *TypeXIMG = GRRLIB_LoadTexture(TypeX_png);
     GRRLIB_texImg *TypeZIMG = GRRLIB_LoadTexture(TypeZ_png);
     GRRLIB_texImg *WallIMG = GRRLIB_LoadTexture(Wall_png);
     GRRLIB_texImg *UpgradeIMG = GRRLIB_LoadTexture(Upgrade_png);
@@ -420,8 +422,13 @@ int main(int argc, char **argv){
 
         if(enemyCounter == 0){
             level++;
-            if(level >= 51){
+            if(level >= 52){
                 win =1;
+            }
+            else if(level == 51){
+                struct ennemy typeX = {120,-150,400,100,2000,1,1,1,0,0xFF0000FF,'X',TypeXIMG,time(NULL)};
+                enemyCount.ennemybase[0] = typeX;
+                enemyCounter++;
             }
             else
             {
@@ -714,6 +721,19 @@ int main(int argc, char **argv){
                         gameend =1;
                         }
                         break;
+                        
+                        case 'X':
+                        GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].imgName , 0, 4, 4, 0xFFFFFFFF);
+                        if(enemyCount.ennemybase[i].yposition  <= -10){
+                        enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;  
+                        }
+
+                        if(GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
+                        enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
+                        gameend =1;
+                        }
+
+                        break;
 
                         default:
                         GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].imgName , 0, 1, 1, 0xFFFFFFFF);
@@ -751,6 +771,9 @@ int main(int argc, char **argv){
                         break;
                         case 'F':
                         score += 20;
+                        break;
+                        case 'X':
+                        score += 2000;
                         break;
                         default:
                         score+=1;

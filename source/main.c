@@ -138,7 +138,7 @@ int main(int argc, char **argv){
     struct storage enemyCount;
     struct levelSystem MenuSystem ={1,0,0,0};
     int enemyCounter = 0;
-    int level = 0;
+    int level = 50;
     int score =0;
     int win =0;
     int gameend =0;
@@ -157,6 +157,15 @@ int main(int argc, char **argv){
         bulletCount.box[i].active = 0;
         bulletCount.ennemyBox[i].active =0;
     }
+
+    /*
+    ?Boss specific values
+    */
+
+    int placed =0;
+    int battleMode =0;
+    int attackMode = rand()%(3+1);
+    int unit = rand()%(5+1);
     /*
     ?The SYS loop starts here
     */
@@ -189,6 +198,10 @@ int main(int argc, char **argv){
                 enemyCount.ennemybase[i].active = 0;
             }
             reset =0;
+            placed =0;
+            battleMode =0;
+            attackMode = rand()%(3+1);
+            unit = rand()%(5+1);
         }
     /*
     ?main menu loop starts here
@@ -724,14 +737,50 @@ int main(int argc, char **argv){
                         
                         case 'X':
                         GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].imgName , 0, 4, 4, 0xFFFFFFFF);
-                        if(enemyCount.ennemybase[i].yposition  <= -10){
+                        if(enemyCount.ennemybase[i].yposition  <= -10 && placed ==0){
                         enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;  
                         }
+                        else{
+                            placed =1;
+                        }
+                        if(placed ==1 && battleMode ==0){
+                            placed =0;
+                            enemyCount.ennemybase[i].time = time(NULL);
+                            battleMode =1;
+                        }
+                        if(battleMode ==1){
+                            if(difftime(time(NULL),enemyCount.ennemybase[i].time)>= 2){
+                                switch(attackMode){
+                                    case 1:
 
-                        if(GRRLIB_RectOnRect(Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize,
-                        enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize) ){
+                                    break;
+
+                                    case 2:
+                                        for(int j=0;j<count;j++){
+                                            if(bulletCount.ennemyBox[j].active == 0){
+                                            struct bullet ennemyBullet = {(enemyCount.ennemybase[i].xposition+enemyCount.ennemybase[i].xsize/2), (enemyCount.ennemybase[i].yposition+enemyCount.ennemybase[i].ysize),8,12,-4,1,1};
+                                            bulletCount.ennemyBox[j] = ennemyBullet;
+                                            break;
+                                            }
+                                        }
+                                    break;
+
+                                    default:
+
+                                    break;
+                                }
+                                enemyCount.ennemybase[i].time = time(NULL);
+                                attackMode = rand()%(3+1);
+                                
+
+                            }
+                        }
+
+                        if(enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize,
+                        Falcon.xposition,Falcon.yposition,Falcon.xsize,Falcon.ysize) ){
                         gameend =1;
                         }
+                        
 
                         break;
 

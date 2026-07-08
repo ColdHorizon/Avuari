@@ -246,7 +246,7 @@ int main(int argc, char **argv){
         GRRLIB_PrintfTTF(420,320,font,"Information",18,0xFFFFFFFF);
         GRRLIB_DrawImg(100, 300, button, 0, 2, 2, 0xFFFFFFFF);
         GRRLIB_PrintfTTF(110,320,font,"Music(On/Off)",18,0xFFFFFFFF);
-        GRRLIB_PrintfTTF(520,460,font,"Version 1.10",16,0xFFFFFFFF);
+        GRRLIB_PrintfTTF(520,440,font,"Version 1.10",16,0xFFFFFFFF);
         if(pressed & WPAD_BUTTON_A){
             if(GRRLIB_RectOnRect(credits.xposition,credits.yposition,credits.xsize,credits.ysize,ir.x, ir.y, 20, 20)){
                 mainMenu =0;
@@ -319,6 +319,7 @@ int main(int argc, char **argv){
         timeValues =0;
         }
         
+        
         WPAD_ScanPads();
         u32 pressed = WPAD_ButtonsDown(0);
         u32 hold = WPAD_ButtonsHeld(0);
@@ -332,6 +333,15 @@ int main(int argc, char **argv){
         GRRLIB_PrintfTTF(5,40,font,levelCounter,20,0x000000FF);
         GRRLIB_PrintfTTF(5,80,font,scoreCounter,16,0x000000FF);
         GRRLIB_PrintfTTF(5,120,font,lives,16,0x000000FF);
+
+
+        if((difftime(time(NULL),Falcon.ability)>= 20)){
+        GRRLIB_PrintfTTF(5,440,font,"ability:ON",14,0x000000FF);
+        }
+        else{
+            GRRLIB_PrintfTTF(5,440,font,"ability:OFF",14,0x000000FF);
+        }
+
         /*
         ?Movement system
         */
@@ -393,10 +403,10 @@ int main(int argc, char **argv){
             
         }
 
-        if(pressed & WPAD_BUTTON_B && (difftime(time(NULL),Falcon.ability)>= 2) ){
+        if(pressed & WPAD_BUTTON_B && (difftime(time(NULL),Falcon.ability)>= 20) ){
             for(int i=0;i<count;i++){
                     if(bulletCount.box[i].active == 0){
-                        struct bullet ultimate = {(Falcon.xposition+Falcon.xsize/3)-5,(Falcon.yposition-Falcon.ysize/4)-10,16,24,10,0,1,'U'};
+                        struct bullet ultimate = {(Falcon.xposition+Falcon.xsize/3)-12,(Falcon.yposition-Falcon.ysize/4)-40,32,48,10,0,1,'U'};
                         bulletCount.box[i] = ultimate;
                         Falcon.ability = time(NULL);
                         break;
@@ -425,15 +435,45 @@ int main(int argc, char **argv){
             if(bulletCount.box[i].active == 1){
 
                 if(bulletCount.box[i].type == 'U'){
-                    GRRLIB_DrawImg(bulletCount.box[i].xposition,bulletCount.box[i].yposition,BulletIMG,0, 2, 2, 0xFFFFFFFF);
+                    GRRLIB_DrawImg(bulletCount.box[i].xposition,bulletCount.box[i].yposition,BulletIMG,0, 4, 4, 0xFFFFFFFF);
                     for(int j =0;j<level;j++){
                         if(enemyCount.ennemybase[j].active==1){
+                            if(enemyCount.ennemybase[j].ysize <= bulletCount.box[i].bysize){
+                                 if(GRRLIB_RectOnRect(bulletCount.box[i].xposition,bulletCount.box[i].yposition,bulletCount.box[i].bxsize,bulletCount.box[i].bysize,
+                                    enemyCount.ennemybase[j].xposition,enemyCount.ennemybase[j].yposition,enemyCount.ennemybase[j].xsize,enemyCount.ennemybase[j].ysize)){
+                                    if(enemyCount.ennemybase[j].type =='X'){
+                                        enemyCount.ennemybase[j].health -= 100;
+                                        bulletCount.box[i].active = 0;
 
-
+                                    }
+                                    else{
+                                        enemyCount.ennemybase[j].active = 0;
+                                        enemyCount.ennemybase[j].health = 0;
+                                    }
+                                    if(enemyCount.ennemybase[j].health <= 0){
+                                        int object = 0;
+                                        enemyCount.ennemybase[j].active = 0;
+                                        object = rand() %(6+1);
+                                        if(object == 6 && powerUp.active == 0){
+                                            powerUp.xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize/2;
+                                            powerUp.yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize/2;
+                                            powerUp.xsize =12;
+                                            powerUp.ysize=12;
+                                            powerUp.speed=3;
+                                            powerUp.active=1;
+                                            powerUp.color=0xFFFF00FF;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                            else{
                             if(GRRLIB_RectOnRect(enemyCount.ennemybase[j].xposition,enemyCount.ennemybase[j].yposition,enemyCount.ennemybase[j].xsize,enemyCount.ennemybase[j].ysize,
                                 bulletCount.box[i].xposition,bulletCount.box[i].yposition,bulletCount.box[i].bxsize,bulletCount.box[i].bysize)){
                                     if(enemyCount.ennemybase[j].type =='X'){
                                         enemyCount.ennemybase[j].health -= 100;
+                                        bulletCount.box[i].active = 0;
+
                                     }
                                     else{
                                         enemyCount.ennemybase[j].active = 0;
@@ -457,6 +497,7 @@ int main(int argc, char **argv){
                                 }
                             }
                         }
+                    }
                           
                 }
                 else{

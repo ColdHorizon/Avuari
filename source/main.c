@@ -23,6 +23,7 @@
 #include "Upgrade_png.h"
 #include "Bullet_png.h"
 #include "Bullet2_png.h"
+#include "Star_png.h"
 /*
 ?Creation of the object items
 */
@@ -92,6 +93,15 @@ struct buttoncollisions{
     int xsize;
     int ysize;
 };
+struct star{
+    int xposition;
+    int yposition;
+    int size;
+    int active;
+};
+struct sky{
+    struct star starrySky[20];
+};
 /*
 ?This is the main loop
 */
@@ -132,7 +142,7 @@ int main(int argc, char **argv){
     GRRLIB_texImg *UpgradeIMG = GRRLIB_LoadTexture(Upgrade_png);
     GRRLIB_texImg *BulletIMG = GRRLIB_LoadTexture(Bullet_png);
     GRRLIB_texImg *Bullet2IMG = GRRLIB_LoadTexture(Bullet2_png);
-    //ActionTimer dodgeTimer = {0};
+    GRRLIB_texImg *StarIMG = GRRLIB_LoadTexture(Star_png);
     int musicActivation =1;
     int mainMenu =1;
     int creditsMenu = 0;
@@ -141,6 +151,7 @@ int main(int argc, char **argv){
     struct player Falcon;
     struct bulletCount bulletCount;
     struct storage enemyCount;
+    struct sky space;
     struct levelSystem MenuSystem ={1,0,0,0};
     int enemyCounter = 0;
     int level = 0;
@@ -160,11 +171,19 @@ int main(int argc, char **argv){
     Falcon.life =10;
     Falcon.ability = time(NULL);
     int count = sizeof(bulletCount.box) / sizeof(bulletCount.box[0]);
+    int starCounter = sizeof(space.starrySky) / sizeof(space.starrySky[0]);
     int sizeOfEnemies = sizeof(enemyCount.ennemybase) / sizeof(enemyCount.ennemybase[0]);
     //// DO NOT CHANGE THE BULLET AMOUNT BEFORE CHANGING THIS
     for (int i = 0; i < count; i++) {
         bulletCount.box[i].active = 0;
         bulletCount.ennemyBox[i].active =0;
+    }
+    for (int i = 0; i < sizeOfEnemies; i++) {
+                enemyCount.ennemybase[i].active = 0;
+    }
+    for (int i = 0; i < starCounter; i++) {
+        struct star s = {(rand()%(540-80 + 1)+80),rand()%(480+1),rand()%(2+1),1};
+        space.starrySky[i] = s;
     }
 
     /*
@@ -208,6 +227,10 @@ int main(int argc, char **argv){
             }
             for (int i = 0; i < sizeOfEnemies; i++) {
                 enemyCount.ennemybase[i].active = 0;
+            }
+            for (int i = 0; i < starCounter; i++) {
+                struct star s = {(rand()%(540-80 + 1)+80),rand()%(480+1),rand()%(2+1),1};
+                space.starrySky[i] = s;
             }
             reset =0;
             placed =0;
@@ -341,6 +364,29 @@ int main(int argc, char **argv){
         else{
             GRRLIB_PrintfTTF(5,440,font,"ability:OFF",14,0x000000FF);
         }
+
+
+
+        /*
+        ?Stars
+        */
+        for (int i = 0; i < starCounter; i++) {
+                if(space.starrySky[i].active==1){
+                    GRRLIB_DrawImg(space.starrySky[i].xposition,space.starrySky[i].yposition,StarIMG,0,space.starrySky[i].size,space.starrySky[i].size,0xFFFFFFCC);
+                    space.starrySky[i].yposition +=1;
+                    if(space.starrySky[i].yposition >= 500){
+                        space.starrySky[i].active=0;
+                    }
+                }
+                else{
+                struct star s = {(rand()%(540-80 + 1)+80),rand()%(-50+1)-70,rand()%(2+1),1};
+                space.starrySky[i] = s;
+                }
+        }
+
+
+
+
 
         /*
         ?Movement system

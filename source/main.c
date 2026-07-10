@@ -349,7 +349,6 @@ int main(int argc, char **argv){
         GRRLIB_SetBackgroundColour(0x10, 0x10, 0x10, 0xFF);
         GRRLIB_DrawImg(0,0,WallIMG,0,1,1,0xFFFFFFFF);
         GRRLIB_DrawImg(560,0,WallIMG,0,1,1,0xFFFFFFFF);
-        GRRLIB_DrawImg(Falcon.xposition, Falcon.yposition, FalconIMG, 0, 1, 1, 0xFFFFFFFF);
         sprintf(levelCounter,"level:%d",level);
         sprintf(scoreCounter,"lives:%d",Falcon.life);
         sprintf(lives,"score:%d",score);
@@ -383,6 +382,8 @@ int main(int argc, char **argv){
                 space.starrySky[i] = s;
                 }
         }
+
+        GRRLIB_DrawImg(Falcon.xposition, Falcon.yposition, FalconIMG, 0, 1, 1, 0xFFFFFFFF);
 
 
 
@@ -806,7 +807,6 @@ int main(int argc, char **argv){
                     switch(enemyCount.ennemybase[i].type){
 
                         case 'Z':
-                        //*GRRLIB_Rectangle(enemyCount.ennemybase[i].xposition,enemyCount.ennemybase[i].yposition,enemyCount.ennemybase[i].xsize,enemyCount.ennemybase[i].ysize,enemyCount.ennemybase[i].color, 1);
                         GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
                         enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;  
 

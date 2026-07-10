@@ -9,7 +9,12 @@
 #include "OlivettiThin_ttf.h"
 #include "expo_it.h"
 #include "button_png.h"
+#include "buttonS_png.h"
 #include "Falcon_png.h"
+#include "FalconS_png.h"
+#include "Falcon3_png.h"
+#include "Falcon7_png.h"
+#include "Falcon9_png.h"
 #include "TypeA_png.h"
 #include "TypeB_png.h"
 #include "TypeC_png.h"
@@ -102,6 +107,7 @@ struct star{
 struct sky{
     struct star starrySky[20];
 };
+
 /*
 ?This is the main loop
 */
@@ -128,6 +134,7 @@ int main(int argc, char **argv){
 
     GRRLIB_ttfFont *font = GRRLIB_LoadTTF(OlivettiThin_ttf,OlivettiThin_ttf_size);
     GRRLIB_texImg *button = GRRLIB_LoadTexture(button_png);
+    GRRLIB_texImg *buttonS = GRRLIB_LoadTexture(buttonS_png);
     GRRLIB_texImg *FalconIMG = GRRLIB_LoadTexture(Falcon_png);
     GRRLIB_texImg *TypeAIMG = GRRLIB_LoadTexture(TypeA_png);
     GRRLIB_texImg *TypeBIMG = GRRLIB_LoadTexture(TypeB_png);
@@ -143,6 +150,7 @@ int main(int argc, char **argv){
     GRRLIB_texImg *BulletIMG = GRRLIB_LoadTexture(Bullet_png);
     GRRLIB_texImg *Bullet2IMG = GRRLIB_LoadTexture(Bullet2_png);
     GRRLIB_texImg *StarIMG = GRRLIB_LoadTexture(Star_png);
+    int falconSkin =1;
     int musicActivation =1;
     int mainMenu =1;
     int creditsMenu = 0;
@@ -249,6 +257,8 @@ int main(int argc, char **argv){
         struct buttoncollisions credits ={400,300,120,64};
         struct buttoncollisions music ={100,300,120,64};
         struct buttoncollisions back ={240,300,120,64};
+        struct buttoncollisions plus ={350,400,64,64};
+        struct buttoncollisions minus ={200,400,64,64};
         WPAD_ScanPads();
         ir_t ir;
         WPAD_IR(0, &ir);
@@ -269,7 +279,13 @@ int main(int argc, char **argv){
         GRRLIB_PrintfTTF(420,320,font,"Information",18,0xFFFFFFFF);
         GRRLIB_DrawImg(100, 300, button, 0, 2, 2, 0xFFFFFFFF);
         GRRLIB_PrintfTTF(110,320,font,"Music(On/Off)",18,0xFFFFFFFF);
-        GRRLIB_PrintfTTF(520,440,font,"Version 1.10",16,0xFFFFFFFF);
+        GRRLIB_PrintfTTF(520,440,font,"Version 1.20",16,0xFFFFFFFF);
+        GRRLIB_DrawImg(200, 400, buttonS, 0, 2, 2, 0xFFFFFFFF);
+        GRRLIB_DrawImg(350, 400, buttonS, 0, 2, 2, 0xFFFFFFFF);
+        GRRLIB_PrintfTTF(370,395,font,"+",50,0xFFFFFFFF);
+        GRRLIB_PrintfTTF(220,395,font,"-",50,0xFFFFFFFF);
+        GRRLIB_PrintfTTF(275,350,font,"Change Skin",16,0xFFFFFFFF);
+        GRRLIB_DrawImg(290,415, FalconIMG, 0, 1.5, 1.5, 0xFFFFFFFF);
         if(pressed & WPAD_BUTTON_A){
             if(GRRLIB_RectOnRect(credits.xposition,credits.yposition,credits.xsize,credits.ysize,ir.x, ir.y, 20, 20)){
                 mainMenu =0;
@@ -284,6 +300,15 @@ int main(int argc, char **argv){
                     
                     GRRMOD_Start();
                 }
+            }
+            if(GRRLIB_RectOnRect(plus.xposition,plus.yposition,plus.xsize,plus.ysize,ir.x, ir.y, 20, 20)&& falconSkin <= 4){
+                falconSkin +=1;
+                
+                
+            }
+            if(GRRLIB_RectOnRect(minus.xposition,minus.yposition,minus.xsize,minus.ysize,ir.x, ir.y, 20, 20)&& falconSkin >= 2){
+                falconSkin -=1;
+                
             }
         }
         if(pressed & WPAD_BUTTON_PLUS){
@@ -314,6 +339,29 @@ int main(int argc, char **argv){
         if (ir.valid) {
             GRRLIB_Rectangle(ir.x, ir.y, 20, 20, 0xFF10F0FF, 1);
         }
+
+        /*
+        ?Falcon Skins
+        */
+
+        switch(falconSkin){
+            case 1:
+            FalconIMG = GRRLIB_LoadTexture(Falcon_png);
+            break;
+            case 2:
+            FalconIMG = GRRLIB_LoadTexture(Falcon3_png);
+            break;
+            case 3:
+            FalconIMG = GRRLIB_LoadTexture(Falcon7_png);
+            break;
+            case 4:
+            FalconIMG = GRRLIB_LoadTexture(Falcon9_png);
+            break;
+            case 5:
+            FalconIMG = GRRLIB_LoadTexture(FalconS_png);
+            break;
+        }
+
 
 
         /*

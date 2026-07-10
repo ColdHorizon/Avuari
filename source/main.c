@@ -170,6 +170,8 @@ int main(int argc, char **argv){
     char levelCounter[20];
     char scoreCounter[20];
     char lives[10];
+    char skinName[20];
+    sprintf(skinName,"Falcon 4");
     Falcon.xposition = 300;
     Falcon.yposition = 240;
     Falcon.xsize = 20;
@@ -284,8 +286,9 @@ int main(int argc, char **argv){
         GRRLIB_DrawImg(350, 400, buttonS, 0, 2, 2, 0xFFFFFFFF);
         GRRLIB_PrintfTTF(370,395,font,"+",50,0xFFFFFFFF);
         GRRLIB_PrintfTTF(220,395,font,"-",50,0xFFFFFFFF);
-        GRRLIB_PrintfTTF(275,350,font,"Change Skin",16,0xFFFFFFFF);
+        GRRLIB_PrintfTTF(270,350,font,"Change Skin",16,0xFFFFFFFF);
         GRRLIB_DrawImg(290,415, FalconIMG, 0, 1.5, 1.5, 0xFFFFFFFF);
+        GRRLIB_PrintfTTF(280,390,font,skinName,16,0xFFFFFFFF);
         if(pressed & WPAD_BUTTON_A){
             if(GRRLIB_RectOnRect(credits.xposition,credits.yposition,credits.xsize,credits.ysize,ir.x, ir.y, 20, 20)){
                 mainMenu =0;
@@ -347,18 +350,23 @@ int main(int argc, char **argv){
         switch(falconSkin){
             case 1:
             FalconIMG = GRRLIB_LoadTexture(Falcon_png);
+            sprintf(skinName,"Falcon 4");
             break;
             case 2:
             FalconIMG = GRRLIB_LoadTexture(Falcon3_png);
+            sprintf(skinName,"Falcon 3");
             break;
             case 3:
             FalconIMG = GRRLIB_LoadTexture(Falcon7_png);
+            sprintf(skinName,"Falcon 7");
             break;
             case 4:
             FalconIMG = GRRLIB_LoadTexture(Falcon9_png);
+            sprintf(skinName,"Falcon 9");
             break;
             case 5:
             FalconIMG = GRRLIB_LoadTexture(FalconS_png);
+            sprintf(skinName,"Falcon S");
             break;
         }
 

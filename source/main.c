@@ -324,9 +324,10 @@ int main(int argc, char **argv){
         GRRLIB_PrintfTTF(135,60,font,"Controls:",18,0xFFFFFFFF);
         GRRLIB_PrintfTTF(135,80,font,"2: Shoot",18,0xFFFFFFFF);
         GRRLIB_PrintfTTF(135,100,font,"1:Speed Boost",18,0xFFFFFFFF);
-        GRRLIB_PrintfTTF(135,120,font,"Dpad :Move",18,0xFFFFFFFF);
-        GRRLIB_PrintfTTF(135,150,font,"Everything except the GRRLIB engine was made by me",18,0xFFFFFFFF);
-        GRRLIB_PrintfTTF(135,170,font,"ColdHorizon",18,0xFFFFFFFF);
+        GRRLIB_PrintfTTF(135,120,font,"B:Ultimate when ready",18,0xFFFFFFFF);
+        GRRLIB_PrintfTTF(135,140,font,"Dpad :Move",18,0xFFFFFFFF);
+        GRRLIB_PrintfTTF(135,170,font,"Everything except the GRRLIB engine was made by me",18,0xFFFFFFFF);
+        GRRLIB_PrintfTTF(135,190,font,"ColdHorizon",18,0xFFFFFFFF);
 
 
 

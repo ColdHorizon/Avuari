@@ -6,7 +6,7 @@
 extern const uint8_t expo_it[];
 extern const uint8_t expo_it_end[];
 #if __cplusplus >= 201103L
-static constexpr size_t expo_it_size=1976845;
+static constexpr size_t expo_it_size=9798246;
 #else
-static const size_t expo_it_size=1976845;
+static const size_t expo_it_size=9798246;
 #endif

@@ -28,6 +28,7 @@
 #include "Upgrade_png.h"
 #include "Bullet_png.h"
 #include "Bullet2_png.h"
+#include "BulletUltimate_png.h"
 #include "Star_png.h"
 /*
 ?Creation of the object items
@@ -54,6 +55,7 @@ struct bullet
     int dmg;
     int active;
     char type;
+    GRRLIB_texImg *bulletName;
 };
 struct ennemy
 {
@@ -164,6 +166,7 @@ int main(int argc, char **argv)
     GRRLIB_texImg *UpgradeIMG = GRRLIB_LoadTexture(Upgrade_png);
     GRRLIB_texImg *BulletIMG = GRRLIB_LoadTexture(Bullet_png);
     GRRLIB_texImg *Bullet2IMG = GRRLIB_LoadTexture(Bullet2_png);
+    GRRLIB_texImg *BulletUltimateIMG = GRRLIB_LoadTexture(BulletUltimate_png);
     GRRLIB_texImg *StarIMG = GRRLIB_LoadTexture(Star_png);
     int falconSkin = 1;
     int musicActivation = 1;
@@ -336,7 +339,7 @@ int main(int argc, char **argv)
                     }
                 }
 
-                
+
                 if (pressed & WPAD_BUTTON_A)
                 {
                     if (GRRLIB_RectOnRect(credits.xposition, credits.yposition, credits.xsize, credits.ysize, ir.x, ir.y, 20, 20))
@@ -455,7 +458,7 @@ int main(int argc, char **argv)
 
                         if (bulletCount.box[i].type == 'U')
                         {
-                            GRRLIB_DrawImg(bulletCount.box[i].xposition, bulletCount.box[i].yposition, BulletIMG, 0, 4, 4, 0xFFFFFFFF);
+                            GRRLIB_DrawImg(bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bulletName, 0, 4, 4, 0xFFFFFFFF);
                             for (int j = 0; j < level; j++)
                             {
                                 if (enemyCount.ennemybase[j].active == 1)
@@ -534,7 +537,7 @@ int main(int argc, char **argv)
                         else
                         {
 
-                            GRRLIB_DrawImg(bulletCount.box[i].xposition, bulletCount.box[i].yposition, BulletIMG, 0, 1, 1, 0xFFFFFFFF);
+                            GRRLIB_DrawImg(bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bulletName, 0, 1, 1, 0xFFFFFFFF);
                             for (int j = 0; j < level; j++)
                             {
                                 if (enemyCount.ennemybase[j].active == 1)
@@ -913,7 +916,7 @@ int main(int argc, char **argv)
                                     {
                                         if (bulletCount.ennemyBox[j].active == 0)
                                         {
-                                            struct bullet ennemyBullet = {(enemyCount.ennemybase[i].xposition + enemyCount.ennemybase[i].xsize / 2), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 1, 1};
+                                            struct bullet ennemyBullet = {(enemyCount.ennemybase[i].xposition + enemyCount.ennemybase[i].xsize / 2), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 1, 1,'E',Bullet2IMG};
                                             bulletCount.ennemyBox[j] = ennemyBullet;
                                             break;
                                         }
@@ -1107,7 +1110,7 @@ int main(int argc, char **argv)
                     if (bulletCount.ennemyBox[i].active == 1)
                     {
 
-                        GRRLIB_DrawImg(bulletCount.ennemyBox[i].xposition, bulletCount.ennemyBox[i].yposition, Bullet2IMG, 0, 1, 1, 0xFFFFFFFF);
+                        GRRLIB_DrawImg(bulletCount.ennemyBox[i].xposition, bulletCount.ennemyBox[i].yposition,bulletCount.ennemyBox[i].bulletName , 0, 1, 1, 0xFFFFFFFF);
 
                         bulletCount.ennemyBox[i].yposition -= bulletCount.ennemyBox[i].speed;
                         if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
@@ -1244,9 +1247,17 @@ int main(int argc, char **argv)
                     {
                         if (bulletCount.box[j].active == 0)
                         {
-                            struct bullet b = {Falcon.xposition + Falcon.xsize / 3 + region, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, 1 + Falcon.power, 1, 'S'};
-                            bulletCount.box[j] = b;
-                            break;
+                            if(Falcon.power ==5){
+                                struct bullet b = {Falcon.xposition + Falcon.xsize / 3 + region, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, 1 + Falcon.power, 1, 'S',BulletUltimateIMG};
+                                bulletCount.box[j] = b;
+                                break;
+                            }
+                            else{
+                                struct bullet b = {Falcon.xposition + Falcon.xsize / 3 + region, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, 1 + Falcon.power, 1, 'S',BulletIMG};
+                                bulletCount.box[j] = b;
+                                break;
+                            }
+                            
                         }
                     }
                     region += 15;
@@ -1259,10 +1270,20 @@ int main(int argc, char **argv)
                 {
                     if (bulletCount.box[i].active == 0)
                     {
-                        struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 1, 'U'};
-                        bulletCount.box[i] = ultimate;
-                        Falcon.ability = time(NULL);
-                        break;
+                        if(Falcon.power ==5)
+                        {
+                            struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 1, 'U',BulletUltimateIMG};
+                            bulletCount.box[i] = ultimate;
+                            Falcon.ability = time(NULL);
+                            break;
+                        }
+                        else
+                        {
+                            struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 1, 'U',BulletIMG};
+                            bulletCount.box[i] = ultimate;
+                            Falcon.ability = time(NULL);
+                            break;
+                        }
                     }
                 }
             }

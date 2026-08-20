@@ -122,6 +122,7 @@ void enemy();
 void enemyTurn();
 void enemyBullet();
 void powerUpTurn();
+void falconSkins();
 
 /*
 ?This is the main loop
@@ -307,6 +308,35 @@ int main(int argc, char **argv)
                 GRRLIB_PrintfTTF(270, 350, font, "Change Skin", 16, 0xFFFFFFFF);
                 GRRLIB_DrawImg(290, 415, FalconIMG, 0, 1.5, 1.5, 0xFFFFFFFF);
                 GRRLIB_PrintfTTF(280, 390, font, skinName, 16, 0xFFFFFFFF);
+
+
+                void falconSkins(){
+                    switch (falconSkin)
+                    {
+                    case 1:
+                        FalconIMG = GRRLIB_LoadTexture(Falcon_png);
+                        sprintf(skinName, "Falcon 4");
+                        break;
+                    case 2:
+                        FalconIMG = GRRLIB_LoadTexture(Falcon3_png);
+                        sprintf(skinName, "Falcon 3");
+                        break;
+                    case 3:
+                        FalconIMG = GRRLIB_LoadTexture(Falcon7_png);
+                        sprintf(skinName, "Falcon 7");
+                        break;
+                    case 4:
+                        FalconIMG = GRRLIB_LoadTexture(Falcon9_png);
+                        sprintf(skinName, "Falcon 9");
+                        break;
+                    case 5:
+                        FalconIMG = GRRLIB_LoadTexture(FalconS_png);
+                        sprintf(skinName, "Falcon S");
+                        break;
+                    }
+                }
+
+                
                 if (pressed & WPAD_BUTTON_A)
                 {
                     if (GRRLIB_RectOnRect(credits.xposition, credits.yposition, credits.xsize, credits.ysize, ir.x, ir.y, 20, 20))
@@ -330,10 +360,12 @@ int main(int argc, char **argv)
                     if (GRRLIB_RectOnRect(plus.xposition, plus.yposition, plus.xsize, plus.ysize, ir.x, ir.y, 20, 20) && falconSkin <= 4)
                     {
                         falconSkin += 1;
+                        falconSkins();
                     }
                     if (GRRLIB_RectOnRect(minus.xposition, minus.yposition, minus.xsize, minus.ysize, ir.x, ir.y, 20, 20) && falconSkin >= 2)
                     {
                         falconSkin -= 1;
+                        falconSkins();
                     }
                 }
                 if (pressed & WPAD_BUTTON_PLUS)
@@ -373,29 +405,7 @@ int main(int argc, char **argv)
             ?Falcon Skins
             */
 
-            switch (falconSkin)
-            {
-            case 1:
-                FalconIMG = GRRLIB_LoadTexture(Falcon_png);
-                sprintf(skinName, "Falcon 4");
-                break;
-            case 2:
-                FalconIMG = GRRLIB_LoadTexture(Falcon3_png);
-                sprintf(skinName, "Falcon 3");
-                break;
-            case 3:
-                FalconIMG = GRRLIB_LoadTexture(Falcon7_png);
-                sprintf(skinName, "Falcon 7");
-                break;
-            case 4:
-                FalconIMG = GRRLIB_LoadTexture(Falcon9_png);
-                sprintf(skinName, "Falcon 9");
-                break;
-            case 5:
-                FalconIMG = GRRLIB_LoadTexture(FalconS_png);
-                sprintf(skinName, "Falcon S");
-                break;
-            }
+            
 
             /*
             ?Homebrew Exit

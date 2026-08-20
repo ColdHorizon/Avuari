@@ -107,6 +107,12 @@ struct star{
 struct sky{
     struct star starrySky[20];
 };
+void stars();
+void bullet();
+void enemy();
+void enemyTurn();
+void enemyBullet();
+void powerUpTurn();
 
 /*
 ?This is the main loop
@@ -393,39 +399,7 @@ int main(int argc, char **argv){
 
 
     while(MenuSystem.game ==1){
-
-        if(timeValues ==1){
-        Falcon.ability = time(NULL);
-        timeValues =0;
-        }
-        
-        
-        WPAD_ScanPads();
-        u32 pressed = WPAD_ButtonsDown(0);
-        u32 hold = WPAD_ButtonsHeld(0);
-        GRRLIB_SetBackgroundColour(0x10, 0x10, 0x10, 0xFF);
-        GRRLIB_DrawImg(0,0,WallIMG,0,1,1,0xFFFFFFFF);
-        GRRLIB_DrawImg(560,0,WallIMG,0,1,1,0xFFFFFFFF);
-        sprintf(levelCounter,"level:%d",level);
-        sprintf(scoreCounter,"lives:%d",Falcon.life);
-        sprintf(lives,"score:%d",score);
-        GRRLIB_PrintfTTF(5,40,font,levelCounter,20,0x000000FF);
-        GRRLIB_PrintfTTF(5,80,font,scoreCounter,16,0x000000FF);
-        GRRLIB_PrintfTTF(5,120,font,lives,16,0x000000FF);
-
-
-        if((difftime(time(NULL),Falcon.ability)>= 20)){
-        GRRLIB_PrintfTTF(5,440,font,"ability:ON",14,0x000000FF);
-        }
-        else{
-            GRRLIB_PrintfTTF(5,440,font,"ability:OFF",14,0x000000FF);
-        }
-
-
-
-        /*
-        ?Stars
-        */
+        void stars(){
         for (int i = 0; i < starCounter; i++) {
                 if(space.starrySky[i].active==1){
                     GRRLIB_DrawImg(space.starrySky[i].xposition,space.starrySky[i].yposition,StarIMG,0,space.starrySky[i].size,space.starrySky[i].size,0xFFFFFFCC);
@@ -438,104 +412,10 @@ int main(int argc, char **argv){
                 struct star s = {(rand()%(540-80 + 1)+80),rand()%(-50+1)-70,rand()%(2+1),1};
                 space.starrySky[i] = s;
                 }
-        }
-
-        GRRLIB_DrawImg(Falcon.xposition, Falcon.yposition, FalconIMG, 0, 1, 1, 0xFFFFFFFF);
-
-
-
-
-
-        /*
-        ?Movement system
-        */
-
-
-        if(hold & WPAD_BUTTON_DOWN){
-            if (Falcon.xposition >= 560 - Falcon.xsize){
-
-            }
-            else{
-                Falcon.xposition+=Falcon.speed;
-            }
-            
-        }
-        else if(hold & WPAD_BUTTON_UP){
-            if (Falcon.xposition <= 80){
-
-            }
-            else{
-            Falcon.xposition-=Falcon.speed;
             }
         }
-
-        if(hold & WPAD_BUTTON_RIGHT){
-            if (Falcon.yposition <= 0){
-
-            }
-            else{
-            Falcon.yposition-=Falcon.speed;
-            }
-        }
-        else if(hold & WPAD_BUTTON_LEFT){
-            if (Falcon.yposition >= 480 - Falcon.ysize){
-
-            }
-            else{
-            Falcon.yposition+=Falcon.speed;
-            }
-        }
-        /*
-        ?Gun system
-        */
-
-
-        if(pressed & WPAD_BUTTON_2){
-            int maxBullets = Falcon.power;
-            int region = -8 * maxBullets;
-            for(int i=0;i<maxBullets+1;i++){
-                for(int j=0;j<count;j++){
-                    if(bulletCount.box[j].active == 0){
-                        struct bullet b = {Falcon.xposition+Falcon.xsize/3+region,(Falcon.yposition-Falcon.ysize/4)-5,8,12,10,1+Falcon.power,1,'S'};
-                        bulletCount.box[j] = b;
-                        break;
-                    }
-                }
-                region +=15;
-                
-            }
-            
-        }
-
-        if(pressed & WPAD_BUTTON_B && (difftime(time(NULL),Falcon.ability)>= 20) ){
+        void bullet(){
             for(int i=0;i<count;i++){
-                    if(bulletCount.box[i].active == 0){
-                        struct bullet ultimate = {(Falcon.xposition+Falcon.xsize/3)-12,(Falcon.yposition-Falcon.ysize/4)-40,32,48,10,0,1,'U'};
-                        bulletCount.box[i] = ultimate;
-                        Falcon.ability = time(NULL);
-                        break;
-                    }
-                }
-
-        }
-        /*
-        ?Boost system
-        */
-
-
-        if(hold & WPAD_BUTTON_1){
-            Falcon.speed = 10;
-            
-        }
-        else{
-            Falcon.speed = 5;
-        }
-        /*
-        ?Bullet turn
-        */
-
-
-        for(int i=0;i<count;i++){
             if(bulletCount.box[i].active == 1){
 
                 if(bulletCount.box[i].type == 'U'){
@@ -646,15 +526,9 @@ int main(int argc, char **argv){
             }
             }
         }
-    
-
-        
-        /*
-        ?Enemy spawn
-        */
-
-
-        if(enemyCounter == 0){
+        }
+        void enemy(){
+            if(enemyCounter == 0){
             level++;
             if(level >= 52){
                 win =1;
@@ -852,11 +726,8 @@ int main(int argc, char **argv){
                 }
             }
         }
-        /*
-        ?Enemy Turn
-        */
-
-
+    }
+    void enemyTurn(){
         for(int i=0;i<level;i++){
             {
                 if(enemyCount.ennemybase[i].active == 1)
@@ -1119,12 +990,8 @@ int main(int argc, char **argv){
                             
             }
         }
-
-
-        /*
-        ?Ennemy Bullet turn
-        */
-
+    }
+    void enemyBullet(){
         for(int i=0;i<count;i++){
             if(bulletCount.ennemyBox[i].active == 1){
 
@@ -1143,20 +1010,8 @@ int main(int argc, char **argv){
             }
             }
         }
-
-        /*
-        ?when you lose all lives
-        */
-
-        if(Falcon.life ==0){
-            gameend=1;
-        }
- 
-        /*
-        ?Power Up Turn
-        */
-
-
+    }
+    void powerUpTurn(){
         if (powerUp.active ==1){
             //*GRRLIB_Rectangle(powerUp.xposition,powerUp.yposition,powerUp.xsize,powerUp.ysize,powerUp.color,1);
             GRRLIB_DrawImg(powerUp.xposition,powerUp.yposition,UpgradeIMG,0,1,1,0xFFFFFFFF);
@@ -1176,6 +1031,175 @@ int main(int argc, char **argv){
                 powerUp.active=0;
             }
         }
+    }
+
+        if(timeValues ==1){
+        Falcon.ability = time(NULL);
+        timeValues =0;
+        }
+        
+        
+        WPAD_ScanPads();
+        u32 pressed = WPAD_ButtonsDown(0);
+        u32 hold = WPAD_ButtonsHeld(0);
+        GRRLIB_SetBackgroundColour(0x10, 0x10, 0x10, 0xFF);
+        GRRLIB_DrawImg(0,0,WallIMG,0,1,1,0xFFFFFFFF);
+        GRRLIB_DrawImg(560,0,WallIMG,0,1,1,0xFFFFFFFF);
+        sprintf(levelCounter,"level:%d",level);
+        sprintf(scoreCounter,"lives:%d",Falcon.life);
+        sprintf(lives,"score:%d",score);
+        GRRLIB_PrintfTTF(5,40,font,levelCounter,20,0x000000FF);
+        GRRLIB_PrintfTTF(5,80,font,scoreCounter,16,0x000000FF);
+        GRRLIB_PrintfTTF(5,120,font,lives,16,0x000000FF);
+
+
+        if((difftime(time(NULL),Falcon.ability)>= 20)){
+        GRRLIB_PrintfTTF(5,440,font,"ability:ON",14,0x000000FF);
+        }
+        else{
+            GRRLIB_PrintfTTF(5,440,font,"ability:OFF",14,0x000000FF);
+        }
+
+
+
+        /*
+        ?Stars
+        */
+        stars();
+
+        GRRLIB_DrawImg(Falcon.xposition, Falcon.yposition, FalconIMG, 0, 1, 1, 0xFFFFFFFF);
+
+
+
+
+
+        /*
+        ?Movement system
+        */
+
+
+        if(hold & WPAD_BUTTON_DOWN){
+            if (Falcon.xposition >= 560 - Falcon.xsize){
+
+            }
+            else{
+                Falcon.xposition+=Falcon.speed;
+            }
+            
+        }
+        else if(hold & WPAD_BUTTON_UP){
+            if (Falcon.xposition <= 80){
+
+            }
+            else{
+            Falcon.xposition-=Falcon.speed;
+            }
+        }
+
+        if(hold & WPAD_BUTTON_RIGHT){
+            if (Falcon.yposition <= 0){
+
+            }
+            else{
+            Falcon.yposition-=Falcon.speed;
+            }
+        }
+        else if(hold & WPAD_BUTTON_LEFT){
+            if (Falcon.yposition >= 480 - Falcon.ysize){
+
+            }
+            else{
+            Falcon.yposition+=Falcon.speed;
+            }
+        }
+        /*
+        ?Gun system
+        */
+
+
+        if(pressed & WPAD_BUTTON_2){
+            int maxBullets = Falcon.power;
+            int region = -8 * maxBullets;
+            for(int i=0;i<maxBullets+1;i++){
+                for(int j=0;j<count;j++){
+                    if(bulletCount.box[j].active == 0){
+                        struct bullet b = {Falcon.xposition+Falcon.xsize/3+region,(Falcon.yposition-Falcon.ysize/4)-5,8,12,10,1+Falcon.power,1,'S'};
+                        bulletCount.box[j] = b;
+                        break;
+                    }
+                }
+                region +=15;
+                
+            }
+            
+        }
+
+        if(pressed & WPAD_BUTTON_B && (difftime(time(NULL),Falcon.ability)>= 20) ){
+            for(int i=0;i<count;i++){
+                    if(bulletCount.box[i].active == 0){
+                        struct bullet ultimate = {(Falcon.xposition+Falcon.xsize/3)-12,(Falcon.yposition-Falcon.ysize/4)-40,32,48,10,0,1,'U'};
+                        bulletCount.box[i] = ultimate;
+                        Falcon.ability = time(NULL);
+                        break;
+                    }
+                }
+
+        }
+        /*
+        ?Boost system
+        */
+
+
+        if(hold & WPAD_BUTTON_1){
+            Falcon.speed = 10;
+            
+        }
+        else{
+            Falcon.speed = 5;
+        }
+        /*
+        ?Bullet turn
+        */
+
+        bullet();
+        
+    
+
+        
+        /*
+        ?Enemy spawn
+        */
+
+        enemy();
+        
+        /*
+        ?Enemy Turn
+        */
+        enemyTurn();
+
+        
+
+
+        /*
+        ?Ennemy Bullet turn
+        */
+        enemyBullet();
+        
+
+        /*
+        ?when you lose all lives
+        */
+
+        if(Falcon.life ==0){
+            gameend=1;
+        }
+ 
+        /*
+        ?Power Up Turn
+        */
+        powerUpTurn();
+
+        
         /*
         ?Win and lose conditions
         */
@@ -1191,6 +1215,9 @@ int main(int argc, char **argv){
             MenuSystem.gameover =1;
             break;
         }
+
+    
+
         /*
         ?Homebrew Exit
         */
@@ -1280,4 +1307,13 @@ int main(int argc, char **argv){
     GRRMOD_End();
     GRRLIB_Exit();
     return 0;
+
+
+
+
+
+
+
+
+    
 }

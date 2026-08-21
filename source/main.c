@@ -79,7 +79,8 @@ struct upgrade
     int yposition;
     int xsize;
     int ysize;
-    int speed;
+    float speed;
+    float deacceleration;
     int active;
     u32 color;
 };
@@ -184,7 +185,7 @@ int main(int argc, char **argv)
     struct sky space;
     struct levelSystem MenuSystem = {1, 0, 0, 0};
     int enemyCounter = 0;
-    int level = 49;
+    int level = 0;
     int score = 0;
     int win = 0;
     int gameend = 0;
@@ -200,7 +201,7 @@ int main(int argc, char **argv)
     Falcon.ysize = 24;
     Falcon.power = 0;
     Falcon.speed = 5;
-    Falcon.life = 100;
+    Falcon.life = 10;
     Falcon.ability = time(NULL);
     int count = sizeof(bulletCount.box) / sizeof(bulletCount.box[0]);
     int starCounter = sizeof(space.starrySky) / sizeof(space.starrySky[0]);
@@ -564,7 +565,8 @@ int main(int argc, char **argv)
                                                 powerUp.yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
                                                 powerUp.xsize = 12;
                                                 powerUp.ysize = 12;
-                                                powerUp.speed = 3;
+                                                powerUp.speed = -5;
+                                                powerUp.deacceleration = 0.25f;
                                                 powerUp.active = 1;
                                                 powerUp.color = 0xFFFF00FF;
                                             }
@@ -1137,6 +1139,7 @@ int main(int argc, char **argv)
                     //*GRRLIB_Rectangle(powerUp.xposition,powerUp.yposition,powerUp.xsize,powerUp.ysize,powerUp.color,1);
                     GRRLIB_DrawImg(powerUp.xposition, powerUp.yposition, UpgradeIMG, 0, 1, 1, 0xFFFFFFFF);
                     powerUp.yposition += powerUp.speed;
+                    powerUp.speed += powerUp.deacceleration;
                     if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
                                           powerUp.xposition, powerUp.yposition, powerUp.xsize, powerUp.ysize))
                     {

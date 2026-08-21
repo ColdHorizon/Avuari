@@ -90,7 +90,7 @@ struct bulletCount
 };
 struct storage
 {
-    struct ennemy ennemybase[50];
+    struct ennemy ennemybase[55];
     // level 51 breaks game change or keep
 };
 struct levelSystem
@@ -1010,7 +1010,7 @@ int main(int argc, char **argv)
                                                 {
                                                     if (bulletCount.ennemyBox[j].active == 0)
                                                     {
-                                                        struct bullet ennemyBullet = {(rand() % (300 + 1) + 150), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 1, 1, 'E'};
+                                                        struct bullet ennemyBullet = {(rand() % (300 + 1) + 150), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 1, 1, 'E',Bullet2IMG};
                                                         bulletCount.ennemyBox[j] = ennemyBullet;
                                                         break;
                                                     }

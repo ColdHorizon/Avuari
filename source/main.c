@@ -90,7 +90,7 @@ struct bulletCount
 };
 struct storage
 {
-    struct ennemy ennemybase[55];
+    struct ennemy ennemybase[51];
     // level 51 breaks game change or keep
 };
 struct levelSystem
@@ -153,6 +153,10 @@ int main(int argc, char **argv)
     GRRLIB_texImg *button = GRRLIB_LoadTexture(button_png);
     GRRLIB_texImg *buttonS = GRRLIB_LoadTexture(buttonS_png);
     GRRLIB_texImg *FalconIMG = GRRLIB_LoadTexture(Falcon_png);
+    GRRLIB_texImg *Falcon3IMG = GRRLIB_LoadTexture(Falcon3_png);
+    GRRLIB_texImg *Falcon7IMG = GRRLIB_LoadTexture(Falcon7_png);
+    GRRLIB_texImg *Falcon9IMG = GRRLIB_LoadTexture(Falcon9_png);
+    GRRLIB_texImg *FalconSIMG = GRRLIB_LoadTexture(FalconS_png);
     GRRLIB_texImg *TypeAIMG = GRRLIB_LoadTexture(TypeA_png);
     GRRLIB_texImg *TypeBIMG = GRRLIB_LoadTexture(TypeB_png);
     GRRLIB_texImg *TypeCIMG = GRRLIB_LoadTexture(TypeC_png);
@@ -180,7 +184,7 @@ int main(int argc, char **argv)
     struct sky space;
     struct levelSystem MenuSystem = {1, 0, 0, 0};
     int enemyCounter = 0;
-    int level = 0;
+    int level = 49;
     int score = 0;
     int win = 0;
     int gameend = 0;
@@ -196,7 +200,7 @@ int main(int argc, char **argv)
     Falcon.ysize = 24;
     Falcon.power = 0;
     Falcon.speed = 5;
-    Falcon.life = 10;
+    Falcon.life = 100;
     Falcon.ability = time(NULL);
     int count = sizeof(bulletCount.box) / sizeof(bulletCount.box[0]);
     int starCounter = sizeof(space.starrySky) / sizeof(space.starrySky[0]);
@@ -317,23 +321,23 @@ int main(int argc, char **argv)
                     switch (falconSkin)
                     {
                     case 1:
-                        FalconIMG = GRRLIB_LoadTexture(Falcon_png);
+                        FalconIMG = FalconIMG;
                         sprintf(skinName, "Falcon 4");
                         break;
                     case 2:
-                        FalconIMG = GRRLIB_LoadTexture(Falcon3_png);
+                        FalconIMG = Falcon3IMG;
                         sprintf(skinName, "Falcon 3");
                         break;
                     case 3:
-                        FalconIMG = GRRLIB_LoadTexture(Falcon7_png);
+                        FalconIMG = Falcon7IMG;
                         sprintf(skinName, "Falcon 7");
                         break;
                     case 4:
-                        FalconIMG = GRRLIB_LoadTexture(Falcon9_png);
+                        FalconIMG = Falcon9IMG;
                         sprintf(skinName, "Falcon 9");
                         break;
                     case 5:
-                        FalconIMG = GRRLIB_LoadTexture(FalconS_png);
+                        FalconIMG = FalconSIMG;
                         sprintf(skinName, "Falcon S");
                         break;
                     }
@@ -588,11 +592,11 @@ int main(int argc, char **argv)
                     {
                         win = 1;
                     }
-                    else if (level == 51)
+                    else if (level >= 51)
                     {
                         struct ennemy typeX = {120, -150, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X', TypeXIMG, time(NULL)};
                         enemyCount.ennemybase[0] = typeX;
-                        enemyCounter++;
+                        enemyCounter = 10;
                     }
                     else
                     {
@@ -924,8 +928,8 @@ int main(int argc, char **argv)
                                     enemyCount.ennemybase[i].time = time(NULL);
                                 }
 
-                                if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
-                                                                                                   enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize))
+                                if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                                                                                   Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
                                 {
                                     Falcon.life -= 1;
                                     enemyCount.ennemybase[i].active = 0;

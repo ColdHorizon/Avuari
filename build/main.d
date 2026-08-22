@@ -101,6 +101,7 @@ main.o: C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/source/main.c \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeZ_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Wall_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Upgrade_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Points_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Bullet_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Bullet2_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/BulletUltimate_png.h \
@@ -207,6 +208,7 @@ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeX_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeZ_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Wall_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Upgrade_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Points_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Bullet_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Bullet2_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/BulletUltimate_png.h:

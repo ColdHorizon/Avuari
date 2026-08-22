@@ -26,6 +26,7 @@
 #include "TypeZ_png.h"
 #include "Wall_png.h"
 #include "Upgrade_png.h"
+#include "Points_png.h"
 #include "Bullet_png.h"
 #include "Bullet2_png.h"
 #include "BulletUltimate_png.h"
@@ -83,6 +84,8 @@ struct upgrade
     float deacceleration;
     int active;
     u32 color;
+    char upgradeType;
+    GRRLIB_texImg *upgradeName;
 };
 struct bulletCount
 {
@@ -92,6 +95,7 @@ struct bulletCount
 struct storage
 {
     struct ennemy ennemybase[51];
+    struct upgrade itemsBox[100];
     // level 51 breaks game change or keep
 };
 struct levelSystem
@@ -154,6 +158,7 @@ int main(int argc, char **argv)
     GRRLIB_texImg *button = GRRLIB_LoadTexture(button_png);
     GRRLIB_texImg *buttonS = GRRLIB_LoadTexture(buttonS_png);
     GRRLIB_texImg *FalconIMG = GRRLIB_LoadTexture(Falcon_png);
+    GRRLIB_texImg *Falcon4IMG = GRRLIB_LoadTexture(Falcon_png);
     GRRLIB_texImg *Falcon3IMG = GRRLIB_LoadTexture(Falcon3_png);
     GRRLIB_texImg *Falcon7IMG = GRRLIB_LoadTexture(Falcon7_png);
     GRRLIB_texImg *Falcon9IMG = GRRLIB_LoadTexture(Falcon9_png);
@@ -169,6 +174,7 @@ int main(int argc, char **argv)
     GRRLIB_texImg *TypeZIMG = GRRLIB_LoadTexture(TypeZ_png);
     GRRLIB_texImg *WallIMG = GRRLIB_LoadTexture(Wall_png);
     GRRLIB_texImg *UpgradeIMG = GRRLIB_LoadTexture(Upgrade_png);
+    GRRLIB_texImg *PointsIMG = GRRLIB_LoadTexture(Points_png);
     GRRLIB_texImg *BulletIMG = GRRLIB_LoadTexture(Bullet_png);
     GRRLIB_texImg *Bullet2IMG = GRRLIB_LoadTexture(Bullet2_png);
     GRRLIB_texImg *BulletUltimateIMG = GRRLIB_LoadTexture(BulletUltimate_png);
@@ -178,7 +184,6 @@ int main(int argc, char **argv)
     int mainMenu = 1;
     int creditsMenu = 0;
     int reset = 0;
-    struct upgrade powerUp = {0, 0, 0, 0, 0, 0, 0x00000000};
     struct player Falcon;
     struct bulletCount bulletCount;
     struct storage enemyCount;
@@ -206,6 +211,7 @@ int main(int argc, char **argv)
     int count = sizeof(bulletCount.box) / sizeof(bulletCount.box[0]);
     int starCounter = sizeof(space.starrySky) / sizeof(space.starrySky[0]);
     int sizeOfEnemies = sizeof(enemyCount.ennemybase) / sizeof(enemyCount.ennemybase[0]);
+    int sizeOfItems = sizeof(enemyCount.itemsBox) / sizeof(enemyCount.itemsBox[0]);
     //// DO NOT CHANGE THE BULLET AMOUNT BEFORE CHANGING THIS
     for (int i = 0; i < count; i++)
     {
@@ -215,6 +221,10 @@ int main(int argc, char **argv)
     for (int i = 0; i < sizeOfEnemies; i++)
     {
         enemyCount.ennemybase[i].active = 0;
+    }
+    for (int i = 0; i < sizeOfItems; i++)
+    {
+        enemyCount.itemsBox[i].active = 0;
     }
     for (int i = 0; i < starCounter; i++)
     {
@@ -255,7 +265,6 @@ int main(int argc, char **argv)
             Falcon.power = 0;
             Falcon.speed = 5;
             Falcon.life = 10;
-            powerUp.active = 0;
             timeValues = 1;
             for (int i = 0; i < count; i++)
             {
@@ -265,6 +274,10 @@ int main(int argc, char **argv)
             for (int i = 0; i < sizeOfEnemies; i++)
             {
                 enemyCount.ennemybase[i].active = 0;
+            }
+            for (int i = 0; i < sizeOfItems; i++)
+            {
+                enemyCount.itemsBox[i].active = 0;
             }
             for (int i = 0; i < starCounter; i++)
             {
@@ -322,7 +335,7 @@ int main(int argc, char **argv)
                     switch (falconSkin)
                     {
                     case 1:
-                        FalconIMG = FalconIMG;
+                        FalconIMG = Falcon4IMG;
                         sprintf(skinName, "Falcon 4");
                         break;
                     case 2:
@@ -488,16 +501,48 @@ int main(int argc, char **argv)
                                                 int object = 0;
                                                 enemyCount.ennemybase[j].active = 0;
                                                 object = rand() % (6 + 1);
-                                                if (object == 6 && powerUp.active == 0)
-                                                {
-                                                    powerUp.xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
-                                                    powerUp.yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
-                                                    powerUp.xsize = 12;
-                                                    powerUp.ysize = 12;
-                                                    powerUp.speed = 3;
-                                                    powerUp.active = 1;
-                                                    powerUp.color = 0xFFFF00FF;
+                                                
+                                                for(int u =0; u <sizeOfItems;u++){
+                                                    if(enemyCount.itemsBox[u].active ==0){
+                                                        switch(object){
+                                                        case 6:
+                                                            enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
+                                                            enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
+                                                            enemyCount.itemsBox[u].xsize = 12;
+                                                            enemyCount.itemsBox[u].ysize = 12;
+                                                            enemyCount.itemsBox[u].speed = -5;
+                                                            enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].active = 1;
+                                                            enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                                            enemyCount.itemsBox[u].upgradeType = 'D';
+                                                            enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
+                                                        break;
+
+                                                        case 5:
+                                                            enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
+                                                            enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
+                                                            enemyCount.itemsBox[u].xsize = 12;
+                                                            enemyCount.itemsBox[u].ysize = 12;
+                                                            enemyCount.itemsBox[u].speed = -5;
+                                                            enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].active = 1;
+                                                            enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                                            enemyCount.itemsBox[u].upgradeType = 'P';
+                                                            enemyCount.itemsBox[u].upgradeName = PointsIMG;
+                                                        break;
+
+                                                        default:
+                                                        break;
+
+                                                        }
+                                                        break;
+                                                        
+                                                        
+                                                    }
+                                                    
                                                 }
+                                                    
+                                                
                                             }
                                             break;
                                         }
@@ -522,15 +567,44 @@ int main(int argc, char **argv)
                                                 int object = 0;
                                                 enemyCount.ennemybase[j].active = 0;
                                                 object = rand() % (6 + 1);
-                                                if (object == 6 && powerUp.active == 0)
-                                                {
-                                                    powerUp.xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
-                                                    powerUp.yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
-                                                    powerUp.xsize = 12;
-                                                    powerUp.ysize = 12;
-                                                    powerUp.speed = 3;
-                                                    powerUp.active = 1;
-                                                    powerUp.color = 0xFFFF00FF;
+                                                for(int u =0; u <sizeOfItems;u++){
+                                                    if(enemyCount.itemsBox[u].active ==0){
+                                                        switch(object){
+                                                        case 6:
+                                                            enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
+                                                            enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
+                                                            enemyCount.itemsBox[u].xsize = 12;
+                                                            enemyCount.itemsBox[u].ysize = 12;
+                                                            enemyCount.itemsBox[u].speed = -5;
+                                                            enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].active = 1;
+                                                            enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                                            enemyCount.itemsBox[u].upgradeType = 'D';
+                                                            enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
+                                                        break;
+
+                                                        case 5:
+                                                            enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
+                                                            enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
+                                                            enemyCount.itemsBox[u].xsize = 12;
+                                                            enemyCount.itemsBox[u].ysize = 12;
+                                                            enemyCount.itemsBox[u].speed = -5;
+                                                            enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].active = 1;
+                                                            enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                                            enemyCount.itemsBox[u].upgradeType = 'P';
+                                                            enemyCount.itemsBox[u].upgradeName = PointsIMG;
+                                                        break;
+
+                                                        default:
+                                                        break;
+
+                                                        }
+                                                        break;
+                                                        
+                                                        
+                                                    }
+                                                    
                                                 }
                                             }
                                             break;
@@ -559,17 +633,44 @@ int main(int argc, char **argv)
                                             int object = 0;
                                             enemyCount.ennemybase[j].active = 0;
                                             object = rand() % (6 + 1);
-                                            if (object == 6 && powerUp.active == 0)
-                                            {
-                                                powerUp.xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
-                                                powerUp.yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
-                                                powerUp.xsize = 12;
-                                                powerUp.ysize = 12;
-                                                powerUp.speed = -5;
-                                                powerUp.deacceleration = 0.25f;
-                                                powerUp.active = 1;
-                                                powerUp.color = 0xFFFF00FF;
-                                            }
+                                            for(int u =0; u <sizeOfItems;u++){
+                                                    if(enemyCount.itemsBox[u].active ==0){
+                                                        switch(object){
+                                                        case 6:
+                                                            enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
+                                                            enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
+                                                            enemyCount.itemsBox[u].xsize = 12;
+                                                            enemyCount.itemsBox[u].ysize = 12;
+                                                            enemyCount.itemsBox[u].speed = -5;
+                                                            enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].active = 1;
+                                                            enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                                            enemyCount.itemsBox[u].upgradeType = 'D';
+                                                            enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
+                                                        break;
+
+                                                        case 5:
+                                                            enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
+                                                            enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
+                                                            enemyCount.itemsBox[u].xsize = 12;
+                                                            enemyCount.itemsBox[u].ysize = 12;
+                                                            enemyCount.itemsBox[u].speed = -5;
+                                                            enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].active = 1;
+                                                            enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                                            enemyCount.itemsBox[u].upgradeType = 'P';
+                                                            enemyCount.itemsBox[u].upgradeName = PointsIMG;
+                                                        break;
+
+                                                        default:
+                                                        break;
+
+                                                        }
+                                                        break;
+                                                        
+                                                    }
+                                                    
+                                                }
                                         }
 
                                         break;
@@ -594,7 +695,7 @@ int main(int argc, char **argv)
                     {
                         win = 1;
                     }
-                    else if (level >= 51)
+                    else if (level == 51)
                     {
                         struct ennemy typeX = {120, -150, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X', TypeXIMG, time(NULL)};
                         enemyCount.ennemybase[0] = typeX;
@@ -620,39 +721,56 @@ int main(int argc, char **argv)
                                     enemyCount.ennemybase[i] = typeZ;
                                     boss = 1;
                                 }
-                                else if (enemytype == 10)
-                                {
-                                    struct ennemy typeF = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F', TypeFIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeF;
-                                }
-                                else if (enemytype == 9)
-                                {
-                                    int side = rand() % (2 + 1);
-                                    if (side == 1)
-                                    {
-                                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                        enemyCount.ennemybase[i] = typeC;
-                                    }
-                                    else
-                                    {
-                                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                        enemyCount.ennemybase[i] = typeC;
-                                    }
-                                }
-                                else if (enemytype == 8)
-                                {
-                                    struct ennemy typeD = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeD;
-                                }
-                                else if (enemytype == 7)
-                                {
-                                    struct ennemy typeE = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 32, 1000, 6, 2, 1, 0, 0xFF0000FF, 'E', TypeEIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeE;
-                                }
                                 else
                                 {
-                                    struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeA;
+                                    switch(enemytype){
+                                        case 10:
+
+                                        struct ennemy typeF = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F', TypeFIMG, time(NULL)};
+                                        enemyCount.ennemybase[i] = typeF;
+
+                                        break;
+
+                                        case 9:
+
+                                        int side = rand() % (2 + 1);
+                                        if (side == 1)
+                                        {
+                                            struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeC;
+                                        }
+                                        else
+                                        {
+                                            struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeC;
+                                        }
+
+                                        break;
+
+                                        case 8:
+
+                                            struct ennemy typeD = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeD;
+
+                                        break;
+
+                                        case 7:
+
+                                            struct ennemy typeE = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 32, 1000, 6, 2, 1, 0, 0xFF0000FF, 'E', TypeEIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeE;
+
+                                        break;
+
+                                        default:
+
+                                            struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeA;
+
+                                        break;
+
+
+                                    }
+                                    
                                 }
                             }
 
@@ -668,40 +786,55 @@ int main(int argc, char **argv)
                                     enemyCount.ennemybase[i] = typeZ;
                                     boss = 1;
                                 }
-                                else if (enemytype == 10)
-                                {
-                                    struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeB;
-                                }
-                                else if (enemytype == 9)
-                                {
-                                    int side = rand() % (2 + 1);
-                                    if (side == 1)
-                                    {
-                                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                        enemyCount.ennemybase[i] = typeC;
-                                    }
-                                    else
-                                    {
-                                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                        enemyCount.ennemybase[i] = typeC;
-                                    }
-                                }
-                                else if (enemytype == 8)
-                                {
-                                    struct ennemy typeD = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeD;
-                                }
-                                else if (enemytype == 7)
-                                {
-                                    struct ennemy typeE = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 32, 1000, 6, 2, 1, 0, 0xFF0000FF, 'E', TypeEIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeE;
-                                }
                                 else
                                 {
-                                    struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeA;
+                                    switch(enemytype){
+                                        case 10:
+
+                                            struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeB;
+
+                                        break;
+
+                                        case 9:
+
+                                        int side = rand() % (2 + 1);
+                                        if (side == 1)
+                                        {
+                                            struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeC;
+                                        }
+                                        else
+                                        {
+                                            struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeC;
+                                        }
+
+                                        break;
+
+                                        case 8:
+
+                                            struct ennemy typeD = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeD;
+
+                                        break;
+
+                                        case 7:
+
+                                            struct ennemy typeE = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 32, 1000, 6, 2, 1, 0, 0xFF0000FF, 'E', TypeEIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeE;
+
+                                        break;
+
+                                        default:
+
+                                            struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeA;
+
+                                        break;
+                                    }
                                 }
+                                
                             }
 
                             /*
@@ -716,35 +849,48 @@ int main(int argc, char **argv)
                                     enemyCount.ennemybase[i] = typeZ;
                                     boss = 1;
                                 }
-                                else if (enemytype == 10)
+                                else 
                                 {
-                                    struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeB;
-                                }
-                                else if (enemytype == 9)
-                                {
-                                    int side = rand() % (2 + 1);
-                                    if (side == 1)
-                                    {
-                                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                        enemyCount.ennemybase[i] = typeC;
+                                    switch(enemytype){
+                                        case 10:
+
+                                            struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeB;
+
+                                        break;
+
+                                        case 9:
+
+                                        int side = rand() % (2 + 1);
+                                        if (side == 1)
+                                        {
+                                            struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeC;
+                                        }
+                                        else
+                                        {
+                                            struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeC;
+                                        }
+
+                                        break;
+
+                                        case 8:
+
+                                            struct ennemy typeD = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeD;
+
+                                        break;
+
+                                        default:
+
+                                            struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeA;
+
+                                        break;
                                     }
-                                    else
-                                    {
-                                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                        enemyCount.ennemybase[i] = typeC;
-                                    }
                                 }
-                                else if (enemytype == 8)
-                                {
-                                    struct ennemy typeD = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeD;
-                                }
-                                else
-                                {
-                                    struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeA;
-                                }
+                                    
                             }
 
                             /*
@@ -759,29 +905,39 @@ int main(int argc, char **argv)
                                     enemyCount.ennemybase[i] = typeZ;
                                     boss = 1;
                                 }
-                                else if (enemytype == 10)
+                                else 
                                 {
-                                    struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeB;
-                                }
-                                else if (enemytype == 9)
-                                {
-                                    int side = rand() % (2 + 1);
-                                    if (side == 1)
-                                    {
-                                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                        enemyCount.ennemybase[i] = typeC;
+                                    switch(enemytype){
+                                        case 10:
+
+                                            struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeB;
+
+                                        break;
+
+                                        case 9:
+
+                                        int side = rand() % (2 + 1);
+                                        if (side == 1)
+                                        {
+                                            struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeC;
+                                        }
+                                        else
+                                        {
+                                            struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeC;
+                                        }
+
+                                        break;
+
+                                        default:
+
+                                            struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeA;
+
+                                        break;
                                     }
-                                    else
-                                    {
-                                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                        enemyCount.ennemybase[i] = typeC;
-                                    }
-                                }
-                                else
-                                {
-                                    struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeA;
                                 }
                             }
 
@@ -791,16 +947,23 @@ int main(int argc, char **argv)
 
                             else if (level >= 5)
                             {
-                                if (enemytype == 10)
-                                {
-                                    struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeB;
+                                switch(enemytype){
+                                        case 10:
+
+                                            struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeB;
+
+                                        break;
+
+                                        default:
+
+                                            struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
+                                            enemyCount.ennemybase[i] = typeA;
+
+                                        break;
                                 }
-                                else
-                                {
-                                    struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeA;
-                                }
+                                
+
                             }
                             else
                             {
@@ -1134,30 +1297,44 @@ int main(int argc, char **argv)
             }
             void powerUpTurn()
             {
-                if (powerUp.active == 1)
+                for (int i = 0; i < sizeOfItems; i++)
+                {
+
+                if (enemyCount.itemsBox[i].active == 1)
                 {
                     //*GRRLIB_Rectangle(powerUp.xposition,powerUp.yposition,powerUp.xsize,powerUp.ysize,powerUp.color,1);
-                    GRRLIB_DrawImg(powerUp.xposition, powerUp.yposition, UpgradeIMG, 0, 1, 1, 0xFFFFFFFF);
-                    powerUp.yposition += powerUp.speed;
-                    powerUp.speed += powerUp.deacceleration;
+                    GRRLIB_DrawImg(enemyCount.itemsBox[i].xposition, enemyCount.itemsBox[i].yposition, enemyCount.itemsBox[i].upgradeName, 0, 1, 1, 0xFFFFFFFF);
+                    enemyCount.itemsBox[i].yposition += enemyCount.itemsBox[i].speed;
+                    enemyCount.itemsBox[i].speed += enemyCount.itemsBox[i].deacceleration;
                     if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
-                                          powerUp.xposition, powerUp.yposition, powerUp.xsize, powerUp.ysize))
+                                          enemyCount.itemsBox[i].xposition, enemyCount.itemsBox[i].yposition, enemyCount.itemsBox[i].xsize, enemyCount.itemsBox[i].ysize))
                     {
-                        powerUp.active = 0;
-                        if (Falcon.power >= 5)
-                        {
-                            score += 5;
+                        enemyCount.itemsBox[i].active = 0;
+                        switch(enemyCount.itemsBox[i].upgradeType){
+                            case 'D':
+                                if (Falcon.power >= 5)
+                                {
+                                    score += 5;
+                                }
+                                else
+                                {
+                                    Falcon.power += 1;
+                                }
+                            break;
+                            case 'P':
+                                score += 10;
+                            break;
+                            
+
                         }
-                        else
-                        {
-                            Falcon.power += 1;
-                        }
+                        
                     }
-                    if (powerUp.yposition >= 480)
+                    if (enemyCount.itemsBox[i].yposition >= 480)
                     {
-                        powerUp.active = 0;
+                        enemyCount.itemsBox[i].active = 0;
                     }
                 }
+            }
             }
 
             if (timeValues == 1)

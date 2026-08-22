@@ -321,7 +321,7 @@ int main(int argc, char **argv)
                 GRRLIB_PrintfTTF(420, 320, font, "Information", 18, 0xFFFFFFFF);
                 GRRLIB_DrawImg(100, 300, button, 0, 2, 2, 0xFFFFFFFF);
                 GRRLIB_PrintfTTF(110, 320, font, "Music(On/Off)", 18, 0xFFFFFFFF);
-                GRRLIB_PrintfTTF(520, 440, font, "Version 1.20", 16, 0xFFFFFFFF);
+                GRRLIB_PrintfTTF(520, 440, font, "Version 1.30", 16, 0xFFFFFFFF);
                 GRRLIB_DrawImg(200, 400, buttonS, 0, 2, 2, 0xFFFFFFFF);
                 GRRLIB_DrawImg(350, 400, buttonS, 0, 2, 2, 0xFFFFFFFF);
                 GRRLIB_PrintfTTF(370, 395, font, "+", 50, 0xFFFFFFFF);
@@ -998,6 +998,19 @@ int main(int argc, char **argv)
                                     enemyCount.ennemybase[i].active = 0;
                                 }
                                 break;
+                            case 'B':
+                            GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
+                                enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
+
+                                if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                                                                                   Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
+                                {
+                                    Falcon.life -= 1;
+                                    enemyCount.ennemybase[i].active = 0;
+                                }   
+
+
+                            break;
 
                             case 'C':
                                 GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);

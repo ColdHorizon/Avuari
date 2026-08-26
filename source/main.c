@@ -82,6 +82,7 @@ struct upgrade
     int ysize;
     float speed;
     float deacceleration;
+    int magnetised;
     int active;
     u32 color;
     char upgradeType;
@@ -179,6 +180,13 @@ int main(int argc, char **argv)
     GRRLIB_texImg *Bullet2IMG = GRRLIB_LoadTexture(Bullet2_png);
     GRRLIB_texImg *BulletUltimateIMG = GRRLIB_LoadTexture(BulletUltimate_png);
     GRRLIB_texImg *StarIMG = GRRLIB_LoadTexture(Star_png);
+    //changes the rotation spot
+    GRRLIB_SetHandle(FalconIMG,10,12);
+    GRRLIB_SetHandle(Falcon4IMG,10,12);
+    GRRLIB_SetHandle(Falcon3IMG,10,12);
+    GRRLIB_SetHandle(Falcon7IMG,10,12);
+    GRRLIB_SetHandle(Falcon9IMG,10,12);
+    GRRLIB_SetHandle(FalconSIMG,10,12);
     int falconSkin = 1;
     int musicActivation = 1;
     int mainMenu = 1;
@@ -212,6 +220,8 @@ int main(int argc, char **argv)
     int starCounter = sizeof(space.starrySky) / sizeof(space.starrySky[0]);
     int sizeOfEnemies = sizeof(enemyCount.ennemybase) / sizeof(enemyCount.ennemybase[0]);
     int sizeOfItems = sizeof(enemyCount.itemsBox) / sizeof(enemyCount.itemsBox[0]);
+
+    int skinRotation =0;
     //// DO NOT CHANGE THE BULLET AMOUNT BEFORE CHANGING THIS
     for (int i = 0; i < count; i++)
     {
@@ -253,6 +263,7 @@ int main(int argc, char **argv)
 
         while (reset == 1)
         {
+            skinRotation =0;
             enemyCounter = 0;
             level = 0;
             score = 0;
@@ -327,7 +338,7 @@ int main(int argc, char **argv)
                 GRRLIB_PrintfTTF(370, 395, font, "+", 50, 0xFFFFFFFF);
                 GRRLIB_PrintfTTF(220, 395, font, "-", 50, 0xFFFFFFFF);
                 GRRLIB_PrintfTTF(270, 350, font, "Change Skin", 16, 0xFFFFFFFF);
-                GRRLIB_DrawImg(290, 415, FalconIMG, 0, 1.5, 1.5, 0xFFFFFFFF);
+                GRRLIB_DrawImg(295, 420, FalconIMG, skinRotation, 1.5, 1.5, 0xFFFFFFFF);
                 GRRLIB_PrintfTTF(280, 390, font, skinName, 16, 0xFFFFFFFF);
 
 
@@ -389,6 +400,15 @@ int main(int argc, char **argv)
                         falconSkins();
                     }
                 }
+
+                if(skinRotation != 360){
+                    skinRotation++;
+                }
+                else
+                {
+                    skinRotation = 0;
+                }
+
                 if (pressed & WPAD_BUTTON_PLUS)
                 {
                     MenuSystem.start = 0;
@@ -512,6 +532,7 @@ int main(int argc, char **argv)
                                                             enemyCount.itemsBox[u].ysize = 12;
                                                             enemyCount.itemsBox[u].speed = -5;
                                                             enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].magnetised =0;
                                                             enemyCount.itemsBox[u].active = 1;
                                                             enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                                             enemyCount.itemsBox[u].upgradeType = 'D';
@@ -525,6 +546,7 @@ int main(int argc, char **argv)
                                                             enemyCount.itemsBox[u].ysize = 12;
                                                             enemyCount.itemsBox[u].speed = -5;
                                                             enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].magnetised =0;
                                                             enemyCount.itemsBox[u].active = 1;
                                                             enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                                             enemyCount.itemsBox[u].upgradeType = 'P';
@@ -577,6 +599,7 @@ int main(int argc, char **argv)
                                                             enemyCount.itemsBox[u].ysize = 12;
                                                             enemyCount.itemsBox[u].speed = -5;
                                                             enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].magnetised =0;
                                                             enemyCount.itemsBox[u].active = 1;
                                                             enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                                             enemyCount.itemsBox[u].upgradeType = 'D';
@@ -590,6 +613,7 @@ int main(int argc, char **argv)
                                                             enemyCount.itemsBox[u].ysize = 12;
                                                             enemyCount.itemsBox[u].speed = -5;
                                                             enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].magnetised =0;
                                                             enemyCount.itemsBox[u].active = 1;
                                                             enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                                             enemyCount.itemsBox[u].upgradeType = 'P';
@@ -643,6 +667,7 @@ int main(int argc, char **argv)
                                                             enemyCount.itemsBox[u].ysize = 12;
                                                             enemyCount.itemsBox[u].speed = -5;
                                                             enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].magnetised =0;
                                                             enemyCount.itemsBox[u].active = 1;
                                                             enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                                             enemyCount.itemsBox[u].upgradeType = 'D';
@@ -656,6 +681,7 @@ int main(int argc, char **argv)
                                                             enemyCount.itemsBox[u].ysize = 12;
                                                             enemyCount.itemsBox[u].speed = -5;
                                                             enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                                            enemyCount.itemsBox[u].magnetised =0;
                                                             enemyCount.itemsBox[u].active = 1;
                                                             enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                                             enemyCount.itemsBox[u].upgradeType = 'P';
@@ -1317,7 +1343,12 @@ int main(int argc, char **argv)
                 {
                     //*GRRLIB_Rectangle(powerUp.xposition,powerUp.yposition,powerUp.xsize,powerUp.ysize,powerUp.color,1);
                     GRRLIB_DrawImg(enemyCount.itemsBox[i].xposition, enemyCount.itemsBox[i].yposition, enemyCount.itemsBox[i].upgradeName, 0, 1, 1, 0xFFFFFFFF);
-                    enemyCount.itemsBox[i].yposition += enemyCount.itemsBox[i].speed;
+                    if(enemyCount.itemsBox[i].magnetised == 1){
+                        enemyCount.itemsBox[i].yposition += enemyCount.itemsBox[i].speed/2;
+                    }
+                    else{
+                        enemyCount.itemsBox[i].yposition += enemyCount.itemsBox[i].speed;   
+                    }
                     enemyCount.itemsBox[i].speed += enemyCount.itemsBox[i].deacceleration;
                     if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
                                           enemyCount.itemsBox[i].xposition, enemyCount.itemsBox[i].yposition, enemyCount.itemsBox[i].xsize, enemyCount.itemsBox[i].ysize))
@@ -1342,6 +1373,29 @@ int main(int argc, char **argv)
                         }
                         
                     }
+                    //only works when on a side ( not like top right)
+                    if(GRRLIB_RectOnRect(Falcon.xposition -20, Falcon.yposition, Falcon.xsize, Falcon.ysize,
+                        enemyCount.itemsBox[i].xposition, enemyCount.itemsBox[i].yposition, enemyCount.itemsBox[i].xsize, enemyCount.itemsBox[i].ysize)){
+                            enemyCount.itemsBox[i].xposition +=5;
+                            enemyCount.itemsBox[i].magnetised =1;
+                    }
+                    else if(GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize+20, Falcon.ysize,
+                        enemyCount.itemsBox[i].xposition, enemyCount.itemsBox[i].yposition, enemyCount.itemsBox[i].xsize, enemyCount.itemsBox[i].ysize)){
+                            enemyCount.itemsBox[i].xposition -=5;
+                            enemyCount.itemsBox[i].magnetised =1;
+                    }
+
+                    if(GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition -20, Falcon.xsize, Falcon.ysize,
+                        enemyCount.itemsBox[i].xposition, enemyCount.itemsBox[i].yposition, enemyCount.itemsBox[i].xsize, enemyCount.itemsBox[i].ysize)){
+                            enemyCount.itemsBox[i].yposition +=5;
+                            enemyCount.itemsBox[i].magnetised =1;
+                    }
+                    else if(GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize +20,
+                        enemyCount.itemsBox[i].xposition, enemyCount.itemsBox[i].yposition, enemyCount.itemsBox[i].xsize, enemyCount.itemsBox[i].ysize)){
+                            enemyCount.itemsBox[i].yposition -=5;
+                            enemyCount.itemsBox[i].magnetised =1;
+                    }
+                    
                     if (enemyCount.itemsBox[i].yposition >= 480)
                     {
                         enemyCount.itemsBox[i].active = 0;

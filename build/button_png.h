@@ -6,7 +6,7 @@
 extern const uint8_t button_png[];
 extern const uint8_t button_png_end[];
 #if __cplusplus >= 201103L
-static constexpr size_t button_png_size=310;
+static constexpr size_t button_png_size=312;
 #else
-static const size_t button_png_size=310;
+static const size_t button_png_size=312;
 #endif

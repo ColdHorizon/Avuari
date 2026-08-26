@@ -10,6 +10,7 @@
 #include "expo_it.h"
 #include "button_png.h"
 #include "buttonS_png.h"
+#include "titleLogo_png.h"
 #include "Falcon_png.h"
 #include "FalconS_png.h"
 #include "Falcon3_png.h"
@@ -158,6 +159,7 @@ int main(int argc, char **argv)
     GRRLIB_ttfFont *font = GRRLIB_LoadTTF(OlivettiThin_ttf, OlivettiThin_ttf_size);
     GRRLIB_texImg *button = GRRLIB_LoadTexture(button_png);
     GRRLIB_texImg *buttonS = GRRLIB_LoadTexture(buttonS_png);
+    GRRLIB_texImg *titleLogo = GRRLIB_LoadTexture(titleLogo_png);
     GRRLIB_texImg *FalconIMG = GRRLIB_LoadTexture(Falcon_png);
     GRRLIB_texImg *Falcon4IMG = GRRLIB_LoadTexture(Falcon_png);
     GRRLIB_texImg *Falcon3IMG = GRRLIB_LoadTexture(Falcon3_png);
@@ -317,7 +319,7 @@ int main(int argc, char **argv)
             ir_t ir;
             WPAD_IR(0, &ir);
             u32 pressed = WPAD_ButtonsDown(0);
-            GRRLIB_SetBackgroundColour(0x3C, 0x00, 0x61, 0xFF);
+            GRRLIB_SetBackgroundColour(0x03, 0x09, 0xa8, 0xFF);
 
             /*
             ?menu sections
@@ -325,7 +327,8 @@ int main(int argc, char **argv)
 
             if (mainMenu == 1)
             {
-                GRRLIB_PrintfTTF(270, 140, font, "Avuari", 30, 0xFFFFFFFF);
+                
+                GRRLIB_DrawImg(240, 120, titleLogo, 0, 1, 1, 0xFFFFFFFF);
                 GRRLIB_PrintfTTF(180, 210, font, "Use the pointer to go into the menus", 22, 0xFFFFFFFF);
                 GRRLIB_PrintfTTF(180, 240, font, "To Start : press + on remote", 22, 0xFFFFFFFF);
                 GRRLIB_DrawImg(400, 300, button, 0, 2, 2, 0xFFFFFFFF);

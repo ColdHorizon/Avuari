@@ -85,6 +85,7 @@ main.o: C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/source/main.c \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/expo_it.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/button_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonS_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/titleLogo_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/FalconS_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon3_png.h \
@@ -192,6 +193,7 @@ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/OlivettiThin_ttf.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/expo_it.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/button_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonS_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/titleLogo_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/FalconS_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon3_png.h:

@@ -84,8 +84,17 @@ main.o: C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/source/main.c \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/OlivettiThin_ttf.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/expo_it.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/button_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonF3_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonF7_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonF9_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonS_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonSF3_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonSF7_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonSF9_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/titleLogo_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/titleLogoF3_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/titleLogoF7_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/titleLogoF9_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/FalconS_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon3_png.h \
@@ -192,8 +201,17 @@ C:/devkitPro/libogc/include/tuxedo/ppc/clock.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/OlivettiThin_ttf.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/expo_it.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/button_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonF3_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonF7_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonF9_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonS_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonSF3_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonSF7_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonSF9_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/titleLogo_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/titleLogoF3_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/titleLogoF7_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/titleLogoF9_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/FalconS_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Falcon3_png.h:

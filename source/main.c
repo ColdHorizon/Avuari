@@ -8,14 +8,37 @@
 #include <ogc/lwp_watchdog.h>
 #include "OlivettiThin_ttf.h"
 #include "expo_it.h"
+
+
+
 #include "button_png.h"
+#include "buttonF3_png.h"
+#include "buttonF7_png.h"
+#include "buttonF9_png.h"
+
+
+
 #include "buttonS_png.h"
+#include "buttonSF3_png.h"
+#include "buttonSF7_png.h"
+#include "buttonSF9_png.h"
+
+
+
 #include "titleLogo_png.h"
+#include "titleLogoF3_png.h"
+#include "titleLogoF7_png.h"
+#include "titleLogoF9_png.h"
+
+
+
 #include "Falcon_png.h"
 #include "FalconS_png.h"
 #include "Falcon3_png.h"
 #include "Falcon7_png.h"
 #include "Falcon9_png.h"
+
+
 #include "TypeA_png.h"
 #include "TypeB_png.h"
 #include "TypeC_png.h"
@@ -108,6 +131,14 @@ struct levelSystem
     int gameover;
     int win;
 };
+struct mainMenuBGColors
+{
+u8 R;
+u8 G;
+u8 B;
+u8 A;
+
+};
 struct buttoncollisions
 {
     int xposition;
@@ -158,15 +189,42 @@ int main(int argc, char **argv)
     WPAD_SetVRes(WPAD_CHAN_0, 640, 480);
 
     GRRLIB_ttfFont *font = GRRLIB_LoadTTF(OlivettiThin_ttf, OlivettiThin_ttf_size);
+
+
+
     GRRLIB_texImg *button = GRRLIB_LoadTexture(button_png);
+    GRRLIB_texImg *buttonF4 = GRRLIB_LoadTexture(button_png);
+    GRRLIB_texImg *buttonF3 = GRRLIB_LoadTexture(buttonF3_png);
+    GRRLIB_texImg *buttonF7 = GRRLIB_LoadTexture(buttonF7_png);
+    GRRLIB_texImg *buttonF9 = GRRLIB_LoadTexture(buttonF9_png);
+
+
+
     GRRLIB_texImg *buttonS = GRRLIB_LoadTexture(buttonS_png);
+    GRRLIB_texImg *buttonSF4 = GRRLIB_LoadTexture(buttonS_png);
+    GRRLIB_texImg *buttonSF3 = GRRLIB_LoadTexture(buttonSF3_png);
+    GRRLIB_texImg *buttonSF7 = GRRLIB_LoadTexture(buttonSF7_png);
+    GRRLIB_texImg *buttonSF9 = GRRLIB_LoadTexture(buttonSF9_png);
+
+
+
     GRRLIB_texImg *titleLogo = GRRLIB_LoadTexture(titleLogo_png);
+    GRRLIB_texImg *titleLogoF4 = GRRLIB_LoadTexture(titleLogo_png);
+    GRRLIB_texImg *titleLogoF3 = GRRLIB_LoadTexture(titleLogoF3_png);
+    GRRLIB_texImg *titleLogoF7 = GRRLIB_LoadTexture(titleLogoF7_png);
+    GRRLIB_texImg *titleLogoF9= GRRLIB_LoadTexture(titleLogoF9_png);
+
+
+
     GRRLIB_texImg *FalconIMG = GRRLIB_LoadTexture(Falcon_png);
     GRRLIB_texImg *Falcon4IMG = GRRLIB_LoadTexture(Falcon_png);
     GRRLIB_texImg *Falcon3IMG = GRRLIB_LoadTexture(Falcon3_png);
     GRRLIB_texImg *Falcon7IMG = GRRLIB_LoadTexture(Falcon7_png);
     GRRLIB_texImg *Falcon9IMG = GRRLIB_LoadTexture(Falcon9_png);
     GRRLIB_texImg *FalconSIMG = GRRLIB_LoadTexture(FalconS_png);
+
+
+
     GRRLIB_texImg *TypeAIMG = GRRLIB_LoadTexture(TypeA_png);
     GRRLIB_texImg *TypeBIMG = GRRLIB_LoadTexture(TypeB_png);
     GRRLIB_texImg *TypeCIMG = GRRLIB_LoadTexture(TypeC_png);
@@ -199,6 +257,7 @@ int main(int argc, char **argv)
     struct bulletCount bulletCount;
     struct storage enemyCount;
     struct sky space;
+    struct mainMenuBGColors menuColors;
     struct levelSystem MenuSystem = {1, 0, 0, 0};
     int enemyCounter = 0;
     int level = 0;
@@ -219,6 +278,10 @@ int main(int argc, char **argv)
     Falcon.speed = 5;
     Falcon.life = 10;
     Falcon.ability = time(NULL);
+    menuColors.R = 0x03;
+    menuColors.G = 0x09;
+    menuColors.B = 0xa8;
+    menuColors.A = 0xFF;
     int count = sizeof(bulletCount.box) / sizeof(bulletCount.box[0]);
     int starCounter = sizeof(space.starrySky) / sizeof(space.starrySky[0]);
     int sizeOfEnemies = sizeof(enemyCount.ennemybase) / sizeof(enemyCount.ennemybase[0]);
@@ -320,7 +383,7 @@ int main(int argc, char **argv)
             ir_t ir;
             WPAD_IR(0, &ir);
             u32 pressed = WPAD_ButtonsDown(0);
-            GRRLIB_SetBackgroundColour(0x03, 0x09, 0xa8, 0xFF);
+            GRRLIB_SetBackgroundColour(menuColors.R,menuColors.G,menuColors.B,menuColors.A);
 
             /*
             ?menu sections
@@ -351,22 +414,57 @@ int main(int argc, char **argv)
                     {
                     case 1:
                         FalconIMG = Falcon4IMG;
+                        button = buttonF4;
+                        buttonS = buttonSF4;
+                        titleLogo = titleLogoF4;
+                        menuColors.R = 0x03;
+                        menuColors.G = 0x09;
+                        menuColors.B = 0xa8;
+                        menuColors.A = 0xFF;
                         sprintf(skinName, "Falcon 4");
                         break;
                     case 2:
                         FalconIMG = Falcon3IMG;
+                        button = buttonF3;
+                        buttonS = buttonSF3;
+                        titleLogo = titleLogoF3;
+                        menuColors.R = 0xd4;
+                        menuColors.G = 0x9f;
+                        menuColors.B = 0x0d;
+                        menuColors.A = 0xFF;
                         sprintf(skinName, "Falcon 3");
                         break;
                     case 3:
                         FalconIMG = Falcon7IMG;
+                        button = buttonF7;
+                        buttonS = buttonSF7;
+                        titleLogo = titleLogoF7;
+                        menuColors.R = 0xa6;
+                        menuColors.G = 0x03;
+                        menuColors.B = 0x21;
+                        menuColors.A = 0xFF;
                         sprintf(skinName, "Falcon 7");
                         break;
                     case 4:
                         FalconIMG = Falcon9IMG;
+                        button = buttonF9;
+                        buttonS = buttonSF9;
+                        titleLogo = titleLogoF9;
+                        menuColors.R = 0x90;
+                        menuColors.G = 0x03;
+                        menuColors.B = 0xa6;
+                        menuColors.A = 0xFF;
                         sprintf(skinName, "Falcon 9");
                         break;
                     case 5:
                         FalconIMG = FalconSIMG;
+                        button = buttonF4;
+                        buttonS = buttonSF4;
+                        titleLogo = titleLogoF4;
+                        menuColors.R = 0x03;
+                        menuColors.G = 0x09;
+                        menuColors.B = 0xa8;
+                        menuColors.A = 0xFF;
                         sprintf(skinName, "Falcon S");
                         break;
                     }

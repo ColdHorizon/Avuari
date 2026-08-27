@@ -1361,7 +1361,7 @@ int main(int argc, char **argv)
                         enemyCount.itemsBox[i].active = 0;
                         switch(enemyCount.itemsBox[i].upgradeType){
                             case 'D':
-                                if (Falcon.power >= 6)
+                                if (Falcon.power >= 4)
                                 {
                                     score += 5;
                                 }
@@ -1496,24 +1496,16 @@ int main(int argc, char **argv)
             if (pressed & WPAD_BUTTON_2)
             {
                 int maxBullets = Falcon.power;
-                int angle[7];
+                int angle[5];
                 int region;
-                if(maxBullets ==2 || maxBullets ==4 || maxBullets == 6){
-                    region = maxBullets+1;
+                if(maxBullets !=0){
+                    region = maxBullets;
                     for (int i = 0; i < maxBullets + 1; i++)
                     {
                         angle[i] = region;
                         region -= 2;
                     }
 
-                }
-                else if( maxBullets ==1 || maxBullets ==3 || maxBullets == 5){
-                    region = maxBullets/2;
-                    for (int i = 0; i < maxBullets + 1; i++)
-                    {
-                        angle[i] = region;
-                        region -=4;
-                    }
                 }
                 else{
                     for (int i = 0; i < maxBullets + 1; i++)
@@ -1529,7 +1521,7 @@ int main(int argc, char **argv)
                     {
                         if (bulletCount.box[j].active == 0)
                         {
-                            if(Falcon.power ==6){
+                            if(Falcon.power ==4){
                                 struct bullet b = {Falcon.xposition + Falcon.xsize / 3  , (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10,0+angle[i], 1 + Falcon.power, 1, 'S',BulletUltimateIMG};
                                 bulletCount.box[j] = b;
                                 break;
@@ -1552,7 +1544,7 @@ int main(int argc, char **argv)
                 {
                     if (bulletCount.box[i].active == 0)
                     {
-                        if(Falcon.power ==6)
+                        if(Falcon.power ==4)
                         {
                             struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10,0, 0, 1, 'U',BulletUltimateIMG};
                             bulletCount.box[i] = ultimate;

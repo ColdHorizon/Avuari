@@ -10,26 +10,34 @@
 #include "expo_it.h"
 
 
-
+/*
+?Button skins
+*/
 #include "button_png.h"
 #include "buttonF3_png.h"
 #include "buttonF7_png.h"
 #include "buttonF9_png.h"
-
+/*
+?Button Small skins
+*/
 
 
 #include "buttonS_png.h"
 #include "buttonSF3_png.h"
 #include "buttonSF7_png.h"
 #include "buttonSF9_png.h"
-
+/*
+?Title Logo skins
+*/
 
 
 #include "titleLogo_png.h"
 #include "titleLogoF3_png.h"
 #include "titleLogoF7_png.h"
 #include "titleLogoF9_png.h"
-
+/*
+?Falcon skins
+*/
 
 
 #include "Falcon_png.h"
@@ -37,7 +45,7 @@
 #include "Falcon3_png.h"
 #include "Falcon7_png.h"
 #include "Falcon9_png.h"
-
+//
 
 #include "TypeA_png.h"
 #include "TypeB_png.h"
@@ -164,6 +172,7 @@ void enemyTurn();
 void enemyBullet();
 void powerUpTurn();
 void falconSkins();
+void exitTheGame();
 
 /*
 ?This is the main loop
@@ -171,6 +180,7 @@ void falconSkins();
 
 int main(int argc, char **argv)
 {
+
     /*
     ?Initilisation of the values
     */
@@ -189,7 +199,9 @@ int main(int argc, char **argv)
     WPAD_SetVRes(WPAD_CHAN_0, 640, 480);
 
     GRRLIB_ttfFont *font = GRRLIB_LoadTTF(OlivettiThin_ttf, OlivettiThin_ttf_size);
-
+    /*
+    ?Button skins
+    */
 
 
     GRRLIB_texImg *button = GRRLIB_LoadTexture(button_png);
@@ -197,7 +209,9 @@ int main(int argc, char **argv)
     GRRLIB_texImg *buttonF3 = GRRLIB_LoadTexture(buttonF3_png);
     GRRLIB_texImg *buttonF7 = GRRLIB_LoadTexture(buttonF7_png);
     GRRLIB_texImg *buttonF9 = GRRLIB_LoadTexture(buttonF9_png);
-
+    /*
+    ?Button Small skins
+    */
 
 
     GRRLIB_texImg *buttonS = GRRLIB_LoadTexture(buttonS_png);
@@ -205,7 +219,9 @@ int main(int argc, char **argv)
     GRRLIB_texImg *buttonSF3 = GRRLIB_LoadTexture(buttonSF3_png);
     GRRLIB_texImg *buttonSF7 = GRRLIB_LoadTexture(buttonSF7_png);
     GRRLIB_texImg *buttonSF9 = GRRLIB_LoadTexture(buttonSF9_png);
-
+    /*
+    ?Title Logo skins
+    */
 
 
     GRRLIB_texImg *titleLogo = GRRLIB_LoadTexture(titleLogo_png);
@@ -213,7 +229,9 @@ int main(int argc, char **argv)
     GRRLIB_texImg *titleLogoF3 = GRRLIB_LoadTexture(titleLogoF3_png);
     GRRLIB_texImg *titleLogoF7 = GRRLIB_LoadTexture(titleLogoF7_png);
     GRRLIB_texImg *titleLogoF9= GRRLIB_LoadTexture(titleLogoF9_png);
-
+    /*
+    ?Falcon skins
+    */
 
 
     GRRLIB_texImg *FalconIMG = GRRLIB_LoadTexture(Falcon_png);
@@ -222,7 +240,7 @@ int main(int argc, char **argv)
     GRRLIB_texImg *Falcon7IMG = GRRLIB_LoadTexture(Falcon7_png);
     GRRLIB_texImg *Falcon9IMG = GRRLIB_LoadTexture(Falcon9_png);
     GRRLIB_texImg *FalconSIMG = GRRLIB_LoadTexture(FalconS_png);
-
+    //
 
 
     GRRLIB_texImg *TypeAIMG = GRRLIB_LoadTexture(TypeA_png);
@@ -320,6 +338,50 @@ int main(int argc, char **argv)
     /*
     ?The SYS loop starts here
     */
+
+    void exitTheGame(){
+
+        GRRLIB_FreeTTF(font);
+        GRRLIB_FreeTexture(button);
+        GRRLIB_FreeTexture(buttonF4);
+        GRRLIB_FreeTexture(buttonF3);
+        GRRLIB_FreeTexture(buttonF7);
+        GRRLIB_FreeTexture(buttonF9);
+        GRRLIB_FreeTexture(buttonS);
+        GRRLIB_FreeTexture(buttonSF4);
+        GRRLIB_FreeTexture(buttonSF3);
+        GRRLIB_FreeTexture(buttonSF7);
+        GRRLIB_FreeTexture(buttonSF9);
+        GRRLIB_FreeTexture(titleLogo);
+        GRRLIB_FreeTexture(titleLogoF4);
+        GRRLIB_FreeTexture(titleLogoF3);
+        GRRLIB_FreeTexture(titleLogoF7);
+        GRRLIB_FreeTexture(titleLogoF9);
+        GRRLIB_FreeTexture(FalconIMG);
+        GRRLIB_FreeTexture(Falcon4IMG);
+        GRRLIB_FreeTexture(Falcon3IMG);
+        GRRLIB_FreeTexture(Falcon7IMG);
+        GRRLIB_FreeTexture(Falcon9IMG);
+        GRRLIB_FreeTexture(FalconSIMG);
+        GRRLIB_FreeTexture(TypeAIMG);
+        GRRLIB_FreeTexture(TypeBIMG);
+        GRRLIB_FreeTexture(TypeCIMG);
+        GRRLIB_FreeTexture(TypeDIMG);
+        GRRLIB_FreeTexture(TypeEIMG);
+        GRRLIB_FreeTexture(TypeE2IMG);
+        GRRLIB_FreeTexture(TypeFIMG);
+        GRRLIB_FreeTexture(TypeXIMG);
+        GRRLIB_FreeTexture(TypeZIMG);
+        GRRLIB_FreeTexture(WallIMG);
+        GRRLIB_FreeTexture(UpgradeIMG);
+        GRRLIB_FreeTexture(PointsIMG);
+        GRRLIB_FreeTexture(BulletIMG);
+        GRRLIB_FreeTexture(Bullet2IMG);
+        GRRLIB_FreeTexture(BulletUltimateIMG);
+        GRRLIB_FreeTexture(StarIMG);
+        GRRMOD_End();
+        GRRLIB_Exit();
+    }
 
     while (SYS_MainLoop())
     {
@@ -556,10 +618,9 @@ int main(int argc, char **argv)
 
             if (pressed & WPAD_BUTTON_HOME)
             {
-                GRRLIB_FreeTTF(font);
-                GRRMOD_End();
-                GRRLIB_Exit();
+                exitTheGame();
                 return 0;
+                
             }
             GRRLIB_Render();
         }
@@ -1730,10 +1791,9 @@ int main(int argc, char **argv)
 
             if (pressed & WPAD_BUTTON_HOME)
             {
-                GRRLIB_FreeTTF(font);
-                GRRMOD_End();
-                GRRLIB_Exit();
+                exitTheGame();
                 return 0;
+                
             }
             GRRLIB_Render();
         }
@@ -1765,10 +1825,9 @@ int main(int argc, char **argv)
 
             if (pressed & WPAD_BUTTON_HOME)
             {
-                GRRLIB_FreeTTF(font);
-                GRRMOD_End();
-                GRRLIB_Exit();
+                exitTheGame();
                 return 0;
+                
             }
         }
         /*
@@ -1798,10 +1857,9 @@ int main(int argc, char **argv)
 
             if (pressed & WPAD_BUTTON_HOME)
             {
-                GRRLIB_FreeTTF(font);
-                GRRMOD_End();
-                GRRLIB_Exit();
+                exitTheGame();
                 return 0;
+                
             }
         }
     }

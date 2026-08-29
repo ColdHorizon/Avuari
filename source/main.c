@@ -41,7 +41,7 @@
 #include "Falcon3_png.h"
 #include "Falcon7_png.h"
 #include "Falcon9_png.h"
-//
+
 
 #include "TypeA_png.h"
 #include "TypeB_png.h"
@@ -231,7 +231,7 @@ int main(int argc, char **argv)
     GRRLIB_texImg *Falcon7IMG = GRRLIB_LoadTexture(Falcon7_png);
     GRRLIB_texImg *Falcon9IMG = GRRLIB_LoadTexture(Falcon9_png);
     GRRLIB_texImg *FalconSIMG = GRRLIB_LoadTexture(FalconS_png);
-    //
+    
 
     GRRLIB_texImg *TypeAIMG = GRRLIB_LoadTexture(TypeA_png);
     GRRLIB_texImg *TypeBIMG = GRRLIB_LoadTexture(TypeB_png);

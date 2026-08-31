@@ -3,6 +3,8 @@
 #include <grrmod.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
 #include <time.h>
 #include <wiiuse/wpad.h>
 #include <ogc/lwp_watchdog.h>
@@ -149,6 +151,14 @@ struct buttoncollisions
     int xsize;
     int ysize;
 };
+struct UiComponents
+{
+    int xposition;
+    int yposition;
+    int xsize;
+    int ysize;
+    bool active;
+};
 struct star
 {
     int xposition;
@@ -166,6 +176,7 @@ void enemy();
 void enemyTurn();
 void enemyBullet();
 void powerUpTurn();
+void UiInformation();
 void falconSkins();
 void exitTheGame();
 
@@ -267,8 +278,10 @@ int main(int argc, char **argv)
     struct sky space;
     struct mainMenuBGColors menuColors;
     struct levelSystem MenuSystem = {1, 0, 0, 0};
+    struct UiComponents bossBar = {590,40,0,0,0};
+    struct UiComponents bossBarContour = {580,30,0,0,0};
     int enemyCounter = 0;
-    int level = 0;
+    int level = 49;
     int score = 0;
     int win = 0;
     int gameend = 0;
@@ -282,7 +295,7 @@ int main(int argc, char **argv)
     Falcon.yposition = 240;
     Falcon.xsize = 20;
     Falcon.ysize = 24;
-    Falcon.power = 0;
+    Falcon.power = 4;
     Falcon.speed = 5;
     Falcon.life = 10;
     Falcon.ability = time(NULL);
@@ -874,6 +887,8 @@ int main(int argc, char **argv)
                         struct ennemy typeX = {120, -150, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X', TypeXIMG, time(NULL)};
                         enemyCount.ennemybase[0] = typeX;
                         enemyCounter = 10;
+                        bossBar.active =1;
+                        bossBarContour.active =1;
                     }
                     else
                     {
@@ -1337,6 +1352,21 @@ int main(int argc, char **argv)
                     }
                 }
             }
+            void UiInformation()
+            {
+                if(bossBar.active ==1 && bossBarContour.active ==1){
+                    bossBar.xsize = 20;
+                    bossBar.ysize = 400;
+                    bossBarContour.xsize = 40;
+                    bossBarContour.ysize = 420;
+                    GRRLIB_Rectangle(bossBarContour.xposition,bossBarContour.yposition,bossBarContour.xsize,bossBarContour.ysize,0xA1A1A1FF,1);
+                    GRRLIB_Rectangle(bossBar.xposition,bossBar.yposition,bossBar.xsize,bossBar.ysize*(((float)enemyCount.ennemybase[0].health/4000)),0x00FF00FF,1);
+                    
+
+                }
+
+
+            }
 
             if (timeValues == 1)
             {
@@ -1538,6 +1568,11 @@ int main(int argc, char **argv)
             ?Power Up Turn
             */
             powerUpTurn();
+
+            /*
+            ?Modify Ui information
+            */
+            UiInformation();
 
             /*
             ?Win and lose conditions

@@ -278,10 +278,10 @@ int main(int argc, char **argv)
     struct sky space;
     struct mainMenuBGColors menuColors;
     struct levelSystem MenuSystem = {1, 0, 0, 0};
-    struct UiComponents bossBar = {590,40,0,0,0};
+    struct UiComponents bossBar = {590,440,0,0,0};
     struct UiComponents bossBarContour = {580,30,0,0,0};
     int enemyCounter = 0;
-    int level = 49;
+    int level = 50;
     int score = 0;
     int win = 0;
     int gameend = 0;
@@ -1356,7 +1356,7 @@ int main(int argc, char **argv)
             {
                 if(bossBar.active ==1 && bossBarContour.active ==1){
                     bossBar.xsize = 20;
-                    bossBar.ysize = 400;
+                    bossBar.ysize = -400;
                     bossBarContour.xsize = 40;
                     bossBarContour.ysize = 420;
                     GRRLIB_Rectangle(bossBarContour.xposition,bossBarContour.yposition,bossBarContour.xsize,bossBarContour.ysize,0xA1A1A1FF,1);

@@ -280,8 +280,9 @@ int main(int argc, char **argv)
     struct levelSystem MenuSystem = {1, 0, 0, 0};
     struct UiComponents bossBar = {590,440,0,0,0};
     struct UiComponents bossBarContour = {580,30,0,0,0};
+    int bossBarAnimation =0;
     int enemyCounter = 0;
-    int level = 50;
+    int level = 49;
     int score = 0;
     int win = 0;
     int gameend = 0;
@@ -409,6 +410,8 @@ int main(int argc, char **argv)
             Falcon.speed = 5;
             Falcon.life = 10;
             timeValues = 1;
+            bossBar.active =0;
+            bossBarAnimation =0;
             for (int i = 0; i < count; i++)
             {
                 bulletCount.box[i].active = 0;
@@ -889,6 +892,7 @@ int main(int argc, char **argv)
                         enemyCounter = 10;
                         bossBar.active =1;
                         bossBarContour.active =1;
+                        bossBarAnimation =1;
                     }
                     else
                     {
@@ -1356,11 +1360,22 @@ int main(int argc, char **argv)
             {
                 if(bossBar.active ==1 && bossBarContour.active ==1){
                     bossBar.xsize = 20;
-                    bossBar.ysize = -400;
+                    if(bossBarAnimation ==1 && bossBar.ysize > -400){
+                        bossBar.ysize -= 5;
+                    }
+                    else if(bossBar.ysize < -400){
+                        bossBarAnimation =0;
+                    }
                     bossBarContour.xsize = 40;
                     bossBarContour.ysize = 420;
                     GRRLIB_Rectangle(bossBarContour.xposition,bossBarContour.yposition,bossBarContour.xsize,bossBarContour.ysize,0xA1A1A1FF,1);
-                    GRRLIB_Rectangle(bossBar.xposition,bossBar.yposition,bossBar.xsize,bossBar.ysize*(((float)enemyCount.ennemybase[0].health/4000)),0x00FF00FF,1);
+                    if(((float)enemyCount.ennemybase[0].health/4000) <= 0.5f){
+                        GRRLIB_Rectangle(bossBar.xposition,bossBar.yposition,bossBar.xsize,bossBar.ysize*(((float)enemyCount.ennemybase[0].health/4000)),0xFF0000FF,1);
+                    }
+                    else{
+                        GRRLIB_Rectangle(bossBar.xposition,bossBar.yposition,bossBar.xsize,bossBar.ysize*(((float)enemyCount.ennemybase[0].health/4000)),0x00FF00FF,1);
+                    }
+                    
                     
 
                 }

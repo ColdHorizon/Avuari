@@ -44,7 +44,6 @@
 #include "Falcon7_png.h"
 #include "Falcon9_png.h"
 
-
 #include "TypeA_png.h"
 #include "TypeB_png.h"
 #include "TypeC_png.h"
@@ -179,6 +178,7 @@ void powerUpTurn();
 void UiInformation();
 void falconSkins();
 void exitTheGame();
+void objectDrop(int enemyNumber);
 
 /*
 ?This is the main loop
@@ -242,7 +242,6 @@ int main(int argc, char **argv)
     GRRLIB_texImg *Falcon7IMG = GRRLIB_LoadTexture(Falcon7_png);
     GRRLIB_texImg *Falcon9IMG = GRRLIB_LoadTexture(Falcon9_png);
     GRRLIB_texImg *FalconSIMG = GRRLIB_LoadTexture(FalconS_png);
-    
 
     GRRLIB_texImg *TypeAIMG = GRRLIB_LoadTexture(TypeA_png);
     GRRLIB_texImg *TypeBIMG = GRRLIB_LoadTexture(TypeB_png);
@@ -278,11 +277,11 @@ int main(int argc, char **argv)
     struct sky space;
     struct mainMenuBGColors menuColors;
     struct levelSystem MenuSystem = {1, 0, 0, 0};
-    struct UiComponents bossBar = {590,440,0,0,0};
-    struct UiComponents bossBarContour = {580,30,0,0,0};
-    int bossBarAnimation =0;
+    struct UiComponents bossBar = {590, 440, 0, 0, 0};
+    struct UiComponents bossBarContour = {580, 30, 0, 0, 0};
+    int bossBarAnimation = 0;
     int enemyCounter = 0;
-    int level = 49;
+    int level = 0;
     int score = 0;
     int win = 0;
     int gameend = 0;
@@ -410,8 +409,8 @@ int main(int argc, char **argv)
             Falcon.speed = 5;
             Falcon.life = 10;
             timeValues = 1;
-            bossBar.active =0;
-            bossBarAnimation =0;
+            bossBar.active = 0;
+            bossBarAnimation = 0;
             for (int i = 0; i < count; i++)
             {
                 bulletCount.box[i].active = 0;
@@ -656,6 +655,52 @@ int main(int argc, char **argv)
             }
             void bullet()
             {
+                void objectDrop(int enemyNumber)
+                {
+                    int object = 0;
+                    enemyCount.ennemybase[enemyNumber].active = 0;
+                    object = rand() % (6 + 1);
+                    for (int u = 0; u < sizeOfItems; u++)
+                    {
+                        if (enemyCount.itemsBox[u].active == 0)
+                        {
+                            switch (object)
+                            {
+                            case 6:
+                                enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
+                                enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
+                                enemyCount.itemsBox[u].xsize = 12;
+                                enemyCount.itemsBox[u].ysize = 12;
+                                enemyCount.itemsBox[u].speed = -5;
+                                enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                enemyCount.itemsBox[u].magnetised = 0;
+                                enemyCount.itemsBox[u].active = 1;
+                                enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                enemyCount.itemsBox[u].upgradeType = 'D';
+                                enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
+                                break;
+
+                            case 5:
+                                enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
+                                enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
+                                enemyCount.itemsBox[u].xsize = 12;
+                                enemyCount.itemsBox[u].ysize = 12;
+                                enemyCount.itemsBox[u].speed = -5;
+                                enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                enemyCount.itemsBox[u].magnetised = 0;
+                                enemyCount.itemsBox[u].active = 1;
+                                enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                enemyCount.itemsBox[u].upgradeType = 'P';
+                                enemyCount.itemsBox[u].upgradeName = PointsIMG;
+                                break;
+
+                            default:
+                                break;
+                            }
+                            break;
+                        }
+                    }
+                }
                 for (int i = 0; i < count; i++)
                 {
                     if (bulletCount.box[i].active == 1)
@@ -685,50 +730,9 @@ int main(int argc, char **argv)
                                             }
                                             if (enemyCount.ennemybase[j].health <= 0)
                                             {
-                                                int object = 0;
-                                                enemyCount.ennemybase[j].active = 0;
-                                                object = rand() % (6 + 1);
 
-                                                for (int u = 0; u < sizeOfItems; u++)
-                                                {
-                                                    if (enemyCount.itemsBox[u].active == 0)
-                                                    {
-                                                        switch (object)
-                                                        {
-                                                        case 6:
-                                                            enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
-                                                            enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
-                                                            enemyCount.itemsBox[u].xsize = 12;
-                                                            enemyCount.itemsBox[u].ysize = 12;
-                                                            enemyCount.itemsBox[u].speed = -5;
-                                                            enemyCount.itemsBox[u].deacceleration = 0.25f;
-                                                            enemyCount.itemsBox[u].magnetised = 0;
-                                                            enemyCount.itemsBox[u].active = 1;
-                                                            enemyCount.itemsBox[u].color = 0xFFFF00FF;
-                                                            enemyCount.itemsBox[u].upgradeType = 'D';
-                                                            enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
-                                                            break;
-
-                                                        case 5:
-                                                            enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
-                                                            enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
-                                                            enemyCount.itemsBox[u].xsize = 12;
-                                                            enemyCount.itemsBox[u].ysize = 12;
-                                                            enemyCount.itemsBox[u].speed = -5;
-                                                            enemyCount.itemsBox[u].deacceleration = 0.25f;
-                                                            enemyCount.itemsBox[u].magnetised = 0;
-                                                            enemyCount.itemsBox[u].active = 1;
-                                                            enemyCount.itemsBox[u].color = 0xFFFF00FF;
-                                                            enemyCount.itemsBox[u].upgradeType = 'P';
-                                                            enemyCount.itemsBox[u].upgradeName = PointsIMG;
-                                                            break;
-
-                                                        default:
-                                                            break;
-                                                        }
-                                                        break;
-                                                    }
-                                                }
+                                                int enemyNumber = j;
+                                                objectDrop(enemyNumber);
                                             }
                                             break;
                                         }
@@ -750,49 +754,9 @@ int main(int argc, char **argv)
                                             }
                                             if (enemyCount.ennemybase[j].health <= 0)
                                             {
-                                                int object = 0;
-                                                enemyCount.ennemybase[j].active = 0;
-                                                object = rand() % (6 + 1);
-                                                for (int u = 0; u < sizeOfItems; u++)
-                                                {
-                                                    if (enemyCount.itemsBox[u].active == 0)
-                                                    {
-                                                        switch (object)
-                                                        {
-                                                        case 6:
-                                                            enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
-                                                            enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
-                                                            enemyCount.itemsBox[u].xsize = 12;
-                                                            enemyCount.itemsBox[u].ysize = 12;
-                                                            enemyCount.itemsBox[u].speed = -5;
-                                                            enemyCount.itemsBox[u].deacceleration = 0.25f;
-                                                            enemyCount.itemsBox[u].magnetised = 0;
-                                                            enemyCount.itemsBox[u].active = 1;
-                                                            enemyCount.itemsBox[u].color = 0xFFFF00FF;
-                                                            enemyCount.itemsBox[u].upgradeType = 'D';
-                                                            enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
-                                                            break;
 
-                                                        case 5:
-                                                            enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
-                                                            enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
-                                                            enemyCount.itemsBox[u].xsize = 12;
-                                                            enemyCount.itemsBox[u].ysize = 12;
-                                                            enemyCount.itemsBox[u].speed = -5;
-                                                            enemyCount.itemsBox[u].deacceleration = 0.25f;
-                                                            enemyCount.itemsBox[u].magnetised = 0;
-                                                            enemyCount.itemsBox[u].active = 1;
-                                                            enemyCount.itemsBox[u].color = 0xFFFF00FF;
-                                                            enemyCount.itemsBox[u].upgradeType = 'P';
-                                                            enemyCount.itemsBox[u].upgradeName = PointsIMG;
-                                                            break;
-
-                                                        default:
-                                                            break;
-                                                        }
-                                                        break;
-                                                    }
-                                                }
+                                                int enemyNumber = j;
+                                                objectDrop(enemyNumber);
                                             }
                                             break;
                                         }
@@ -817,49 +781,8 @@ int main(int argc, char **argv)
                                         bulletCount.box[i].active = 0;
                                         if (enemyCount.ennemybase[j].health <= 0)
                                         {
-                                            int object = 0;
-                                            enemyCount.ennemybase[j].active = 0;
-                                            object = rand() % (6 + 1);
-                                            for (int u = 0; u < sizeOfItems; u++)
-                                            {
-                                                if (enemyCount.itemsBox[u].active == 0)
-                                                {
-                                                    switch (object)
-                                                    {
-                                                    case 6:
-                                                        enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
-                                                        enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
-                                                        enemyCount.itemsBox[u].xsize = 12;
-                                                        enemyCount.itemsBox[u].ysize = 12;
-                                                        enemyCount.itemsBox[u].speed = -5;
-                                                        enemyCount.itemsBox[u].deacceleration = 0.25f;
-                                                        enemyCount.itemsBox[u].magnetised = 0;
-                                                        enemyCount.itemsBox[u].active = 1;
-                                                        enemyCount.itemsBox[u].color = 0xFFFF00FF;
-                                                        enemyCount.itemsBox[u].upgradeType = 'D';
-                                                        enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
-                                                        break;
-
-                                                    case 5:
-                                                        enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[j].xposition + enemyCount.ennemybase[j].xsize / 2;
-                                                        enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[j].yposition + enemyCount.ennemybase[j].ysize / 2;
-                                                        enemyCount.itemsBox[u].xsize = 12;
-                                                        enemyCount.itemsBox[u].ysize = 12;
-                                                        enemyCount.itemsBox[u].speed = -5;
-                                                        enemyCount.itemsBox[u].deacceleration = 0.25f;
-                                                        enemyCount.itemsBox[u].magnetised = 0;
-                                                        enemyCount.itemsBox[u].active = 1;
-                                                        enemyCount.itemsBox[u].color = 0xFFFF00FF;
-                                                        enemyCount.itemsBox[u].upgradeType = 'P';
-                                                        enemyCount.itemsBox[u].upgradeName = PointsIMG;
-                                                        break;
-
-                                                    default:
-                                                        break;
-                                                    }
-                                                    break;
-                                                }
-                                            }
+                                            int enemyNumber = j;
+                                            objectDrop(enemyNumber);
                                         }
 
                                         break;
@@ -890,9 +813,9 @@ int main(int argc, char **argv)
                         struct ennemy typeX = {120, -150, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X', TypeXIMG, time(NULL)};
                         enemyCount.ennemybase[0] = typeX;
                         enemyCounter = 10;
-                        bossBar.active =1;
-                        bossBarContour.active =1;
-                        bossBarAnimation =1;
+                        bossBar.active = 1;
+                        bossBarContour.active = 1;
+                        bossBarAnimation = 1;
                     }
                     else
                     {
@@ -1356,31 +1279,32 @@ int main(int argc, char **argv)
                     }
                 }
             }
+
             void UiInformation()
             {
-                if(bossBar.active ==1 && bossBarContour.active ==1){
+                if (bossBar.active == 1 && bossBarContour.active == 1)
+                {
                     bossBar.xsize = 20;
-                    if(bossBarAnimation ==1 && bossBar.ysize > -400){
+                    if (bossBarAnimation == 1 && bossBar.ysize > -400)
+                    {
                         bossBar.ysize -= 5;
                     }
-                    else if(bossBar.ysize < -400){
-                        bossBarAnimation =0;
+                    else if (bossBar.ysize < -400)
+                    {
+                        bossBarAnimation = 0;
                     }
                     bossBarContour.xsize = 40;
                     bossBarContour.ysize = 420;
-                    GRRLIB_Rectangle(bossBarContour.xposition,bossBarContour.yposition,bossBarContour.xsize,bossBarContour.ysize,0xA1A1A1FF,1);
-                    if(((float)enemyCount.ennemybase[0].health/4000) <= 0.5f){
-                        GRRLIB_Rectangle(bossBar.xposition,bossBar.yposition,bossBar.xsize,bossBar.ysize*(((float)enemyCount.ennemybase[0].health/4000)),0xFF0000FF,1);
+                    GRRLIB_Rectangle(bossBarContour.xposition, bossBarContour.yposition, bossBarContour.xsize, bossBarContour.ysize, 0xA1A1A1FF, 1);
+                    if (((float)enemyCount.ennemybase[0].health / 4000) <= 0.5f)
+                    {
+                        GRRLIB_Rectangle(bossBar.xposition, bossBar.yposition, bossBar.xsize, bossBar.ysize * (((float)enemyCount.ennemybase[0].health / 4000)), 0xFF0000FF, 1);
                     }
-                    else{
-                        GRRLIB_Rectangle(bossBar.xposition,bossBar.yposition,bossBar.xsize,bossBar.ysize*(((float)enemyCount.ennemybase[0].health/4000)),0x00FF00FF,1);
+                    else
+                    {
+                        GRRLIB_Rectangle(bossBar.xposition, bossBar.yposition, bossBar.xsize, bossBar.ysize * (((float)enemyCount.ennemybase[0].health / 4000)), 0x00FF00FF, 1);
                     }
-                    
-                    
-
                 }
-
-
             }
 
             if (timeValues == 1)

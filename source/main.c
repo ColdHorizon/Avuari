@@ -55,8 +55,13 @@
 #include "TypeZ_png.h"
 #include "Wall_png.h"
 #include "Upgrade_png.h"
+#include "UpgradeR_png.h"
+#include "UpgradeL_png.h"
+#include "UpgradeS_png.h"
 #include "Points_png.h"
 #include "Bullet_png.h"
+#include "BulletR_png.h"
+#include "BulletL_png.h"
 #include "Bullet2_png.h"
 #include "BulletUltimate_png.h"
 #include "Star_png.h"
@@ -73,6 +78,7 @@ struct player
     int power;
     int speed;
     int life;
+    int gunMode;
     time_t ability;
 };
 struct bullet
@@ -254,8 +260,13 @@ int main(int argc, char **argv)
     GRRLIB_texImg *TypeZIMG = GRRLIB_LoadTexture(TypeZ_png);
     GRRLIB_texImg *WallIMG = GRRLIB_LoadTexture(Wall_png);
     GRRLIB_texImg *UpgradeIMG = GRRLIB_LoadTexture(Upgrade_png);
+    GRRLIB_texImg *UpgradeRIMG = GRRLIB_LoadTexture(UpgradeR_png);
+    GRRLIB_texImg *UpgradeLIMG = GRRLIB_LoadTexture(UpgradeL_png);
+    GRRLIB_texImg *UpgradeSIMG = GRRLIB_LoadTexture(UpgradeS_png);
     GRRLIB_texImg *PointsIMG = GRRLIB_LoadTexture(Points_png);
     GRRLIB_texImg *BulletIMG = GRRLIB_LoadTexture(Bullet_png);
+    GRRLIB_texImg *BulletRIMG = GRRLIB_LoadTexture(BulletR_png);
+    GRRLIB_texImg *BulletLIMG = GRRLIB_LoadTexture(BulletL_png);
     GRRLIB_texImg *Bullet2IMG = GRRLIB_LoadTexture(Bullet2_png);
     GRRLIB_texImg *BulletUltimateIMG = GRRLIB_LoadTexture(BulletUltimate_png);
     GRRLIB_texImg *StarIMG = GRRLIB_LoadTexture(Star_png);
@@ -295,9 +306,10 @@ int main(int argc, char **argv)
     Falcon.yposition = 240;
     Falcon.xsize = 20;
     Falcon.ysize = 24;
-    Falcon.power = 4;
+    Falcon.power = 0;
     Falcon.speed = 5;
     Falcon.life = 10;
+    Falcon.gunMode = 1;
     Falcon.ability = time(NULL);
     menuColors.R = 0x03;
     menuColors.G = 0x09;
@@ -408,6 +420,7 @@ int main(int argc, char **argv)
             Falcon.power = 0;
             Falcon.speed = 5;
             Falcon.life = 10;
+            Falcon.gunMode = 1;
             timeValues = 1;
             bossBar.active = 0;
             bossBarAnimation = 0;
@@ -659,28 +672,12 @@ int main(int argc, char **argv)
                 {
                     int object = 0;
                     enemyCount.ennemybase[enemyNumber].active = 0;
-                    object = rand() % (6 + 1);
+                    object = rand() % (15 + 1);
                     for (int u = 0; u < sizeOfItems; u++)
                     {
                         if (enemyCount.itemsBox[u].active == 0)
                         {
-                            switch (object)
-                            {
-                            case 6:
-                                enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
-                                enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
-                                enemyCount.itemsBox[u].xsize = 12;
-                                enemyCount.itemsBox[u].ysize = 12;
-                                enemyCount.itemsBox[u].speed = -5;
-                                enemyCount.itemsBox[u].deacceleration = 0.25f;
-                                enemyCount.itemsBox[u].magnetised = 0;
-                                enemyCount.itemsBox[u].active = 1;
-                                enemyCount.itemsBox[u].color = 0xFFFF00FF;
-                                enemyCount.itemsBox[u].upgradeType = 'D';
-                                enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
-                                break;
-
-                            case 5:
+                            if(object <= 8){
                                 enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
                                 enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
                                 enemyCount.itemsBox[u].xsize = 12;
@@ -692,13 +689,71 @@ int main(int argc, char **argv)
                                 enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                 enemyCount.itemsBox[u].upgradeType = 'P';
                                 enemyCount.itemsBox[u].upgradeName = PointsIMG;
-                                break;
-
-                            default:
-                                break;
                             }
-                            break;
+
+                            else if(object > 8 && object <= 12){
+                                enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
+                                enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
+                                enemyCount.itemsBox[u].xsize = 12;
+                                enemyCount.itemsBox[u].ysize = 12;
+                                enemyCount.itemsBox[u].speed = -5;
+                                enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                enemyCount.itemsBox[u].magnetised = 0;
+                                enemyCount.itemsBox[u].active = 1;
+                                enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                enemyCount.itemsBox[u].upgradeType = 'D';
+                                enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
+                            }
+                            else if(object ==14 || object == 15){
+                                int weapon = 0;
+                                weapon = rand() % (3 + 1);
+                                if(weapon ==1){
+                                enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
+                                enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
+                                enemyCount.itemsBox[u].xsize = 12;
+                                enemyCount.itemsBox[u].ysize = 12;
+                                enemyCount.itemsBox[u].speed = -5;
+                                enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                enemyCount.itemsBox[u].magnetised = 0;
+                                enemyCount.itemsBox[u].active = 1;
+                                enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                enemyCount.itemsBox[u].upgradeType = 'S';
+                                enemyCount.itemsBox[u].upgradeName = UpgradeSIMG; 
+                                }
+                                else if(weapon ==2){
+                                enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
+                                enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
+                                enemyCount.itemsBox[u].xsize = 12;
+                                enemyCount.itemsBox[u].ysize = 12;
+                                enemyCount.itemsBox[u].speed = -5;
+                                enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                enemyCount.itemsBox[u].magnetised = 0;
+                                enemyCount.itemsBox[u].active = 1;
+                                enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                enemyCount.itemsBox[u].upgradeType = 'R';
+                                enemyCount.itemsBox[u].upgradeName = UpgradeRIMG;
+                                }
+                                else{
+                                enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
+                                enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
+                                enemyCount.itemsBox[u].xsize = 12;
+                                enemyCount.itemsBox[u].ysize = 12;
+                                enemyCount.itemsBox[u].speed = -5;
+                                enemyCount.itemsBox[u].deacceleration = 0.25f;
+                                enemyCount.itemsBox[u].magnetised = 0;
+                                enemyCount.itemsBox[u].active = 1;
+                                enemyCount.itemsBox[u].color = 0xFFFF00FF;
+                                enemyCount.itemsBox[u].upgradeType = 'L';
+                                enemyCount.itemsBox[u].upgradeName = UpgradeLIMG;
+                                }
+
+                            }
+
+                            
+                            
+                            
                         }
+                        break;
                     }
                 }
                 for (int i = 0; i < count; i++)
@@ -1243,6 +1298,15 @@ int main(int argc, char **argv)
                             case 'P':
                                 score += 10;
                                 break;
+                            case 'S':
+
+                            break;
+                            case 'R':
+
+                            break;
+                            case 'L':
+                                
+                            break;
                             }
                         }
                         // only works when on a side ( not like top right)
@@ -1393,47 +1457,52 @@ int main(int argc, char **argv)
 
             if (pressed & WPAD_BUTTON_2)
             {
-                int maxBullets = Falcon.power;
-                int angle[5];
-                int region;
-                if (maxBullets != 0)
-                {
-                    region = maxBullets;
-                    for (int i = 0; i < maxBullets + 1; i++)
-                    {
-                        angle[i] = region;
-                        region -= 2;
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < maxBullets + 1; i++)
-                    {
-                        angle[i] = 0;
-                    }
-                }
+                switch(Falcon.gunMode){
 
-                for (int i = 0; i < maxBullets + 1; i++)
-                {
-
-                    for (int j = 0; j < count; j++)
+                    case 1:
+                    int maxBullets = Falcon.power;
+                    int angle[5];
+                    int region;
+                    if (maxBullets != 0)
                     {
-                        if (bulletCount.box[j].active == 0)
+                        region = maxBullets;
+                        for (int i = 0; i < maxBullets + 1; i++)
                         {
-                            if (Falcon.power == 4)
+                            angle[i] = region;
+                            region -= 2;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < maxBullets + 1; i++)
+                        {
+                            angle[i] = 0;
+                        }
+                    }
+
+                    for (int i = 0; i < maxBullets + 1; i++)
+                    {
+
+                        for (int j = 0; j < count; j++)
+                        {
+                            if (bulletCount.box[j].active == 0)
                             {
-                                struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, 0 + angle[i], 1 + Falcon.power, 1, 'S', BulletUltimateIMG};
-                                bulletCount.box[j] = b;
-                                break;
-                            }
-                            else
-                            {
-                                struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, 0 + angle[i], 1 + Falcon.power, 1, 'S', BulletIMG};
-                                bulletCount.box[j] = b;
-                                break;
+                                if (Falcon.power == 4)
+                                {
+                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, 0 + angle[i], 1 + Falcon.power, 1, 'S', BulletUltimateIMG};
+                                    bulletCount.box[j] = b;
+                                    break;
+                                }
+                                else
+                                {
+                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, 0 + angle[i], 1 + Falcon.power, 1, 'S', BulletIMG};
+                                    bulletCount.box[j] = b;
+                                    break;
+                                }
                             }
                         }
                     }
+                    break;
                 }
             }
 

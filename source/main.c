@@ -89,7 +89,7 @@ struct bullet
     int bysize;
     int speed;
     int speedX;
-    int dmg;
+    float dmg;
     int active;
     char type;
     GRRLIB_texImg *bulletName;
@@ -100,7 +100,7 @@ struct ennemy
     int yposition;
     int xsize;
     int ysize;
-    int health;
+    float health;
     int speed;
     int speedY;
     int active;
@@ -309,7 +309,7 @@ int main(int argc, char **argv)
     Falcon.power = 0;
     Falcon.speed = 5;
     Falcon.life = 10;
-    Falcon.gunMode = 1;
+    Falcon.gunMode = 2;
     Falcon.ability = time(NULL);
     menuColors.R = 0x03;
     menuColors.G = 0x09;
@@ -760,9 +760,11 @@ int main(int argc, char **argv)
                 {
                     if (bulletCount.box[i].active == 1)
                     {
+                        switch(bulletCount.box[i].type){
 
-                        if (bulletCount.box[i].type == 'U')
-                        {
+                        
+
+                        case('U'):
                             GRRLIB_DrawImg(bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bulletName, 0, 4, 4, 0xFFFFFFFF);
                             for (int j = 0; j < level; j++)
                             {
@@ -818,9 +820,10 @@ int main(int argc, char **argv)
                                     }
                                 }
                             }
-                        }
-                        else
-                        {
+                        
+                        break;
+
+                        default:
 
                             GRRLIB_DrawImg(bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bulletName, 0, 1, 1, 0xFFFFFFFF);
                             for (int j = 0; j < level; j++)
@@ -833,7 +836,9 @@ int main(int argc, char **argv)
                                     {
 
                                         enemyCount.ennemybase[j].health -= bulletCount.box[i].dmg;
-                                        bulletCount.box[i].active = 0;
+                                        if(bulletCount.box[i].type != 'R'){
+                                            bulletCount.box[i].active = 0;
+                                        }
                                         if (enemyCount.ennemybase[j].health <= 0)
                                         {
                                             int enemyNumber = j;
@@ -844,7 +849,10 @@ int main(int argc, char **argv)
                                     }
                                 }
                             }
+                            break;
                         }
+                        
+
                         bulletCount.box[i].yposition -= bulletCount.box[i].speed;
                         bulletCount.box[i].xposition += bulletCount.box[i].speedX;
                         if (bulletCount.box[i].yposition <= 0 || bulletCount.box[i].xposition <= 80 || bulletCount.box[i].xposition >= 560)
@@ -1299,13 +1307,13 @@ int main(int argc, char **argv)
                                 score += 10;
                                 break;
                             case 'S':
-
+                                Falcon.gunMode =1;
                             break;
                             case 'R':
-
+                                Falcon.gunMode =2;
                             break;
                             case 'L':
-                                
+                                Falcon.gunMode =3;
                             break;
                             }
                         }
@@ -1457,12 +1465,12 @@ int main(int argc, char **argv)
 
             if (pressed & WPAD_BUTTON_2)
             {
+                int angle[5];
+                int region;
                 switch(Falcon.gunMode){
 
                     case 1:
                     int maxBullets = Falcon.power;
-                    int angle[5];
-                    int region;
                     if (maxBullets != 0)
                     {
                         region = maxBullets;
@@ -1489,19 +1497,50 @@ int main(int argc, char **argv)
                             {
                                 if (Falcon.power == 4)
                                 {
-                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, 0 + angle[i], 1 + Falcon.power, 1, 'S', BulletUltimateIMG};
+                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, angle[i], 1 + Falcon.power, 1, 'S', BulletUltimateIMG};
                                     bulletCount.box[j] = b;
                                     break;
                                 }
                                 else
                                 {
-                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, 0 + angle[i], 1 + Falcon.power, 1, 'S', BulletIMG};
+                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, angle[i], 1 + Falcon.power, 1, 'S', BulletIMG};
                                     bulletCount.box[j] = b;
                                     break;
                                 }
                             }
                         }
                     }
+                    break;
+
+                    case 2: 
+                            region = 2;
+                            for (int i = 0; i < 3 ; i++)
+                            {
+                                angle[i] = region;
+                                region -= 2;
+                            }
+                            for (int i = 0; i < 3 ; i++)
+                            {
+                                for (int j = 0; j < count; j++)
+                                {
+                                    if (bulletCount.box[j].active == 0)
+                                    {
+                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.25 + (Falcon.power*0.25), 1, 'R', BulletRIMG};
+                                        bulletCount.box[j] = r;
+                                        break;
+
+                                    }
+                                }
+                            }
+                        
+
+
+                    break;
+
+
+                    case 3:
+
+
                     break;
                 }
             }

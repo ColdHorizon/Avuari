@@ -293,7 +293,7 @@ int main(int argc, char **argv)
     struct UiComponents bossBarContour = {580, 30, 0, 0, 0};
     int bossBarAnimation = 0;
     int enemyCounter = 0;
-    int level = 0;
+    int level = 50;
     int score = 0;
     int win = 0;
     int gameend = 0;
@@ -307,7 +307,7 @@ int main(int argc, char **argv)
     Falcon.yposition = 240;
     Falcon.xsize = 20;
     Falcon.ysize = 24;
-    Falcon.power = 0;
+    Falcon.power = 4;
     Falcon.speed = 5;
     Falcon.life = 10;
     Falcon.gunMode = 1;
@@ -672,13 +672,14 @@ int main(int argc, char **argv)
                 void objectDrop(int enemyNumber)
                 {
                     int object = 0;
+                    enemyCount.ennemybase[enemyNumber].health = 0;
                     enemyCount.ennemybase[enemyNumber].active = 0;
-                    object = rand() % (15 + 1);
+                    object = rand() % (20 + 1);
                     for (int u = 0; u < sizeOfItems; u++)
                     {
                         if (enemyCount.itemsBox[u].active == 0)
                         {
-                            if(object <= 8){
+                            if(object <= 3){
                                 enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
                                 enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
                                 enemyCount.itemsBox[u].xsize = 12;
@@ -690,9 +691,10 @@ int main(int argc, char **argv)
                                 enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                 enemyCount.itemsBox[u].upgradeType = 'P';
                                 enemyCount.itemsBox[u].upgradeName = PointsIMG;
+                                break;
                             }
 
-                            else if(object > 8 && object <= 12){
+                            else if(object > 3 && object <= 8){
                                 enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
                                 enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
                                 enemyCount.itemsBox[u].xsize = 12;
@@ -704,8 +706,9 @@ int main(int argc, char **argv)
                                 enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                 enemyCount.itemsBox[u].upgradeType = 'D';
                                 enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
+                                break;
                             }
-                            else if(object ==14 || object == 15){
+                            else if(object ==9 || object == 10){
                                 int weapon = 0;
                                 weapon = rand() % (3 + 1);
                                 if(weapon ==1){
@@ -719,7 +722,8 @@ int main(int argc, char **argv)
                                 enemyCount.itemsBox[u].active = 1;
                                 enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                 enemyCount.itemsBox[u].upgradeType = 'S';
-                                enemyCount.itemsBox[u].upgradeName = UpgradeSIMG; 
+                                enemyCount.itemsBox[u].upgradeName = UpgradeSIMG;
+                                break;
                                 }
                                 else if(weapon ==2){
                                 enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
@@ -733,6 +737,7 @@ int main(int argc, char **argv)
                                 enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                 enemyCount.itemsBox[u].upgradeType = 'R';
                                 enemyCount.itemsBox[u].upgradeName = UpgradeRIMG;
+                                break;
                                 }
                                 else{
                                 enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
@@ -746,6 +751,7 @@ int main(int argc, char **argv)
                                 enemyCount.itemsBox[u].color = 0xFFFF00FF;
                                 enemyCount.itemsBox[u].upgradeType = 'L';
                                 enemyCount.itemsBox[u].upgradeName = UpgradeLIMG;
+                                break;
                                 }
 
                             }
@@ -754,7 +760,7 @@ int main(int argc, char **argv)
                             
                             
                         }
-                        break;
+                        
                     }
                 }
                 for (int i = 0; i < count; i++)
@@ -798,16 +804,16 @@ int main(int argc, char **argv)
 
                                     if(colided ==1){
                                         enemyCount.ennemybase[j].health -= bulletCount.box[i].dmg;
-                                            if(bulletCount.box[i].type != 'R'){
+                                            if(bulletCount.box[i].type == 'S' || (bulletCount.box[i].type == 'U' && enemyCount.ennemybase[j].type == 'X')){
                                                 bulletCount.box[i].active = 0;
                                             }
-                                            if (enemyCount.ennemybase[j].health <= 0)
+                                            if (enemyCount.ennemybase[j].health <= 0 || (bulletCount.box[i].type == 'U' && enemyCount.ennemybase[j].type != 'X'))
                                             {
                                                 int enemyNumber = j;
                                                 objectDrop(enemyNumber);
                                             }
                                             break;
-                                        }
+                                    }
                                         
                                 
 
@@ -1522,14 +1528,14 @@ int main(int argc, char **argv)
                     {
                         if (Falcon.power == 4)
                         {
-                            struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 0, 1, 'U', BulletUltimateIMG,4};
+                            struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 500, 1, 'U', BulletUltimateIMG,4};
                             bulletCount.box[i] = ultimate;
                             Falcon.ability = time(NULL);
                             break;
                         }
                         else
                         {
-                            struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 0, 1, 'U', BulletIMG,4};
+                            struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 500, 1, 'U', BulletIMG,4};
                             bulletCount.box[i] = ultimate;
                             Falcon.ability = time(NULL);
                             break;

@@ -93,6 +93,7 @@ struct bullet
     int active;
     char type;
     GRRLIB_texImg *bulletName;
+    int sizeMultiplier;
 };
 struct ennemy
 {
@@ -309,7 +310,7 @@ int main(int argc, char **argv)
     Falcon.power = 0;
     Falcon.speed = 5;
     Falcon.life = 10;
-    Falcon.gunMode = 2;
+    Falcon.gunMode = 1;
     Falcon.ability = time(NULL);
     menuColors.R = 0x03;
     menuColors.G = 0x09;
@@ -760,99 +761,60 @@ int main(int argc, char **argv)
                 {
                     if (bulletCount.box[i].active == 1)
                     {
-                        switch(bulletCount.box[i].type){
-
+                        GRRLIB_DrawImg(bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bulletName, 0, bulletCount.box[i].sizeMultiplier, bulletCount.box[i].sizeMultiplier, 0xFFFFFFFF);
                         
-
-                        case('U'):
-                            GRRLIB_DrawImg(bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bulletName, 0, 4, 4, 0xFFFFFFFF);
-                            for (int j = 0; j < level; j++)
+                        for (int j = 0; j < level; j++)
                             {
+                                int colided =0;
                                 if (enemyCount.ennemybase[j].active == 1)
                                 {
-                                    if (enemyCount.ennemybase[j].ysize <= bulletCount.box[i].bysize)
-                                    {
+                                    
+                                    //?COULD MAKE PROBLEMS
+                                    if(bulletCount.box[i].bxsize > enemyCount.ennemybase[j].xsize && bulletCount.box[i].bysize > enemyCount.ennemybase[j].ysize){
                                         if (GRRLIB_RectOnRect(bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bxsize, bulletCount.box[i].bysize,
-                                                              enemyCount.ennemybase[j].xposition, enemyCount.ennemybase[j].yposition, enemyCount.ennemybase[j].xsize, enemyCount.ennemybase[j].ysize))
-                                        {
-                                            if (enemyCount.ennemybase[j].type == 'X')
-                                            {
-                                                enemyCount.ennemybase[j].health -= 100;
-                                                bulletCount.box[i].active = 0;
+                                            enemyCount.ennemybase[j].xposition, enemyCount.ennemybase[j].yposition, enemyCount.ennemybase[j].xsize, enemyCount.ennemybase[j].ysize
+                                                            )){
+                                                colided =1;
                                             }
-                                            else
-                                            {
-                                                enemyCount.ennemybase[j].active = 0;
-                                                enemyCount.ennemybase[j].health = 0;
-                                            }
-                                            if (enemyCount.ennemybase[j].health <= 0)
-                                            {
-
-                                                int enemyNumber = j;
-                                                objectDrop(enemyNumber);
-                                            }
-                                            break;
-                                        }
                                     }
-                                    else
-                                    {
+                                    else if(bulletCount.box[i].bxsize > enemyCount.ennemybase[j].xsize){
+                                        if (GRRLIB_RectOnRect(bulletCount.box[i].xposition, enemyCount.ennemybase[j].yposition, bulletCount.box[i].bxsize, enemyCount.ennemybase[j].ysize,
+                                                            enemyCount.ennemybase[j].xposition, bulletCount.box[i].yposition, enemyCount.ennemybase[j].xsize, bulletCount.box[i].bysize)){
+                                                colided =1;
+                                            }
+                                    }
+                                    else if (bulletCount.box[i].bysize > enemyCount.ennemybase[j].ysize){
+                                        if (GRRLIB_RectOnRect(enemyCount.ennemybase[j].xposition, bulletCount.box[i].yposition, enemyCount.ennemybase[j].xsize, bulletCount.box[i].bysize,
+                                                            bulletCount.box[i].xposition, enemyCount.ennemybase[j].yposition, bulletCount.box[i].bxsize, enemyCount.ennemybase[j].ysize)){
+                                                colided =1;
+                                            }
+                                    }
+                                    else{
                                         if (GRRLIB_RectOnRect(enemyCount.ennemybase[j].xposition, enemyCount.ennemybase[j].yposition, enemyCount.ennemybase[j].xsize, enemyCount.ennemybase[j].ysize,
-                                                              bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bxsize, bulletCount.box[i].bysize))
-                                        {
-                                            if (enemyCount.ennemybase[j].type == 'X')
-                                            {
-                                                enemyCount.ennemybase[j].health -= 100;
-                                                bulletCount.box[i].active = 0;
+                                                            bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bxsize, bulletCount.box[i].bysize)){
+                                                colided =1;
                                             }
-                                            else
-                                            {
-                                                enemyCount.ennemybase[j].active = 0;
-                                                enemyCount.ennemybase[j].health = 0;
+                                    }
+
+                                    if(colided ==1){
+                                        enemyCount.ennemybase[j].health -= bulletCount.box[i].dmg;
+                                            if(bulletCount.box[i].type != 'R'){
+                                                bulletCount.box[i].active = 0;
                                             }
                                             if (enemyCount.ennemybase[j].health <= 0)
                                             {
-
                                                 int enemyNumber = j;
                                                 objectDrop(enemyNumber);
                                             }
                                             break;
                                         }
-                                    }
+                                        
+                                
+
                                 }
+                                
                             }
-                        
-                        break;
-
-                        default:
-
-                            GRRLIB_DrawImg(bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bulletName, 0, 1, 1, 0xFFFFFFFF);
-                            for (int j = 0; j < level; j++)
-                            {
-                                if (enemyCount.ennemybase[j].active == 1)
-                                {
-
-                                    if (GRRLIB_RectOnRect(enemyCount.ennemybase[j].xposition, enemyCount.ennemybase[j].yposition, enemyCount.ennemybase[j].xsize, enemyCount.ennemybase[j].ysize,
-                                                          bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bxsize, bulletCount.box[i].bysize))
-                                    {
-
-                                        enemyCount.ennemybase[j].health -= bulletCount.box[i].dmg;
-                                        if(bulletCount.box[i].type != 'R'){
-                                            bulletCount.box[i].active = 0;
-                                        }
-                                        if (enemyCount.ennemybase[j].health <= 0)
-                                        {
-                                            int enemyNumber = j;
-                                            objectDrop(enemyNumber);
-                                        }
-
-                                        break;
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                        
-
+                            
                         bulletCount.box[i].yposition -= bulletCount.box[i].speed;
                         bulletCount.box[i].xposition += bulletCount.box[i].speedX;
                         if (bulletCount.box[i].yposition <= 0 || bulletCount.box[i].xposition <= 80 || bulletCount.box[i].xposition >= 560)
@@ -862,6 +824,15 @@ int main(int argc, char **argv)
                     }
                 }
             }
+
+
+                    
+                
+                
+            
+                    
+                
+            
             void enemy()
             {
                 if (enemyCounter == 0)
@@ -1059,7 +1030,7 @@ int main(int argc, char **argv)
                                     {
                                         if (bulletCount.ennemyBox[j].active == 0)
                                         {
-                                            struct bullet ennemyBullet = {(enemyCount.ennemybase[i].xposition + enemyCount.ennemybase[i].xsize / 2), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 0, 1, 1, 'E', Bullet2IMG};
+                                            struct bullet ennemyBullet = {(enemyCount.ennemybase[i].xposition + enemyCount.ennemybase[i].xsize / 2), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 0, 1, 1, 'E', Bullet2IMG,1};
                                             bulletCount.ennemyBox[j] = ennemyBullet;
                                             break;
                                         }
@@ -1153,7 +1124,7 @@ int main(int argc, char **argv)
                                                 {
                                                     if (bulletCount.ennemyBox[j].active == 0)
                                                     {
-                                                        struct bullet ennemyBullet = {(rand() % (300 + 1) + 150), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 0, 1, 1, 'E', Bullet2IMG};
+                                                        struct bullet ennemyBullet = {(rand() % (300 + 1) + 150), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 0, 1, 1, 'E', Bullet2IMG,1};
                                                         bulletCount.ennemyBox[j] = ennemyBullet;
                                                         break;
                                                     }
@@ -1253,7 +1224,7 @@ int main(int argc, char **argv)
                     if (bulletCount.ennemyBox[i].active == 1)
                     {
 
-                        GRRLIB_DrawImg(bulletCount.ennemyBox[i].xposition, bulletCount.ennemyBox[i].yposition, bulletCount.ennemyBox[i].bulletName, 0, 1, 1, 0xFFFFFFFF);
+                        GRRLIB_DrawImg(bulletCount.ennemyBox[i].xposition, bulletCount.ennemyBox[i].yposition, bulletCount.ennemyBox[i].bulletName, 0, bulletCount.ennemyBox[i].sizeMultiplier, bulletCount.ennemyBox[i].sizeMultiplier, 0xFFFFFFFF);
 
                         bulletCount.ennemyBox[i].yposition -= bulletCount.ennemyBox[i].speed;
                         if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
@@ -1463,7 +1434,7 @@ int main(int argc, char **argv)
             ?Gun system
             */
 
-            if (pressed & WPAD_BUTTON_2)
+            if ((pressed & WPAD_BUTTON_2) && Falcon.gunMode != 3)
             {
                 int angle[5];
                 int region;
@@ -1497,13 +1468,13 @@ int main(int argc, char **argv)
                             {
                                 if (Falcon.power == 4)
                                 {
-                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, angle[i], 1 + Falcon.power, 1, 'S', BulletUltimateIMG};
+                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, angle[i], 1 + Falcon.power, 1, 'S', BulletUltimateIMG,1};
                                     bulletCount.box[j] = b;
                                     break;
                                 }
                                 else
                                 {
-                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, angle[i], 1 + Falcon.power, 1, 'S', BulletIMG};
+                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, angle[i], 1 + Falcon.power, 1, 'S', BulletIMG,1};
                                     bulletCount.box[j] = b;
                                     break;
                                 }
@@ -1525,7 +1496,7 @@ int main(int argc, char **argv)
                                 {
                                     if (bulletCount.box[j].active == 0)
                                     {
-                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.25 + (Falcon.power*0.25), 1, 'R', BulletRIMG};
+                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.25 + (Falcon.power*0.25), 1, 'R', BulletRIMG,1};
                                         bulletCount.box[j] = r;
                                         break;
 
@@ -1536,13 +1507,11 @@ int main(int argc, char **argv)
 
 
                     break;
-
-
-                    case 3:
-
-
-                    break;
                 }
+            }
+            if ((hold & WPAD_BUTTON_2) && Falcon.gunMode == 3)
+            {
+
             }
 
             if (pressed & WPAD_BUTTON_B && (difftime(time(NULL), Falcon.ability) >= 20))
@@ -1553,14 +1522,14 @@ int main(int argc, char **argv)
                     {
                         if (Falcon.power == 4)
                         {
-                            struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 0, 1, 'U', BulletUltimateIMG};
+                            struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 0, 1, 'U', BulletUltimateIMG,4};
                             bulletCount.box[i] = ultimate;
                             Falcon.ability = time(NULL);
                             break;
                         }
                         else
                         {
-                            struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 0, 1, 'U', BulletIMG};
+                            struct bullet ultimate = {(Falcon.xposition + Falcon.xsize / 3) - 12, (Falcon.yposition - Falcon.ysize / 4) - 40, 32, 48, 10, 0, 0, 1, 'U', BulletIMG,4};
                             bulletCount.box[i] = ultimate;
                             Falcon.ability = time(NULL);
                             break;

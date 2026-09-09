@@ -127,8 +127,8 @@ struct upgrade
 };
 struct bulletCount
 {
-    struct bullet box[100];
-    struct bullet ennemyBox[100];
+    struct bullet box[150];
+    struct bullet ennemyBox[150];
 };
 struct storage
 {
@@ -293,7 +293,7 @@ int main(int argc, char **argv)
     struct UiComponents bossBarContour = {580, 30, 0, 0, 0};
     int bossBarAnimation = 0;
     int enemyCounter = 0;
-    int level = 50;
+    int level = 0;
     int score = 0;
     int win = 0;
     int gameend = 0;
@@ -307,10 +307,10 @@ int main(int argc, char **argv)
     Falcon.yposition = 240;
     Falcon.xsize = 20;
     Falcon.ysize = 24;
-    Falcon.power = 4;
+    Falcon.power = 0;
     Falcon.speed = 5;
     Falcon.life = 10;
-    Falcon.gunMode = 1;
+    Falcon.gunMode = 3;
     Falcon.ability = time(NULL);
     menuColors.R = 0x03;
     menuColors.G = 0x09;
@@ -825,6 +825,11 @@ int main(int argc, char **argv)
                         bulletCount.box[i].xposition += bulletCount.box[i].speedX;
                         if (bulletCount.box[i].yposition <= 0 || bulletCount.box[i].xposition <= 80 || bulletCount.box[i].xposition >= 560)
                         {
+                            if(bulletCount.box[i].type != 'L'){
+                                bulletCount.box[i].active = 0;
+                            }
+                        }
+                        if(bulletCount.box[i].type == 'L'){
                             bulletCount.box[i].active = 0;
                         }
                     }
@@ -1366,14 +1371,7 @@ int main(int argc, char **argv)
             u32 pressed = WPAD_ButtonsDown(0);
             u32 hold = WPAD_ButtonsHeld(0);
             GRRLIB_SetBackgroundColour(0x10, 0x10, 0x10, 0xFF);
-            GRRLIB_DrawImg(0, 0, WallIMG, 0, 1, 1, 0xFFFFFFFF);
-            GRRLIB_DrawImg(560, 0, WallIMG, 0, 1, 1, 0xFFFFFFFF);
-            sprintf(levelCounter, "level:%d", level);
-            sprintf(scoreCounter, "lives:%d", Falcon.life);
-            sprintf(lives, "score:%d", score);
-            GRRLIB_PrintfTTF(5, 40, font, levelCounter, 20, 0x000000FF);
-            GRRLIB_PrintfTTF(5, 80, font, scoreCounter, 16, 0x000000FF);
-            GRRLIB_PrintfTTF(5, 120, font, lives, 16, 0x000000FF);
+            
 
             if ((difftime(time(NULL), Falcon.ability) >= 20))
             {
@@ -1502,7 +1500,7 @@ int main(int argc, char **argv)
                                 {
                                     if (bulletCount.box[j].active == 0)
                                     {
-                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.25 + (Falcon.power*0.25), 1, 'R', BulletRIMG,1};
+                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3 -30, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.25 + (Falcon.power*0.25), 1, 'R', BulletRIMG,1};
                                         bulletCount.box[j] = r;
                                         break;
 
@@ -1517,6 +1515,17 @@ int main(int argc, char **argv)
             }
             if ((hold & WPAD_BUTTON_2) && Falcon.gunMode == 3)
             {
+                for (int i = 0; i < count; i++)
+                        {
+                            if (bulletCount.box[i].active == 0)
+                            {
+                                struct bullet l = {Falcon.xposition + Falcon.xsize / 3 -23, (Falcon.yposition - Falcon.ysize / 4) - 5 - 390, 56, 400, 0,0, 0.05 + (Falcon.power*0.05), 1, 'L', BulletLIMG,2};
+                                bulletCount.box[i] = l;
+                                break;
+                            }
+
+
+                        }
 
             }
 
@@ -1595,6 +1604,20 @@ int main(int argc, char **argv)
             ?Modify Ui information
             */
             UiInformation();
+
+
+            /*
+            ?BG looks
+            */
+            
+            GRRLIB_DrawImg(0, 0, WallIMG, 0, 1, 1, 0xFFFFFFFF);
+            GRRLIB_DrawImg(560, 0, WallIMG, 0, 1, 1, 0xFFFFFFFF);
+            sprintf(levelCounter, "level:%d", level);
+            sprintf(scoreCounter, "lives:%d", Falcon.life);
+            sprintf(lives, "score:%d", score);
+            GRRLIB_PrintfTTF(5, 40, font, levelCounter, 20, 0x000000FF);
+            GRRLIB_PrintfTTF(5, 80, font, scoreCounter, 16, 0x000000FF);
+            GRRLIB_PrintfTTF(5, 120, font, lives, 16, 0x000000FF);
 
             /*
             ?Win and lose conditions

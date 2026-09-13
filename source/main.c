@@ -311,9 +311,10 @@ int main(int argc, char **argv)
     struct levelSystem MenuSystem = {1, 0, 0, 0};
     struct UiComponents bossBar = {590, 440, 0, 0, 0};
     struct UiComponents bossBarContour = {580, 30, 0, 0, 0};
+    int bossStarted =0;
     int bossBarAnimation = 0;
     int enemyCounter = 0;
-    int level = 0;
+    int level = 49;
     int score = 0;
     int win = 0;
     int gameend = 0;
@@ -327,10 +328,10 @@ int main(int argc, char **argv)
     Falcon.yposition = 240;
     Falcon.xsize = 20;
     Falcon.ysize = 24;
-    Falcon.power = 0;
+    Falcon.power = 4;
     Falcon.speed = 5;
     Falcon.life = 10;
-    Falcon.gunMode = 3;
+    Falcon.gunMode = 1;
     Falcon.ability = time(NULL);
     menuColors.R = 0x03;
     menuColors.G = 0x09;
@@ -444,6 +445,7 @@ int main(int argc, char **argv)
             Falcon.life = 10;
             Falcon.gunMode = 1;
             timeValues = 1;
+            bossStarted =0;
             bossBar.active = 0;
             bossBarAnimation = 0;
             for (int i = 0; i < count; i++)
@@ -907,10 +909,6 @@ int main(int argc, char **argv)
                 void spawnTypeX(int enemySpawnNumber){
                     struct ennemy typeX = {120, -150, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X', TypeXIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeX;
-                    enemyCounter = 10;
-                    bossBar.active = 1;
-                    bossBarContour.active = 1;
-                    bossBarAnimation = 1;
                 }
                 void spawnTypeZ(int enemySpawnNumber){
                     struct ennemy typeZ = {(rand() % (488 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z', TypeZIMG, time(NULL)};
@@ -926,7 +924,9 @@ int main(int argc, char **argv)
                     }
                     else if (level == 51)
                     {
+                        enemyCounter = 10;
                         spawnTypeX(0);
+
                         
                     }
                     else
@@ -1111,7 +1111,10 @@ int main(int argc, char **argv)
 
                                 case 'X':
                                     GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 4, 4, 0xFFFFFFFF);
-                                    if (enemyCount.ennemybase[i].yposition <= -10 && placed == 0)
+                                    if(bossStarted ==0){
+                                        bossStarted =1;
+                                    }
+                                    if (enemyCount.ennemybase[i].yposition <= 0 && placed == 0)
                                     {
                                         enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
                                     }
@@ -1394,6 +1397,12 @@ int main(int argc, char **argv)
 
             void UiInformation()
             {
+                if(bossStarted == 1){
+                bossBar.active = 1;
+                bossBarContour.active = 1;
+                bossBarAnimation = 1;
+                bossStarted =2;
+                }
                 if (bossBar.active == 1 && bossBarContour.active == 1)
                 {
                     bossBar.xsize = 20;
@@ -1431,14 +1440,7 @@ int main(int argc, char **argv)
             GRRLIB_SetBackgroundColour(0x10, 0x10, 0x10, 0xFF);
             
 
-            if ((difftime(time(NULL), Falcon.ability) >= 20))
-            {
-                GRRLIB_PrintfTTF(5, 440, font, "ability:ON", 14, 0x000000FF);
-            }
-            else
-            {
-                GRRLIB_PrintfTTF(5, 440, font, "ability:OFF", 14, 0x000000FF);
-            }
+            
 
             /*
             ?Stars
@@ -1661,7 +1663,7 @@ int main(int argc, char **argv)
             /*
             ?Modify Ui information
             */
-            UiInformation();
+            
 
 
             /*
@@ -1676,6 +1678,16 @@ int main(int argc, char **argv)
             GRRLIB_PrintfTTF(5, 40, font, levelCounter, 20, 0x000000FF);
             GRRLIB_PrintfTTF(5, 80, font, scoreCounter, 16, 0x000000FF);
             GRRLIB_PrintfTTF(5, 120, font, lives, 16, 0x000000FF);
+            UiInformation();
+
+            if ((difftime(time(NULL), Falcon.ability) >= 20))
+            {
+                GRRLIB_PrintfTTF(5, 440, font, "ability:ON", 14, 0x000000FF);
+            }
+            else
+            {
+                GRRLIB_PrintfTTF(5, 440, font, "ability:OFF", 14, 0x000000FF);
+            }
 
             /*
             ?Win and lose conditions

@@ -11,6 +11,7 @@
 #include <ogc/lwp_watchdog.h>
 #include "OlivettiThin_ttf.h"
 #include "expo_it.h"
+
 u32 MALLOC_MEM2 = 1;
 
 /*

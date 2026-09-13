@@ -4,12 +4,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include <math.h>
 #include <time.h>
 #include <wiiuse/wpad.h>
 #include <ogc/lwp_watchdog.h>
 #include "OlivettiThin_ttf.h"
 #include "expo_it.h"
+u32 MALLOC_MEM2 = 1;
 
 /*
 ?Button skins
@@ -186,6 +188,15 @@ void UiInformation();
 void falconSkins();
 void exitTheGame();
 void objectDrop(int enemyNumber);
+void spawnTypeA(int enemySpawnNumber);
+void spawnTypeB(int enemySpawnNumber);
+void spawnTypeC(int enemySpawnNumber);
+void spawnTypeD(int enemySpawnNumber);
+void spawnTypeE(int enemySpawnNumber);
+void spawnTypeE2(int enemySpawnNumber);
+void spawnTypeF(int enemySpawnNumber);
+void spawnTypeX(int enemySpawnNumber);
+void spawnTypeZ(int enemySpawnNumber);
 
 /*
 ?This is the main loop
@@ -193,6 +204,7 @@ void objectDrop(int enemyNumber);
 
 int main(int argc, char **argv)
 {
+    
 
     /*
     ?Initilisation of the values
@@ -204,7 +216,14 @@ int main(int argc, char **argv)
     WPAD_Init();
 
     GRRMOD_Init(0);
-    GRRMOD_SetMOD(expo_it, expo_it_size);
+    
+    void *tracker_memory = malloc(expo_it_size);
+
+    memcpy(tracker_memory, expo_it, expo_it_size);
+
+    DCFlushRange(tracker_memory, expo_it_size);
+
+    GRRMOD_SetMOD(tracker_memory, expo_it_size);
     GRRMOD_SetVolume(64, 64);
     GRRMOD_Start();
 
@@ -396,6 +415,7 @@ int main(int argc, char **argv)
         GRRLIB_FreeTexture(Bullet2IMG);
         GRRLIB_FreeTexture(BulletUltimateIMG);
         GRRLIB_FreeTexture(StarIMG);
+        GRRMOD_Unload();
         GRRMOD_End();
         GRRLIB_Exit();
     }
@@ -846,6 +866,56 @@ int main(int argc, char **argv)
             
             void enemy()
             {
+                void spawnTypeA(int enemySpawnNumber){
+                    struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeA;
+                }
+                void spawnTypeB(int enemySpawnNumber){
+                    struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeB;
+                }
+                void spawnTypeC(int enemySpawnNumber){
+                    int side = rand() % (2 + 1);
+                    if (side == 1)
+                    {
+                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                        enemyCount.ennemybase[enemySpawnNumber] = typeC;
+                    }
+                    else
+                    {
+                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                        enemyCount.ennemybase[enemySpawnNumber] = typeC;
+                    }
+                }
+                void spawnTypeD(int enemySpawnNumber){
+                    struct ennemy typeD = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeD;
+                }
+                void spawnTypeE(int enemySpawnNumber){
+                    struct ennemy typeE = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 32, 1000, 6, 2, 1, 0, 0xFF0000FF, 'E', TypeEIMG, time(NULL)};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeE;
+                }
+                void spawnTypeE2(int enemySpawnNumber){
+                    struct ennemy typeE2 = {320, 110, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E', TypeE2IMG, time(NULL)};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeE2;
+                }
+                void spawnTypeF(int enemySpawnNumber){
+                    struct ennemy typeF = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F', TypeFIMG, time(NULL)};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeF;
+                }
+                void spawnTypeX(int enemySpawnNumber){
+                    struct ennemy typeX = {120, -150, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X', TypeXIMG, time(NULL)};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeX;
+                    enemyCounter = 10;
+                    bossBar.active = 1;
+                    bossBarContour.active = 1;
+                    bossBarAnimation = 1;
+                }
+                void spawnTypeZ(int enemySpawnNumber){
+                    struct ennemy typeZ = {(rand() % (488 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z', TypeZIMG, time(NULL)};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeZ;
+                    
+                }
                 if (enemyCounter == 0)
                 {
                     level++;
@@ -855,12 +925,8 @@ int main(int argc, char **argv)
                     }
                     else if (level == 51)
                     {
-                        struct ennemy typeX = {120, -150, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X', TypeXIMG, time(NULL)};
-                        enemyCount.ennemybase[0] = typeX;
-                        enemyCounter = 10;
-                        bossBar.active = 1;
-                        bossBarContour.active = 1;
-                        bossBarAnimation = 1;
+                        spawnTypeX(0);
+                        
                     }
                     else
                     {
@@ -872,48 +938,32 @@ int main(int argc, char **argv)
 
                             if ((level == 10 || level == 20 || level == 30 || level == 40 || level == 50) && boss == 0)
                             {
-                                struct ennemy typeZ = {(rand() % (488 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z', TypeZIMG, time(NULL)};
-                                enemyCount.ennemybase[i] = typeZ;
+                                spawnTypeZ(i);
                                 boss = 1;
                             }
                             else if (level >= 40 && enemytype == 10)
                             {
-                                struct ennemy typeF = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F', TypeFIMG, time(NULL)};
-                                enemyCount.ennemybase[i] = typeF;
+                                spawnTypeF(i);
                             }
                             else if (level >= 30 && enemytype == 9)
                             {
-                                struct ennemy typeE = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 32, 1000, 6, 2, 1, 0, 0xFF0000FF, 'E', TypeEIMG, time(NULL)};
-                                enemyCount.ennemybase[i] = typeE;
+                                spawnTypeE(i);
                             }
                             else if (level >= 20 && enemytype == 8)
                             {
-                                struct ennemy typeD = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
-                                enemyCount.ennemybase[i] = typeD;
+                                spawnTypeD(i);
                             }
                             else if (level >= 10 && enemytype == 7)
                             {
-                                int side = rand() % (2 + 1);
-                                if (side == 1)
-                                {
-                                    struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeC;
-                                }
-                                else
-                                {
-                                    struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                    enemyCount.ennemybase[i] = typeC;
-                                }
+                                spawnTypeC(i);
                             }
                             else if (level >= 5 && level < 40 && enemytype == 10)
                             {
-                                struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
-                                enemyCount.ennemybase[i] = typeB;
+                                spawnTypeB(i);
                             }
                             else
                             {
-                                struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
-                                enemyCount.ennemybase[i] = typeA;
+                                spawnTypeA(i);
                             }
                             enemytype = 0;
                             enemyCounter++;
@@ -927,303 +977,310 @@ int main(int argc, char **argv)
                 {
                     {
                         if (enemyCount.ennemybase[i].active == 1)
-                        {
-                            switch (enemyCount.ennemybase[i].type)
-                            {
-
-                            case 'Z':
-                                GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
-                                enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
-
-                                if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
-                                                                                                   Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
+                        {   
+                            if(enemyCount.ennemybase[i].xposition >= 0){
+                                switch (enemyCount.ennemybase[i].type)
                                 {
-                                    Falcon.life -= 1;
-                                    enemyCount.ennemybase[i].active = 0;
-                                }
-                                break;
-                            case 'B':
-                                GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
-                                enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
 
-                                if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
-                                                                                                   Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
-                                {
-                                    Falcon.life -= 1;
-                                    enemyCount.ennemybase[i].active = 0;
-                                }
+                                case 'Z':
+                                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
+                                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
 
-                                break;
-
-                            case 'C':
-                                GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
-                                enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
-                                if (enemyCount.ennemybase[i].xposition <= 80 || enemyCount.ennemybase[i].xposition >= 540)
-                                {
-                                    if (enemyCount.ennemybase[i].speedY == 2)
+                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                                                                                    Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
                                     {
-                                        enemyCount.ennemybase[i].speedY = -2;
+                                        Falcon.life -= 1;
+                                        enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    break;
+                                case 'B':
+                                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
+                                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
+
+                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                                                                                    Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
+                                    {
+                                        Falcon.life -= 1;
+                                        enemyCount.ennemybase[i].active = 0;
+                                    }
+
+                                    break;
+
+                                case 'C':
+                                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
+                                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
+                                    if (enemyCount.ennemybase[i].xposition <= 80 || enemyCount.ennemybase[i].xposition >= 540)
+                                    {
+                                        if (enemyCount.ennemybase[i].speedY == 2)
+                                        {
+                                            enemyCount.ennemybase[i].speedY = -2;
+                                        }
+                                        else
+                                        {
+                                            enemyCount.ennemybase[i].speedY = 2;
+                                        }
+                                    }
+                                    enemyCount.ennemybase[i].xposition += enemyCount.ennemybase[i].speedY;
+                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                                                                                    Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
+                                    {
+                                        Falcon.life -= 1;
+                                        enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    break;
+
+                                case 'D':
+                                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
+                                    if (enemyCount.ennemybase[i].yposition < Falcon.yposition)
+                                    {
+                                        enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
+                                    }
+                                    else if (enemyCount.ennemybase[i].yposition > Falcon.yposition)
+                                    {
+                                        enemyCount.ennemybase[i].yposition -= enemyCount.ennemybase[i].speed;
+                                    }
+
+                                    if (enemyCount.ennemybase[i].xposition < Falcon.xposition)
+                                    {
+                                        enemyCount.ennemybase[i].xposition += enemyCount.ennemybase[i].speed;
+                                    }
+                                    else if (enemyCount.ennemybase[i].xposition > Falcon.xposition)
+                                    {
+                                        enemyCount.ennemybase[i].xposition -= enemyCount.ennemybase[i].speed;
+                                    }
+
+                                    if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
+                                                        enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize))
+                                    {
+                                        Falcon.life -= 1;
+                                        enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    break;
+
+                                case 'E':
+
+                                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
+                                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
+                                    if (enemyCount.ennemybase[i].xposition < Falcon.xposition)
+                                    {
+                                        enemyCount.ennemybase[i].xposition += enemyCount.ennemybase[i].speedY;
+                                    }
+                                    else if (enemyCount.ennemybase[i].xposition > Falcon.xposition)
+                                    {
+                                        enemyCount.ennemybase[i].xposition -= enemyCount.ennemybase[i].speedY;
+                                    }
+
+                                    if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
+                                                        enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize))
+                                    {
+                                        Falcon.life -= 1;
+                                        enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    if (enemyCount.ennemybase[i].yposition >= 550)
+                                    {
+                                        enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    break;
+
+                                case 'F':
+                                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
+                                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
+
+                                    if (difftime(time(NULL), enemyCount.ennemybase[i].time) >= 2)
+                                    {
+                                        for (int j = 0; j < count; j++)
+                                        {
+                                            if (bulletCount.ennemyBox[j].active == 0)
+                                            {
+                                                struct bullet ennemyBullet = {(enemyCount.ennemybase[i].xposition + enemyCount.ennemybase[i].xsize / 2), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 0, 1, 1, 'E', Bullet2IMG,1};
+                                                bulletCount.ennemyBox[j] = ennemyBullet;
+                                                break;
+                                            }
+                                        }
+                                        enemyCount.ennemybase[i].time = time(NULL);
+                                    }
+
+                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                                                                                    Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
+                                    {
+                                        Falcon.life -= 1;
+                                        enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    break;
+
+                                case 'X':
+                                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 4, 4, 0xFFFFFFFF);
+                                    if (enemyCount.ennemybase[i].yposition <= -10 && placed == 0)
+                                    {
+                                        enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
                                     }
                                     else
                                     {
-                                        enemyCount.ennemybase[i].speedY = 2;
+                                        placed = 1;
                                     }
-                                }
-                                enemyCount.ennemybase[i].xposition += enemyCount.ennemybase[i].speedY;
-                                if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
-                                                                                                   Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
-                                {
-                                    Falcon.life -= 1;
-                                    enemyCount.ennemybase[i].active = 0;
-                                }
-                                break;
-
-                            case 'D':
-                                GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
-                                if (enemyCount.ennemybase[i].yposition < Falcon.yposition)
-                                {
-                                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
-                                }
-                                else if (enemyCount.ennemybase[i].yposition > Falcon.yposition)
-                                {
-                                    enemyCount.ennemybase[i].yposition -= enemyCount.ennemybase[i].speed;
-                                }
-
-                                if (enemyCount.ennemybase[i].xposition < Falcon.xposition)
-                                {
-                                    enemyCount.ennemybase[i].xposition += enemyCount.ennemybase[i].speed;
-                                }
-                                else if (enemyCount.ennemybase[i].xposition > Falcon.xposition)
-                                {
-                                    enemyCount.ennemybase[i].xposition -= enemyCount.ennemybase[i].speed;
-                                }
-
-                                if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
-                                                      enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize))
-                                {
-                                    Falcon.life -= 1;
-                                    enemyCount.ennemybase[i].active = 0;
-                                }
-                                break;
-
-                            case 'E':
-
-                                GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
-                                enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
-                                if (enemyCount.ennemybase[i].xposition < Falcon.xposition)
-                                {
-                                    enemyCount.ennemybase[i].xposition += enemyCount.ennemybase[i].speedY;
-                                }
-                                else if (enemyCount.ennemybase[i].xposition > Falcon.xposition)
-                                {
-                                    enemyCount.ennemybase[i].xposition -= enemyCount.ennemybase[i].speedY;
-                                }
-
-                                if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
-                                                      enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize))
-                                {
-                                    Falcon.life -= 1;
-                                    enemyCount.ennemybase[i].active = 0;
-                                }
-                                if (enemyCount.ennemybase[i].yposition >= 550)
-                                {
-                                    enemyCount.ennemybase[i].active = 0;
-                                }
-                                break;
-
-                            case 'F':
-                                GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
-                                enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
-
-                                if (difftime(time(NULL), enemyCount.ennemybase[i].time) >= 2)
-                                {
-                                    for (int j = 0; j < count; j++)
+                                    if (placed == 1 && battleMode == 0)
                                     {
-                                        if (bulletCount.ennemyBox[j].active == 0)
-                                        {
-                                            struct bullet ennemyBullet = {(enemyCount.ennemybase[i].xposition + enemyCount.ennemybase[i].xsize / 2), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 0, 1, 1, 'E', Bullet2IMG,1};
-                                            bulletCount.ennemyBox[j] = ennemyBullet;
-                                            break;
-                                        }
+                                        placed = 0;
+                                        enemyCount.ennemybase[i].time = time(NULL);
+                                        battleMode = 1;
                                     }
-                                    enemyCount.ennemybase[i].time = time(NULL);
-                                }
-
-                                if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
-                                                                                                   Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
-                                {
-                                    Falcon.life -= 1;
-                                    enemyCount.ennemybase[i].active = 0;
-                                }
-                                break;
-
-                            case 'X':
-                                GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 4, 4, 0xFFFFFFFF);
-                                if (enemyCount.ennemybase[i].yposition <= -10 && placed == 0)
-                                {
-                                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
-                                }
-                                else
-                                {
-                                    placed = 1;
-                                }
-                                if (placed == 1 && battleMode == 0)
-                                {
-                                    placed = 0;
-                                    enemyCount.ennemybase[i].time = time(NULL);
-                                    battleMode = 1;
-                                }
-                                if (battleMode == 1)
-                                {
-                                    if (difftime(time(NULL), enemyCount.ennemybase[i].time) >= 2)
+                                    if (battleMode == 1)
                                     {
-                                        switch (attackMode)
+                                        if (difftime(time(NULL), enemyCount.ennemybase[i].time) >= 2)
                                         {
-                                        case 1:
-                                            for (int b = 0; b < level; b++)
+                                            switch (attackMode)
                                             {
-                                                int spawn;
-                                                if (cannon == 1)
+                                            case 1:
+                                                for (int b = 0; b < level; b++)
                                                 {
-                                                    spawn = 120;
-                                                }
-                                                else
-                                                {
-                                                    spawn = 480;
-                                                }
-                                                if (enemyCount.ennemybase[b].active == 0)
-                                                {
-                                                    if (unit == 1)
+                                                    int spawn;
+                                                    if (cannon == 1)
                                                     {
-                                                        struct ennemy typeZ = {spawn, 170, 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z', TypeZIMG, time(NULL)};
-                                                        enemyCount.ennemybase[b] = typeZ;
-                                                    }
-                                                    else if (unit == 2)
-                                                    {
-                                                        struct ennemy typeF = {spawn, 132, 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F', TypeFIMG, time(NULL)};
-                                                        enemyCount.ennemybase[b] = typeF;
-                                                    }
-                                                    else if (unit == 3)
-                                                    {
-
-                                                        struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                                        enemyCount.ennemybase[b] = typeC;
-                                                    }
-                                                    else if (unit == 4)
-                                                    {
-                                                        struct ennemy typeD = {spawn, 120, 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
-                                                        enemyCount.ennemybase[b] = typeD;
+                                                        spawn = 120;
                                                     }
                                                     else
                                                     {
-                                                        struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
-                                                        enemyCount.ennemybase[b] = typeC;
+                                                        spawn = 480;
                                                     }
-                                                    enemyCounter++;
-                                                    break;
-                                                }
-                                            }
-                                            unit = rand() % (5 + 1);
-                                            cannon = rand() % (2 + 1);
-
-                                            break;
-
-                                        case 2:
-                                            for (int b = 0; b < 10; b++)
-                                            {
-                                                for (int j = 0; j < count; j++)
-                                                {
-                                                    if (bulletCount.ennemyBox[j].active == 0)
+                                                    if (enemyCount.ennemybase[b].active == 0)
                                                     {
-                                                        struct bullet ennemyBullet = {(rand() % (300 + 1) + 150), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 0, 1, 1, 'E', Bullet2IMG,1};
-                                                        bulletCount.ennemyBox[j] = ennemyBullet;
+                                                        if (unit == 1)
+                                                        {
+                                                            struct ennemy typeZ = {spawn, 170, 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z', TypeZIMG, time(NULL)};
+                                                            enemyCount.ennemybase[b] = typeZ;
+                                                        }
+                                                        else if (unit == 2)
+                                                        {
+                                                            struct ennemy typeF = {spawn, 132, 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F', TypeFIMG, time(NULL)};
+                                                            enemyCount.ennemybase[b] = typeF;
+                                                        }
+                                                        else if (unit == 3)
+                                                        {
+
+                                                            struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                                            enemyCount.ennemybase[b] = typeC;
+                                                        }
+                                                        else if (unit == 4)
+                                                        {
+                                                            struct ennemy typeD = {spawn, 120, 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
+                                                            enemyCount.ennemybase[b] = typeD;
+                                                        }
+                                                        else
+                                                        {
+                                                            struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                                            enemyCount.ennemybase[b] = typeC;
+                                                        }
+                                                        enemyCounter++;
                                                         break;
                                                     }
                                                 }
-                                            }
-                                            break;
+                                                unit = rand() % (5 + 1);
+                                                cannon = rand() % (2 + 1);
 
-                                        default:
-                                            for (int b = 0; b < level; b++)
-                                            {
-                                                if (enemyCount.ennemybase[b].active == 0)
+                                                break;
+
+                                            case 2:
+                                                for (int b = 0; b < 10; b++)
                                                 {
-                                                    struct ennemy typeE2 = {320, 110, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E', TypeE2IMG, time(NULL)};
-                                                    enemyCount.ennemybase[b] = typeE2;
-                                                    enemyCounter++;
-                                                    break;
+                                                    for (int j = 0; j < count; j++)
+                                                    {
+                                                        if (bulletCount.ennemyBox[j].active == 0)
+                                                        {
+                                                            struct bullet ennemyBullet = {(rand() % (300 + 1) + 150), (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 0, 1, 1, 'E', Bullet2IMG,1};
+                                                            bulletCount.ennemyBox[j] = ennemyBullet;
+                                                            break;
+                                                        }
+                                                    }
                                                 }
+                                                break;
+
+                                            default:
+                                                for (int b = 0; b < level; b++)
+                                                {
+                                                    if (enemyCount.ennemybase[b].active == 0)
+                                                    {
+                                                        struct ennemy typeE2 = {320, 110, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E', TypeE2IMG, time(NULL)};
+                                                        enemyCount.ennemybase[b] = typeE2;
+                                                        enemyCounter++;
+                                                        break;
+                                                    }
+                                                }
+
+                                                break;
                                             }
-
-                                            break;
+                                            enemyCount.ennemybase[i].time = time(NULL);
+                                            attackMode = rand() % (3 + 1);
                                         }
-                                        enemyCount.ennemybase[i].time = time(NULL);
-                                        attackMode = rand() % (3 + 1);
                                     }
+
+                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                                                                                    Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
+                                    {
+                                        Falcon.life -= 1;
+                                    }
+
+                                    break;
+
+                                default:
+                                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
+                                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
+
+                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
+                                                                                                    enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize))
+                                    {
+                                        Falcon.life -= 1;
+                                        enemyCount.ennemybase[i].active = 0;
+                                    }
+
+                                    break;
                                 }
-
-                                if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
-                                                                                                   Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
-                                {
-                                    Falcon.life -= 1;
-                                }
-
-                                break;
-
-                            default:
-                                GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
-                                enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
-
-                                if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
-                                                                                                   enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize))
-                                {
-                                    Falcon.life -= 1;
-                                    enemyCount.ennemybase[i].active = 0;
-                                }
-
-                                break;
+                            }
+                            else{
+                            enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
                             }
                         }
 
-                        else if (enemyCount.ennemybase[i].dead == 0)
-                        {
-                            if (enemyCount.ennemybase[i].type == 'X')
+                            else if (enemyCount.ennemybase[i].dead == 0)
                             {
-                                enemyCount.ennemybase[i].dead = 1;
-                                enemyCounter = 0;
-                            }
-                            else
-                            {
-                                enemyCount.ennemybase[i].dead = 1;
-                                enemyCounter -= 1;
-                            }
-                            switch (enemyCount.ennemybase[i].type)
-                            {
-                            case 'Z':
-                                score += 50;
-                                break;
-                            case 'B':
-                                score += 5;
-                                break;
-                            case 'C':
-                                score += 5;
-                                break;
-                            case 'D':
-                                score += 5;
-                                break;
-                            case 'E':
-                                score += 10;
-                                break;
-                            case 'F':
-                                score += 20;
-                                break;
-                            case 'X':
-                                score += 2000;
-                                break;
-                            default:
-                                score += 1;
-                                break;
-                            }
+                                if (enemyCount.ennemybase[i].type == 'X')
+                                {
+                                    enemyCount.ennemybase[i].dead = 1;
+                                    enemyCounter = 0;
+                                }
+                                else
+                                {
+                                    enemyCount.ennemybase[i].dead = 1;
+                                    enemyCounter -= 1;
+                                }
+                                switch (enemyCount.ennemybase[i].type)
+                                {
+                                case 'Z':
+                                    score += 50;
+                                    break;
+                                case 'B':
+                                    score += 5;
+                                    break;
+                                case 'C':
+                                    score += 5;
+                                    break;
+                                case 'D':
+                                    score += 5;
+                                    break;
+                                case 'E':
+                                    score += 10;
+                                    break;
+                                case 'F':
+                                    score += 20;
+                                    break;
+                                case 'X':
+                                    score += 2000;
+                                    break;
+                                default:
+                                    score += 1;
+                                    break;
+                                }
+                            
+                            
                         }
                     }
                 }
@@ -1500,7 +1557,7 @@ int main(int argc, char **argv)
                                 {
                                     if (bulletCount.box[j].active == 0)
                                     {
-                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3 -30, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.25 + (Falcon.power*0.25), 1, 'R', BulletRIMG,1};
+                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.25 + (Falcon.power*0.25), 1, 'R', BulletRIMG,1};
                                         bulletCount.box[j] = r;
                                         break;
 

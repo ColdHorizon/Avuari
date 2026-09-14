@@ -111,6 +111,7 @@ struct ennemy
     int dead;
     u32 color;
     char type;
+    int boss;
     GRRLIB_texImg *imgName;
     time_t time;
 };
@@ -185,19 +186,19 @@ void enemy();
 void enemyTurn();
 void enemyBullet();
 void powerUpTurn();
-void UiInformation();
+void UiInformation(int enemyBossNumber);
 void falconSkins();
 void exitTheGame();
 void objectDrop(int enemyNumber);
-void spawnTypeA(int enemySpawnNumber);
-void spawnTypeB(int enemySpawnNumber);
-void spawnTypeC(int enemySpawnNumber);
-void spawnTypeD(int enemySpawnNumber);
-void spawnTypeE(int enemySpawnNumber);
-void spawnTypeE2(int enemySpawnNumber);
-void spawnTypeF(int enemySpawnNumber);
-void spawnTypeX(int enemySpawnNumber);
-void spawnTypeZ(int enemySpawnNumber);
+void spawnTypeA(int enemySpawnNumber,int x,int y);
+void spawnTypeB(int enemySpawnNumber,int x,int y);
+void spawnTypeC(int enemySpawnNumber,int x,int y,int side);
+void spawnTypeD(int enemySpawnNumber,int x,int y);
+void spawnTypeE(int enemySpawnNumber,int x,int y);
+void spawnTypeE2(int enemySpawnNumber,int x,int y);
+void spawnTypeF(int enemySpawnNumber,int x,int y);
+void spawnTypeX(int enemySpawnNumber,int x,int y);
+void spawnTypeZ(int enemySpawnNumber,int x,int y);
 
 /*
 ?This is the main loop
@@ -313,10 +314,10 @@ int main(int argc, char **argv)
     struct UiComponents bossBarContour = {580, 30, 0, 0, 0};
     int bossStarted =0;
     int bossBarAnimation = 0;
-    int enemyCounter = 0;
-    int level = 49;
+    int level = 0;
     int score = 0;
     int win = 0;
+    int enemySpawn =0;
     int gameend = 0;
     int timeValues = 1;
     char levelCounter[20];
@@ -431,9 +432,9 @@ int main(int argc, char **argv)
         while (reset == 1)
         {
             skinRotation = 0;
-            enemyCounter = 0;
             level = 0;
             score = 0;
+            enemySpawn =0;
             gameend = 0;
             win = 0;
             Falcon.xposition = 300;
@@ -620,6 +621,7 @@ int main(int argc, char **argv)
                 {
                     MenuSystem.start = 0;
                     MenuSystem.game = 1;
+                    
                     break;
                 }
             }
@@ -670,6 +672,11 @@ int main(int argc, char **argv)
 
         while (MenuSystem.game == 1)
         {
+
+
+            //IMPORTANT 
+            int bossSpawnNumber;
+
             void stars()
             {
                 for (int i = 0; i < starCounter; i++)
@@ -792,7 +799,7 @@ int main(int argc, char **argv)
                     {
                         GRRLIB_DrawImg(bulletCount.box[i].xposition, bulletCount.box[i].yposition, bulletCount.box[i].bulletName, 0, bulletCount.box[i].sizeMultiplier, bulletCount.box[i].sizeMultiplier, 0xFFFFFFFF);
                         
-                        for (int j = 0; j < level; j++)
+                        for (int j = 0; j < sizeOfEnemies; j++)
                             {
                                 int colided =0;
                                 if (enemyCount.ennemybase[j].active == 1)
@@ -869,117 +876,70 @@ int main(int argc, char **argv)
             
             void enemy()
             {
-                void spawnTypeA(int enemySpawnNumber){
-                    struct ennemy typeA = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A', TypeAIMG, time(NULL)};
+                void spawnTypeA(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeA = {x, y, 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A',0, TypeAIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeA;
                 }
-                void spawnTypeB(int enemySpawnNumber){
-                    struct ennemy typeB = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B', TypeBIMG, time(NULL)};
+                void spawnTypeB(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeB = {x, y, 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B',0, TypeBIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeB;
                 }
-                void spawnTypeC(int enemySpawnNumber){
-                    int side = rand() % (2 + 1);
+                void spawnTypeC(int enemySpawnNumber,int x,int y,int side){
                     if (side == 1)
                     {
-                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                        struct ennemy typeC = {x, y, 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
                         enemyCount.ennemybase[enemySpawnNumber] = typeC;
                     }
                     else
                     {
-                        struct ennemy typeC = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                        struct ennemy typeC = {x, y, 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
                         enemyCount.ennemybase[enemySpawnNumber] = typeC;
                     }
                 }
-                void spawnTypeD(int enemySpawnNumber){
-                    struct ennemy typeD = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
+                void spawnTypeD(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeD = {x, y, 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D',0, TypeDIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeD;
                 }
-                void spawnTypeE(int enemySpawnNumber){
-                    struct ennemy typeE = {(rand() % (540 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 20, 32, 1000, 6, 2, 1, 0, 0xFF0000FF, 'E', TypeEIMG, time(NULL)};
+                void spawnTypeE(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeE = {x, y, 20, 32, 1000, 6, 2, 1, 0, 0xFF0000FF, 'E',0, TypeEIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeE;
                 }
-                void spawnTypeE2(int enemySpawnNumber){
-                    struct ennemy typeE2 = {320, 110, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E', TypeE2IMG, time(NULL)};
+                void spawnTypeE2(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeE2 = {320, 110, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E',0, TypeE2IMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeE2;
                 }
-                void spawnTypeF(int enemySpawnNumber){
-                    struct ennemy typeF = {(rand() % (508 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F', TypeFIMG, time(NULL)};
+                void spawnTypeF(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeF = {x, y, 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F',0, TypeFIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeF;
                 }
-                void spawnTypeX(int enemySpawnNumber){
-                    struct ennemy typeX = {120, -150, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X', TypeXIMG, time(NULL)};
+                void spawnTypeX(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeX = {120, y, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X',1, TypeXIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeX;
                 }
-                void spawnTypeZ(int enemySpawnNumber){
-                    struct ennemy typeZ = {(rand() % (488 - 80 + 1) + 80), (rand() % (-10 - 200 + 1) - 200), 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z', TypeZIMG, time(NULL)};
+                void spawnTypeZ(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeZ = {x, y, 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z',0, TypeZIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeZ;
                     
                 }
-                if (enemyCounter == 0)
-                {
-                    level++;
-                    if (level >= 52)
-                    {
-                        win = 1;
-                    }
-                    else if (level == 51)
-                    {
-                        enemyCounter = 10;
-                        spawnTypeX(0);
 
-                        
-                    }
-                    else
-                    {
-                        int boss = 0;
-                        for (int i = 0; i < level; i++)
-                        {
-                            int enemytype;
-                            enemytype = rand() % (10 + 1);
 
-                            if ((level == 10 || level == 20 || level == 30 || level == 40 || level == 50) && boss == 0)
-                            {
-                                spawnTypeZ(i);
-                                boss = 1;
-                            }
-                            else if (level >= 40 && enemytype == 10)
-                            {
-                                spawnTypeF(i);
-                            }
-                            else if (level >= 30 && enemytype == 9)
-                            {
-                                spawnTypeE(i);
-                            }
-                            else if (level >= 20 && enemytype == 8)
-                            {
-                                spawnTypeD(i);
-                            }
-                            else if (level >= 10 && enemytype == 7)
-                            {
-                                spawnTypeC(i);
-                            }
-                            else if (level >= 5 && level < 40 && enemytype == 10)
-                            {
-                                spawnTypeB(i);
-                            }
-                            else
-                            {
-                                spawnTypeA(i);
-                            }
-                            enemytype = 0;
-                            enemyCounter++;
-                        }
-                    }
+                if(level == 0){
+                    spawnTypeA(0,200,0);
+                    spawnTypeX(1,0,-500);
+                    bossSpawnNumber =1;
                 }
+                        
+                    
+                
             }
             void enemyTurn()
             {
-                for (int i = 0; i < level; i++)
+                for (int i = 0; i < sizeOfEnemies; i++)
                 {
                     {
                         if (enemyCount.ennemybase[i].active == 1)
                         {   
-                            if(enemyCount.ennemybase[i].xposition >= 0){
+                            if(enemyCount.ennemybase[i].yposition +enemyCount.ennemybase[i].ysize + 20 >= 0){
                                 switch (enemyCount.ennemybase[i].type)
                                 {
 
@@ -1135,7 +1095,7 @@ int main(int argc, char **argv)
                                             switch (attackMode)
                                             {
                                             case 1:
-                                                for (int b = 0; b < level; b++)
+                                                for (int b = 0; b <  sizeOfEnemies; b++)
                                                 {
                                                     int spawn;
                                                     if (cannon == 1)
@@ -1150,31 +1110,31 @@ int main(int argc, char **argv)
                                                     {
                                                         if (unit == 1)
                                                         {
-                                                            struct ennemy typeZ = {spawn, 170, 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z', TypeZIMG, time(NULL)};
+                                                            struct ennemy typeZ = {spawn, 170, 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z',0, TypeZIMG, time(NULL)};
                                                             enemyCount.ennemybase[b] = typeZ;
                                                         }
                                                         else if (unit == 2)
                                                         {
-                                                            struct ennemy typeF = {spawn, 132, 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F', TypeFIMG, time(NULL)};
+                                                            struct ennemy typeF = {spawn, 132, 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F',0, TypeFIMG, time(NULL)};
                                                             enemyCount.ennemybase[b] = typeF;
                                                         }
                                                         else if (unit == 3)
                                                         {
 
-                                                            struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                                            struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
                                                             enemyCount.ennemybase[b] = typeC;
                                                         }
                                                         else if (unit == 4)
                                                         {
-                                                            struct ennemy typeD = {spawn, 120, 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D', TypeDIMG, time(NULL)};
+                                                            struct ennemy typeD = {spawn, 120, 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D',0, TypeDIMG, time(NULL)};
                                                             enemyCount.ennemybase[b] = typeD;
                                                         }
                                                         else
                                                         {
-                                                            struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C', TypeCIMG, time(NULL)};
+                                                            struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
                                                             enemyCount.ennemybase[b] = typeC;
                                                         }
-                                                        enemyCounter++;
+                                                        
                                                         break;
                                                     }
                                                 }
@@ -1199,13 +1159,13 @@ int main(int argc, char **argv)
                                                 break;
 
                                             default:
-                                                for (int b = 0; b < level; b++)
+                                                for (int b = 0; b < sizeOfEnemies; b++)
                                                 {
                                                     if (enemyCount.ennemybase[b].active == 0)
                                                     {
-                                                        struct ennemy typeE2 = {320, 110, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E', TypeE2IMG, time(NULL)};
+                                                        struct ennemy typeE2 = {320, 110, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E',0, TypeE2IMG, time(NULL)};
                                                         enemyCount.ennemybase[b] = typeE2;
-                                                        enemyCounter++;
+                                                        
                                                         break;
                                                     }
                                                 }
@@ -1249,12 +1209,13 @@ int main(int argc, char **argv)
                                 if (enemyCount.ennemybase[i].type == 'X')
                                 {
                                     enemyCount.ennemybase[i].dead = 1;
-                                    enemyCounter = 0;
+                                    win =1;
+                                    
                                 }
                                 else
                                 {
                                     enemyCount.ennemybase[i].dead = 1;
-                                    enemyCounter -= 1;
+                                    
                                 }
                                 switch (enemyCount.ennemybase[i].type)
                                 {
@@ -1395,7 +1356,7 @@ int main(int argc, char **argv)
                 }
             }
 
-            void UiInformation()
+            void UiInformation(int enemyBossNumber)
             {
                 if(bossStarted == 1){
                 bossBar.active = 1;
@@ -1417,13 +1378,13 @@ int main(int argc, char **argv)
                     bossBarContour.xsize = 40;
                     bossBarContour.ysize = 420;
                     GRRLIB_Rectangle(bossBarContour.xposition, bossBarContour.yposition, bossBarContour.xsize, bossBarContour.ysize, 0xA1A1A1FF, 1);
-                    if (((float)enemyCount.ennemybase[0].health / 4000) <= 0.5f)
+                    if (((float)enemyCount.ennemybase[enemyBossNumber].health / 4000) <= 0.5f)
                     {
-                        GRRLIB_Rectangle(bossBar.xposition, bossBar.yposition, bossBar.xsize, bossBar.ysize * (((float)enemyCount.ennemybase[0].health / 4000)), 0xFF0000FF, 1);
+                        GRRLIB_Rectangle(bossBar.xposition, bossBar.yposition, bossBar.xsize, bossBar.ysize * (((float)enemyCount.ennemybase[enemyBossNumber].health / 4000)), 0xFF0000FF, 1);
                     }
                     else
                     {
-                        GRRLIB_Rectangle(bossBar.xposition, bossBar.yposition, bossBar.xsize, bossBar.ysize * (((float)enemyCount.ennemybase[0].health / 4000)), 0x00FF00FF, 1);
+                        GRRLIB_Rectangle(bossBar.xposition, bossBar.yposition, bossBar.xsize, bossBar.ysize * (((float)enemyCount.ennemybase[enemyBossNumber].health / 4000)), 0x00FF00FF, 1);
                     }
                 }
             }
@@ -1438,6 +1399,14 @@ int main(int argc, char **argv)
             u32 pressed = WPAD_ButtonsDown(0);
             u32 hold = WPAD_ButtonsHeld(0);
             GRRLIB_SetBackgroundColour(0x10, 0x10, 0x10, 0xFF);
+
+            /*
+            ?Enemy spawn
+            */
+            if(enemySpawn == 0){
+                enemy();
+                enemySpawn =1;
+            }
             
 
             
@@ -1631,12 +1600,7 @@ int main(int argc, char **argv)
             bullet();
 
             /*
-            ?Enemy spawn
-            */
-
-            enemy();
-
-            /*
+            
             ?Enemy Turn
             */
             enemyTurn();
@@ -1678,7 +1642,7 @@ int main(int argc, char **argv)
             GRRLIB_PrintfTTF(5, 40, font, levelCounter, 20, 0x000000FF);
             GRRLIB_PrintfTTF(5, 80, font, scoreCounter, 16, 0x000000FF);
             GRRLIB_PrintfTTF(5, 120, font, lives, 16, 0x000000FF);
-            UiInformation();
+            UiInformation(bossSpawnNumber);
 
             if ((difftime(time(NULL), Falcon.ability) >= 20))
             {

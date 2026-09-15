@@ -136,7 +136,7 @@ struct bulletCount
 };
 struct storage
 {
-    struct ennemy ennemybase[51];
+    struct ennemy ennemybase[100];
     struct upgrade itemsBox[100];
     // level 51 breaks game change or keep
 };
@@ -329,7 +329,7 @@ int main(int argc, char **argv)
     Falcon.yposition = 240;
     Falcon.xsize = 20;
     Falcon.ysize = 24;
-    Falcon.power = 4;
+    Falcon.power = 0;
     Falcon.speed = 5;
     Falcon.life = 10;
     Falcon.gunMode = 1;
@@ -709,7 +709,7 @@ int main(int argc, char **argv)
                     {
                         if (enemyCount.itemsBox[u].active == 0)
                         {
-                            if(object <= 3){
+                            if(object <= 6){
                                 enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
                                 enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
                                 enemyCount.itemsBox[u].xsize = 12;
@@ -724,7 +724,7 @@ int main(int argc, char **argv)
                                 break;
                             }
 
-                            else if(object > 3 && object <= 8){
+                            else if(object > 6 && object <= 9){
                                 enemyCount.itemsBox[u].xposition = enemyCount.ennemybase[enemyNumber].xposition + enemyCount.ennemybase[enemyNumber].xsize / 2;
                                 enemyCount.itemsBox[u].yposition = enemyCount.ennemybase[enemyNumber].yposition + enemyCount.ennemybase[enemyNumber].ysize / 2;
                                 enemyCount.itemsBox[u].xsize = 12;
@@ -738,7 +738,7 @@ int main(int argc, char **argv)
                                 enemyCount.itemsBox[u].upgradeName = UpgradeIMG;
                                 break;
                             }
-                            else if(object ==9 || object == 10){
+                            else if(object ==10 || object == 11){
                                 int weapon = 0;
                                 weapon = rand() % (3 + 1);
                                 if(weapon ==1){
@@ -842,7 +842,9 @@ int main(int argc, char **argv)
                                                 int enemyNumber = j;
                                                 objectDrop(enemyNumber);
                                             }
-                                            break;
+                                            if(bulletCount.box[i].type != 'L'){
+                                                break;
+                                            }
                                     }
                                         
                                 
@@ -877,27 +879,27 @@ int main(int argc, char **argv)
             void enemy()
             {
                 void spawnTypeA(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeA = {x, y, 20, 20, 1, 2, 2, 1, 0, 0xFF0000FF, 'A',0, TypeAIMG, time(NULL)};
+                    struct ennemy typeA = {x, y, 20, 20, 5, 2, 2, 1, 0, 0xFF0000FF, 'A',0, TypeAIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeA;
                 }
                 void spawnTypeB(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeB = {x, y, 32, 32, 5, 1, 1, 1, 0, 0x0000FFFF, 'B',0, TypeBIMG, time(NULL)};
+                    struct ennemy typeB = {x, y, 32, 32, 25, 1, 1, 1, 0, 0x0000FFFF, 'B',0, TypeBIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeB;
                 }
                 void spawnTypeC(int enemySpawnNumber,int x,int y,int side){
                     if (side == 1)
                     {
-                        struct ennemy typeC = {x, y, 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
+                        struct ennemy typeC = {x, y, 20, 20, 5, 4, 2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
                         enemyCount.ennemybase[enemySpawnNumber] = typeC;
                     }
                     else
                     {
-                        struct ennemy typeC = {x, y, 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
+                        struct ennemy typeC = {x, y, 20, 20, 5, 4, -2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
                         enemyCount.ennemybase[enemySpawnNumber] = typeC;
                     }
                 }
                 void spawnTypeD(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeD = {x, y, 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D',0, TypeDIMG, time(NULL)};
+                    struct ennemy typeD = {x, y, 20, 20, 25, 4, 4, 1, 0, 0xFF0000FF, 'D',0, TypeDIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeD;
                 }
                 void spawnTypeE(int enemySpawnNumber,int x,int y){
@@ -909,7 +911,7 @@ int main(int argc, char **argv)
                     enemyCount.ennemybase[enemySpawnNumber] = typeE2;
                 }
                 void spawnTypeF(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeF = {x, y, 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F',0, TypeFIMG, time(NULL)};
+                    struct ennemy typeF = {x, y, 32, 32, 50, 1, 1, 1, 0, 0x0000FFFF, 'F',0, TypeFIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeF;
                 }
                 void spawnTypeX(int enemySpawnNumber,int x,int y){
@@ -917,15 +919,63 @@ int main(int argc, char **argv)
                     enemyCount.ennemybase[enemySpawnNumber] = typeX;
                 }
                 void spawnTypeZ(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeZ = {x, y, 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z',0, TypeZIMG, time(NULL)};
+                    struct ennemy typeZ = {x, y, 52, 52, 100, 1, 1, 1, 0, 0x101010FF, 'Z',0, TypeZIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeZ;
                     
                 }
 
 
                 if(level == 0){
-                    spawnTypeA(0,200,0);
-                    spawnTypeX(1,0,-500);
+                    //wave 1
+                    spawnTypeA(0,100,-20);
+                    spawnTypeA(1,140,-40);
+                    spawnTypeA(2,180,-60);
+                    spawnTypeA(3,220,-80);
+                    //wave 2
+                    spawnTypeA(4,510,-320);
+                    spawnTypeA(5,470,-340);
+                    spawnTypeA(6,430,-360);
+                    spawnTypeA(7,390,-380);
+                    //wave 3
+                    spawnTypeA(8,300,-700);
+                    spawnTypeA(9,340,-700);
+                    spawnTypeA(10,300,-740);
+                    spawnTypeA(11,340,-740);
+                    spawnTypeA(12,300,-780);
+                    spawnTypeA(13,340,-780);
+                    spawnTypeA(14,300,-820);
+                    spawnTypeA(15,340,-820);
+                    spawnTypeA(16,300,-860);
+                    spawnTypeA(17,340,-860);
+                    spawnTypeB(18,310,-840);
+                    //wave 4
+                    spawnTypeB(19,300,-1000);
+                    spawnTypeB(20,340,-1000);
+                    spawnTypeD(21,200,-1040);
+                    //wave 5
+                    spawnTypeC(22,200,-1200,1);
+                    spawnTypeC(23,300,-1200,2);
+                    spawnTypeC(24,350,-1250,1);
+                    spawnTypeC(25,220,-1400,2);
+                    spawnTypeC(26,400,-1270,1);
+                    spawnTypeC(27,440,-1300,2);
+                    spawnTypeC(28,200,-1180,2);
+                    //wave 6
+                    spawnTypeZ(29,300,-1500);
+                    spawnTypeF(30,310,-1620);
+                    //wave 7
+                    spawnTypeA(31,200,-1800);
+                    spawnTypeA(32,230,-1800);
+                    spawnTypeA(33,260,-1800);
+                    spawnTypeA(34,290,-1800);
+                    spawnTypeA(35,320,-1800);
+                    spawnTypeA(36,350,-1800);
+                    spawnTypeA(37,380,-1800);
+                    spawnTypeA(38,410,-1800);
+                    spawnTypeF(39,200,-1850);
+                    spawnTypeF(40,400,-1850);
+                    //wave 8
+                    spawnTypeX(99,0,-4500);
                     bossSpawnNumber =1;
                 }
                         
@@ -1200,7 +1250,7 @@ int main(int argc, char **argv)
                                 }
                             }
                             else{
-                            enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
+                            enemyCount.ennemybase[i].yposition += 2;
                             }
                         }
 
@@ -1501,13 +1551,13 @@ int main(int argc, char **argv)
                             {
                                 if (Falcon.power == 4)
                                 {
-                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, angle[i], 1 + Falcon.power, 1, 'S', BulletUltimateIMG,1};
+                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, angle[i], 5, 1, 'S', BulletUltimateIMG,1};
                                     bulletCount.box[j] = b;
                                     break;
                                 }
                                 else
                                 {
-                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, angle[i], 1 + Falcon.power, 1, 'S', BulletIMG,1};
+                                    struct bullet b = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 12, 10, angle[i], 5, 1, 'S', BulletIMG,1};
                                     bulletCount.box[j] = b;
                                     break;
                                 }
@@ -1529,7 +1579,7 @@ int main(int argc, char **argv)
                                 {
                                     if (bulletCount.box[j].active == 0)
                                     {
-                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.25 + (Falcon.power*0.25), 1, 'R', BulletRIMG,1};
+                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.7 + (Falcon.power*0.7), 1, 'R', BulletRIMG,1};
                                         bulletCount.box[j] = r;
                                         break;
 
@@ -1548,7 +1598,7 @@ int main(int argc, char **argv)
                         {
                             if (bulletCount.box[i].active == 0)
                             {
-                                struct bullet l = {Falcon.xposition + Falcon.xsize / 3 -23, (Falcon.yposition - Falcon.ysize / 4) - 5 - 390, 56, 400, 0,0, 0.05 + (Falcon.power*0.05), 1, 'L', BulletLIMG,2};
+                                struct bullet l = {Falcon.xposition + Falcon.xsize / 3 -23, (Falcon.yposition - Falcon.ysize / 4) - 5 - 390, 56, 400, 0,0, 0.20 + (Falcon.power*0.20), 1, 'L', BulletLIMG,2};
                                 bulletCount.box[i] = l;
                                 break;
                             }

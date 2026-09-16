@@ -6,7 +6,7 @@
 extern const uint8_t UpgradeR_png[];
 extern const uint8_t UpgradeR_png_end[];
 #if __cplusplus >= 201103L
-static constexpr size_t UpgradeR_png_size=248;
+static constexpr size_t UpgradeR_png_size=255;
 #else
-static const size_t UpgradeR_png_size=248;
+static const size_t UpgradeR_png_size=255;
 #endif

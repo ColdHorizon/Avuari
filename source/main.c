@@ -907,11 +907,11 @@ int main(int argc, char **argv)
                     enemyCount.ennemybase[enemySpawnNumber] = typeE;
                 }
                 void spawnTypeE2(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeE2 = {320, 110, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E',0, TypeE2IMG, time(NULL)};
+                    struct ennemy typeE2 = {x, y, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E',0, TypeE2IMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeE2;
                 }
                 void spawnTypeF(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeF = {x, y, 32, 32, 50, 1, 1, 1, 0, 0x0000FFFF, 'F',0, TypeFIMG, time(NULL)};
+                    struct ennemy typeF = {x, y, 32, 32, 35, 1, 1, 1, 0, 0x0000FFFF, 'F',0, TypeFIMG, time(NULL)};
                     enemyCount.ennemybase[enemySpawnNumber] = typeF;
                 }
                 void spawnTypeX(int enemySpawnNumber,int x,int y){
@@ -931,52 +931,89 @@ int main(int argc, char **argv)
                     spawnTypeA(1,140,-40);
                     spawnTypeA(2,180,-60);
                     spawnTypeA(3,220,-80);
+                    spawnTypeA(4,260,-100);
                     //wave 2
-                    spawnTypeA(4,510,-320);
-                    spawnTypeA(5,470,-340);
-                    spawnTypeA(6,430,-360);
-                    spawnTypeA(7,390,-380);
+                    spawnTypeA(5,510,-320);
+                    spawnTypeA(6,470,-340);
+                    spawnTypeA(7,430,-360);
+                    spawnTypeA(8,390,-380);
+                    spawnTypeA(9,350,-400);
                     //wave 3
-                    spawnTypeA(8,300,-700);
-                    spawnTypeA(9,340,-700);
-                    spawnTypeA(10,300,-740);
-                    spawnTypeA(11,340,-740);
-                    spawnTypeA(12,300,-780);
-                    spawnTypeA(13,340,-780);
-                    spawnTypeA(14,300,-820);
-                    spawnTypeA(15,340,-820);
-                    spawnTypeA(16,300,-860);
-                    spawnTypeA(17,340,-860);
-                    spawnTypeB(18,310,-840);
+                    spawnTypeA(10,300,-700);
+                    spawnTypeA(11,340,-700);
+                    spawnTypeA(12,300,-740);
+                    spawnTypeA(13,340,-740);
+                    spawnTypeA(14,300,-780);
+                    spawnTypeA(15,340,-780);
+                    spawnTypeA(16,300,-820);
+                    spawnTypeA(17,340,-820);
+                    spawnTypeA(18,300,-860);
+                    spawnTypeA(19,340,-860);
+                    spawnTypeB(20,310,-840);
                     //wave 4
-                    spawnTypeB(19,300,-1000);
-                    spawnTypeB(20,340,-1000);
-                    spawnTypeD(21,200,-1040);
+                    spawnTypeB(21,300,-1000);
+                    spawnTypeB(22,340,-1000);
+                    spawnTypeD(23,200,-1040);
                     //wave 5
-                    spawnTypeC(22,200,-1200,1);
-                    spawnTypeC(23,300,-1200,2);
-                    spawnTypeC(24,350,-1250,1);
-                    spawnTypeC(25,220,-1400,2);
-                    spawnTypeC(26,400,-1270,1);
-                    spawnTypeC(27,440,-1300,2);
-                    spawnTypeC(28,200,-1180,2);
+                    spawnTypeC(24,200,-1250,1);
+                    spawnTypeC(25,300,-1250,2);
+                    spawnTypeC(26,350,-1300,1);
+                    spawnTypeC(27,220,-1400,2);
+                    spawnTypeC(28,400,-1290,1);
+                    spawnTypeC(29,440,-1320,2);
+                    spawnTypeC(30,200,-1200,2);
                     //wave 6
-                    spawnTypeZ(29,300,-1500);
-                    spawnTypeF(30,310,-1620);
+                    spawnTypeZ(31,300,-1500);
+                    spawnTypeF(32,310,-1620);
                     //wave 7
-                    spawnTypeA(31,200,-1800);
-                    spawnTypeA(32,230,-1800);
-                    spawnTypeA(33,260,-1800);
-                    spawnTypeA(34,290,-1800);
-                    spawnTypeA(35,320,-1800);
-                    spawnTypeA(36,350,-1800);
-                    spawnTypeA(37,380,-1800);
-                    spawnTypeA(38,410,-1800);
-                    spawnTypeF(39,200,-1850);
-                    spawnTypeF(40,400,-1850);
+                    spawnTypeA(33,200,-1800);
+                    spawnTypeA(34,230,-1800);
+                    spawnTypeA(35,260,-1800);
+                    spawnTypeA(36,290,-1800);
+                    spawnTypeA(37,320,-1800);
+                    spawnTypeA(38,350,-1800);
+                    spawnTypeA(39,380,-1800);
+                    spawnTypeA(40,410,-1800);
+                    spawnTypeF(41,200,-1850);
+                    spawnTypeF(42,400,-1850);
                     //wave 8
+                    spawnTypeB(43,300,-2000);
+                    spawnTypeB(44,350,-2000);
+                    spawnTypeD(45,200,-2100);
+                    spawnTypeB(46,250,-2100);
+                    spawnTypeB(47,400,-2200);
+                    spawnTypeD(48,450,-2200);
+                    spawnTypeE(49,200,-2250);
+                    spawnTypeE(50,400,-2250);
+                    //wave 9
+                    spawnTypeF(51,300,-2500);
+                    spawnTypeF(52,350,-2550);
+                    spawnTypeF(53,250,-2550);
+                    spawnTypeF(54,400,-2600);
+                    spawnTypeF(55,200,-2600);
+                    spawnTypeF(56,450,-2650);
+                    spawnTypeF(57,150,-2650);
+                    //wave 10
+                    spawnTypeE2(58,150,-3200);
+                    spawnTypeE2(59,250,-3200);
+                    spawnTypeE2(60,350,-3200);
+                    spawnTypeE2(61,450,-3200);
+                    //wave 11
+                    spawnTypeA(62,510,-3300);
+                    spawnTypeA(63,470,-3320);
+                    spawnTypeA(64,430,-3340);
+                    spawnTypeA(65,390,-3360);
+                    spawnTypeA(66,350,-3380);
+                    spawnTypeF(67,400,-3420);
+                    spawnTypeA(68,100,-3400);
+                    spawnTypeA(69,140,-3420);
+                    spawnTypeA(70,180,-3440);
+                    spawnTypeA(71,220,-3460);
+                    spawnTypeA(72,260,-3480);
+                    spawnTypeF(73,240,-3520);
+                    //wave 12
                     spawnTypeX(99,0,-4500);
-                    bossSpawnNumber =1;
+                    bossSpawnNumber =99;
                 }
                         
                     
@@ -1598,7 +1635,7 @@ int main(int argc, char **argv)
                         {
                             if (bulletCount.box[i].active == 0)
                             {
-                                struct bullet l = {Falcon.xposition + Falcon.xsize / 3 -23, (Falcon.yposition - Falcon.ysize / 4) - 5 - 390, 56, 400, 0,0, 0.20 + (Falcon.power*0.20), 1, 'L', BulletLIMG,2};
+                                struct bullet l = {Falcon.xposition + Falcon.xsize / 3 -23, (Falcon.yposition - Falcon.ysize / 4) - 5 - 390, 56, 400, 0,0, 0.14 + (Falcon.power*0.14), 1, 'L', BulletLIMG,2};
                                 bulletCount.box[i] = l;
                                 break;
                             }

@@ -362,7 +362,7 @@ int main(int argc, char **argv)
     }
     for (int i = 0; i < sizeOfEnemies; i++)
     {
-        enemyCount.ennemybase[i].active = 0;
+        enemyCount.ennemybase[i].active = 2;
     }
     for (int i = 0; i < sizeOfItems; i++)
     {
@@ -466,7 +466,7 @@ int main(int argc, char **argv)
             }
             for (int i = 0; i < sizeOfEnemies; i++)
             {
-                enemyCount.ennemybase[i].active = 0;
+                enemyCount.ennemybase[i].active = 2;
             }
             for (int i = 0; i < sizeOfItems; i++)
             {
@@ -1225,7 +1225,71 @@ int main(int argc, char **argv)
                                         enemyCount.ennemybase[i].active = 0;
                                     }
                                     break;
+                                case 'H':
+                                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
+                                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
 
+                                    if (enemyCount.ennemybase[i].time >= 120)
+                                    {
+                                        int region = enemyCount.ennemybase[i].xposition;
+                                        for(int j = 0; j < 2; j++)
+                                        {
+                                            for (int b = 0; b < count; b++)
+                                            {
+                                                if (bulletCount.ennemyBox[b].active == 0)
+                                                {
+                                                    struct bullet ennemyBullet = {region, (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, 0, 1, 1, 'E', Bullet2IMG,1};
+                                                    bulletCount.ennemyBox[b] = ennemyBullet;
+                                                    break;
+                                                }
+                                            }
+                                            region += 24;
+                                            
+                                        }
+                                        enemyCount.ennemybase[i].time = 0;
+                                    }
+
+                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                                                                                    Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
+                                    {
+                                        Falcon.life -= 1;
+                                        enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    break;
+
+                                case 'I':
+                                    GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
+                                    enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
+
+                                    if (enemyCount.ennemybase[i].time >= 120)
+                                    {
+                                        int region = enemyCount.ennemybase[i].xposition;
+                                        int rotation = 1;
+                                        for(int j = 0; j < 3; j++)
+                                        {
+                                            for (int b = 0; b < count; b++)
+                                            {
+                                                if (bulletCount.ennemyBox[b].active == 0)
+                                                {
+                                                    struct bullet ennemyBullet = {region, (enemyCount.ennemybase[i].yposition + enemyCount.ennemybase[i].ysize), 8, 12, -4, rotation, 1, 1, 'E', Bullet2IMG,1};
+                                                    bulletCount.ennemyBox[b] = ennemyBullet;
+                                                    break;
+                                                }
+                                            }
+                                            rotation -=1;
+                                            region += 12;
+                                            
+                                        }
+                                        enemyCount.ennemybase[i].time = 0;
+                                    }
+
+                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                                                                                    Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
+                                    {
+                                        Falcon.life -= 1;
+                                        enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    break;
                                 case 'X':
                                     GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 4, 4, 0xFFFFFFFF);
                                     if(bossStarted ==0){
@@ -1361,7 +1425,7 @@ int main(int argc, char **argv)
                             }
                         }
 
-                            else if (enemyCount.ennemybase[i].dead == 0)
+                            else if (enemyCount.ennemybase[i].active == 0 && enemyCount.ennemybase[i].dead == 0)
                             {
                                 if (enemyCount.ennemybase[i].type == 'X')
                                 {
@@ -1426,6 +1490,7 @@ int main(int argc, char **argv)
                         GRRLIB_DrawImg(bulletCount.ennemyBox[i].xposition, bulletCount.ennemyBox[i].yposition, bulletCount.ennemyBox[i].bulletName, 0, bulletCount.ennemyBox[i].sizeMultiplier, bulletCount.ennemyBox[i].sizeMultiplier, 0xFFFFFFFF);
 
                         bulletCount.ennemyBox[i].yposition -= bulletCount.ennemyBox[i].speed;
+                        bulletCount.ennemyBox[i].xposition -= bulletCount.ennemyBox[i].speedX;
                         if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
                                               bulletCount.ennemyBox[i].xposition, bulletCount.ennemyBox[i].yposition, bulletCount.ennemyBox[i].bxsize, bulletCount.ennemyBox[i].bysize))
                         {

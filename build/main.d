@@ -107,6 +107,9 @@ main.o: C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/source/main.c \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeE_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeE2_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeF_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeG_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeH_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeI_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeX_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeZ_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Wall_png.h \
@@ -229,6 +232,9 @@ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeD_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeE_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeE2_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeF_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeG_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeH_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeI_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeX_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/TypeZ_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Wall_png.h:

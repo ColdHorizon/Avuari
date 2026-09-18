@@ -54,6 +54,9 @@ u32 MALLOC_MEM2 = 1;
 #include "TypeE_png.h"
 #include "TypeE2_png.h"
 #include "TypeF_png.h"
+#include "TypeG_png.h"
+#include "TypeH_png.h"
+#include "TypeI_png.h"
 #include "TypeX_png.h"
 #include "TypeZ_png.h"
 #include "Wall_png.h"
@@ -113,7 +116,7 @@ struct ennemy
     char type;
     int boss;
     GRRLIB_texImg *imgName;
-    time_t time;
+    int time;
 };
 struct upgrade
 {
@@ -197,6 +200,9 @@ void spawnTypeD(int enemySpawnNumber,int x,int y);
 void spawnTypeE(int enemySpawnNumber,int x,int y);
 void spawnTypeE2(int enemySpawnNumber,int x,int y);
 void spawnTypeF(int enemySpawnNumber,int x,int y);
+void spawnTypeG(int enemySpawnNumber,int x,int y);
+void spawnTypeH(int enemySpawnNumber,int x,int y);
+void spawnTypeI(int enemySpawnNumber,int x,int y);
 void spawnTypeX(int enemySpawnNumber,int x,int y);
 void spawnTypeZ(int enemySpawnNumber,int x,int y);
 
@@ -278,6 +284,9 @@ int main(int argc, char **argv)
     GRRLIB_texImg *TypeEIMG = GRRLIB_LoadTexture(TypeE_png);
     GRRLIB_texImg *TypeE2IMG = GRRLIB_LoadTexture(TypeE2_png);
     GRRLIB_texImg *TypeFIMG = GRRLIB_LoadTexture(TypeF_png);
+    GRRLIB_texImg *TypeGIMG = GRRLIB_LoadTexture(TypeG_png);
+    GRRLIB_texImg *TypeHIMG = GRRLIB_LoadTexture(TypeH_png);
+    GRRLIB_texImg *TypeIIMG = GRRLIB_LoadTexture(TypeI_png);
     GRRLIB_texImg *TypeXIMG = GRRLIB_LoadTexture(TypeX_png);
     GRRLIB_texImg *TypeZIMG = GRRLIB_LoadTexture(TypeZ_png);
     GRRLIB_texImg *WallIMG = GRRLIB_LoadTexture(Wall_png);
@@ -879,49 +888,60 @@ int main(int argc, char **argv)
             void enemy()
             {
                 void spawnTypeA(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeA = {x, y, 20, 20, 5, 2, 2, 1, 0, 0xFF0000FF, 'A',0, TypeAIMG, time(NULL)};
+                    struct ennemy typeA = {x, y, 20, 20, 5, 2, 2, 1, 0, 0xFF0000FF, 'A',0, TypeAIMG, 0};
                     enemyCount.ennemybase[enemySpawnNumber] = typeA;
                 }
                 void spawnTypeB(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeB = {x, y, 32, 32, 25, 1, 1, 1, 0, 0x0000FFFF, 'B',0, TypeBIMG, time(NULL)};
+                    struct ennemy typeB = {x, y, 32, 32, 25, 1, 1, 1, 0, 0x0000FFFF, 'B',0, TypeBIMG, 0};
                     enemyCount.ennemybase[enemySpawnNumber] = typeB;
                 }
                 void spawnTypeC(int enemySpawnNumber,int x,int y,int side){
                     if (side == 1)
                     {
-                        struct ennemy typeC = {x, y, 20, 20, 5, 4, 2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
+                        struct ennemy typeC = {x, y, 20, 20, 5, 4, 2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, 0};
                         enemyCount.ennemybase[enemySpawnNumber] = typeC;
                     }
                     else
                     {
-                        struct ennemy typeC = {x, y, 20, 20, 5, 4, -2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
+                        struct ennemy typeC = {x, y, 20, 20, 5, 4, -2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, 0};
                         enemyCount.ennemybase[enemySpawnNumber] = typeC;
                     }
                 }
                 void spawnTypeD(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeD = {x, y, 20, 20, 25, 4, 4, 1, 0, 0xFF0000FF, 'D',0, TypeDIMG, time(NULL)};
+                    struct ennemy typeD = {x, y, 20, 20, 25, 4, 4, 1, 0, 0xFF0000FF, 'D',0, TypeDIMG, 0};
                     enemyCount.ennemybase[enemySpawnNumber] = typeD;
                 }
                 void spawnTypeE(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeE = {x, y, 20, 32, 1000, 6, 2, 1, 0, 0xFF0000FF, 'E',0, TypeEIMG, time(NULL)};
+                    struct ennemy typeE = {x, y, 20, 32, 1000, 6, 2, 1, 0, 0xFF0000FF, 'E',0, TypeEIMG, 0};
                     enemyCount.ennemybase[enemySpawnNumber] = typeE;
                 }
                 void spawnTypeE2(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeE2 = {x, y, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E',0, TypeE2IMG, time(NULL)};
+                    struct ennemy typeE2 = {x, y, 20, 32, 1000, 6, 5, 1, 0, 0xFF0000FF, 'E',0, TypeE2IMG, 0};
                     enemyCount.ennemybase[enemySpawnNumber] = typeE2;
                 }
                 void spawnTypeF(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeF = {x, y, 32, 32, 35, 1, 1, 1, 0, 0x0000FFFF, 'F',0, TypeFIMG, time(NULL)};
+                    struct ennemy typeF = {x, y, 32, 32, 35, 1, 1, 1, 0, 0x0000FFFF, 'F',0, TypeFIMG, 0};
                     enemyCount.ennemybase[enemySpawnNumber] = typeF;
                 }
                 void spawnTypeX(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeX = {120, y, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X',1, TypeXIMG, time(NULL)};
+                    struct ennemy typeX = {120, y, 400, 100, 4000, 1, 1, 1, 0, 0xFF0000FF, 'X',1, TypeXIMG, 0};
                     enemyCount.ennemybase[enemySpawnNumber] = typeX;
                 }
                 void spawnTypeZ(int enemySpawnNumber,int x,int y){
-                    struct ennemy typeZ = {x, y, 52, 52, 100, 1, 1, 1, 0, 0x101010FF, 'Z',0, TypeZIMG, time(NULL)};
+                    struct ennemy typeZ = {x, y, 52, 52, 100, 1, 1, 1, 0, 0x101010FF, 'Z',0, TypeZIMG, 0};
                     enemyCount.ennemybase[enemySpawnNumber] = typeZ;
-                    
+                }
+                void spawnTypeG(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeG = {x, y, 20, 20, 25, 5, 5, 1, 0, 0xFF0000FF, 'G',0, TypeGIMG, 0};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeG;
+                }
+                void spawnTypeH(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeH = {x, y, 32, 32, 45, 1, 1, 1, 0, 0x0000FFFF, 'H',0, TypeHIMG, 0};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeH;
+                }
+                void spawnTypeI(int enemySpawnNumber,int x,int y){
+                    struct ennemy typeI = {x, y, 32, 32, 75, 1, 1, 1, 0, 0x0000FFFF, 'I',0, TypeIIMG, 0};
+                    enemyCount.ennemybase[enemySpawnNumber] = typeI;
                 }
 
 
@@ -1012,6 +1032,12 @@ int main(int argc, char **argv)
                     spawnTypeA(72,260,-3480);
                     spawnTypeF(73,240,-3520);
                     //wave 12
+
+                    //wave TEST
+                    spawnTypeG(74,200,-4000);
+                    spawnTypeH(75,300,-4000);
+                    spawnTypeI(76,400,-4000);
+
                     spawnTypeX(99,0,-4500);
                     bossSpawnNumber =99;
                 }
@@ -1025,7 +1051,8 @@ int main(int argc, char **argv)
                 {
                     {
                         if (enemyCount.ennemybase[i].active == 1)
-                        {   
+                        {     
+                            enemyCount.ennemybase[i].time += 1;
                             if(enemyCount.ennemybase[i].yposition +enemyCount.ennemybase[i].ysize + 20 >= 0){
                                 switch (enemyCount.ennemybase[i].type)
                                 {
@@ -1134,7 +1161,7 @@ int main(int argc, char **argv)
                                     GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
                                     enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
 
-                                    if (difftime(time(NULL), enemyCount.ennemybase[i].time) >= 2)
+                                    if (enemyCount.ennemybase[i].time >= 120)
                                     {
                                         for (int j = 0; j < count; j++)
                                         {
@@ -1145,7 +1172,7 @@ int main(int argc, char **argv)
                                                 break;
                                             }
                                         }
-                                        enemyCount.ennemybase[i].time = time(NULL);
+                                        enemyCount.ennemybase[i].time = 0;
                                     }
 
                                     if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
@@ -1172,12 +1199,12 @@ int main(int argc, char **argv)
                                     if (placed == 1 && battleMode == 0)
                                     {
                                         placed = 0;
-                                        enemyCount.ennemybase[i].time = time(NULL);
+                                        enemyCount.ennemybase[i].time = 0;
                                         battleMode = 1;
                                     }
                                     if (battleMode == 1)
                                     {
-                                        if (difftime(time(NULL), enemyCount.ennemybase[i].time) >= 2)
+                                        if (enemyCount.ennemybase[i].time >= 120)
                                         {
                                             switch (attackMode)
                                             {
@@ -1197,28 +1224,28 @@ int main(int argc, char **argv)
                                                     {
                                                         if (unit == 1)
                                                         {
-                                                            struct ennemy typeZ = {spawn, 170, 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z',0, TypeZIMG, time(NULL)};
+                                                            struct ennemy typeZ = {spawn, 170, 52, 52, 50, 1, 1, 1, 0, 0x101010FF, 'Z',0, TypeZIMG, 0};
                                                             enemyCount.ennemybase[b] = typeZ;
                                                         }
                                                         else if (unit == 2)
                                                         {
-                                                            struct ennemy typeF = {spawn, 132, 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F',0, TypeFIMG, time(NULL)};
+                                                            struct ennemy typeF = {spawn, 132, 32, 32, 20, 1, 1, 1, 0, 0x0000FFFF, 'F',0, TypeFIMG, 0};
                                                             enemyCount.ennemybase[b] = typeF;
                                                         }
                                                         else if (unit == 3)
                                                         {
 
-                                                            struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
+                                                            struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, 2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, 0};
                                                             enemyCount.ennemybase[b] = typeC;
                                                         }
                                                         else if (unit == 4)
                                                         {
-                                                            struct ennemy typeD = {spawn, 120, 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D',0, TypeDIMG, time(NULL)};
+                                                            struct ennemy typeD = {spawn, 120, 20, 20, 20, 4, 4, 1, 0, 0xFF0000FF, 'D',0, TypeDIMG, 0};
                                                             enemyCount.ennemybase[b] = typeD;
                                                         }
                                                         else
                                                         {
-                                                            struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, time(NULL)};
+                                                            struct ennemy typeC = {spawn, 120, 20, 20, 1, 4, -2, 1, 0, 0xFF0000FF, 'C',0, TypeCIMG, 0};
                                                             enemyCount.ennemybase[b] = typeC;
                                                         }
                                                         
@@ -1259,7 +1286,7 @@ int main(int argc, char **argv)
 
                                                 break;
                                             }
-                                            enemyCount.ennemybase[i].time = time(NULL);
+                                            enemyCount.ennemybase[i].time = 0;
                                             attackMode = rand() % (3 + 1);
                                         }
                                     }
@@ -1323,6 +1350,15 @@ int main(int argc, char **argv)
                                     break;
                                 case 'F':
                                     score += 20;
+                                    break;
+                                case 'G':
+                                    score += 20;
+                                    break;
+                                case 'H':
+                                    score += 30;
+                                    break;
+                                case 'I':
+                                    score += 35;
                                     break;
                                 case 'X':
                                     score += 2000;
@@ -1635,7 +1671,7 @@ int main(int argc, char **argv)
                         {
                             if (bulletCount.box[i].active == 0)
                             {
-                                struct bullet l = {Falcon.xposition + Falcon.xsize / 3 -23, (Falcon.yposition - Falcon.ysize / 4) - 5 - 390, 56, 400, 0,0, 0.14 + (Falcon.power*0.14), 1, 'L', BulletLIMG,2};
+                                struct bullet l = {Falcon.xposition + Falcon.xsize / 3 -23, (Falcon.yposition - Falcon.ysize / 4) - 5 - 390, 56, 400, 0,0, 0.18 + (Falcon.power*0.18), 1, 'L', BulletLIMG,2};
                                 bulletCount.box[i] = l;
                                 break;
                             }

@@ -1004,42 +1004,52 @@ int main(int argc, char **argv)
                     spawnTypeB(46,250,-2100);
                     spawnTypeB(47,400,-2200);
                     spawnTypeD(48,450,-2200);
-                    //spawnTypeE(49,200,-2250);
-                    //spawnTypeE(50,400,-2250);
                     //wave 9
-                    spawnTypeF(51,300,-2500);
-                    spawnTypeF(52,350,-2550);
-                    spawnTypeF(53,250,-2550);
-                    spawnTypeF(54,400,-2600);
-                    spawnTypeF(55,200,-2600);
-                    spawnTypeF(56,450,-2650);
-                    spawnTypeF(57,150,-2650);
+                    spawnTypeF(49,300,-2500);
+                    spawnTypeF(50,350,-2550);
+                    spawnTypeF(51,250,-2550);
+                    spawnTypeF(52,400,-2600);
+                    spawnTypeF(53,200,-2600);
+                    spawnTypeF(54,450,-2650);
+                    spawnTypeF(55,150,-2650); 
                     //wave 10
-                    //spawnTypeE2(58,150,-3200);
-                    //spawnTypeE2(59,250,-3200);
-                    //spawnTypeE2(60,350,-3200);
-                    //spawnTypeE2(61,450,-3200);
-                    //wave 11
-                    spawnTypeA(62,510,-3300);
-                    spawnTypeA(63,470,-3320);
-                    spawnTypeA(64,430,-3340);
-                    spawnTypeA(65,390,-3360);
-                    spawnTypeA(66,350,-3380);
-                    spawnTypeF(67,400,-3420);
-                    spawnTypeA(68,100,-3400);
-                    spawnTypeA(69,140,-3420);
-                    spawnTypeA(70,180,-3440);
-                    spawnTypeA(71,220,-3460);
-                    spawnTypeA(72,260,-3480);
-                    spawnTypeF(73,240,-3520);
-                    //wave 12(Driller Wave)
-
-                    //wave TEST
-                    spawnTypeG(74,200,-4000);
-                    spawnTypeH(75,300,-4000);
-                    spawnTypeI(76,400,-4000);
-
-                    spawnTypeX(99,0,-5500);
+                    spawnTypeA(56,510,-3300);
+                    spawnTypeA(57,470,-3320);
+                    spawnTypeA(58,430,-3340);
+                    spawnTypeA(59,390,-3360);
+                    spawnTypeA(60,350,-3380);
+                    spawnTypeF(61,400,-3420);
+                    spawnTypeA(62,100,-3400);
+                    spawnTypeA(63,140,-3420);
+                    spawnTypeA(64,180,-3440);
+                    spawnTypeA(65,220,-3460);
+                    spawnTypeA(66,260,-3480);
+                    spawnTypeF(67,240,-3520);
+                    //wave 11(Driller Wave)
+                    spawnTypeE(68,200,-3900);
+                    spawnTypeE(69,400,-3900);
+                    spawnTypeE2(70,150,-4000);
+                    spawnTypeE2(71,250,-4020);
+                    spawnTypeE2(72,350,-4040);
+                    spawnTypeE2(73,450,-4060);
+                    spawnTypeI(74,300,-4000);
+                    //wave 12
+                    spawnTypeG(75,450,-4400);
+                    spawnTypeG(76,430,-4400);
+                    spawnTypeG(77,130,-4400);
+                    spawnTypeG(78,150,-4400);
+                    spawnTypeF(79,200,-4600);
+                    spawnTypeF(80,250,-4600);
+                    spawnTypeF(81,350,-4600);
+                    spawnTypeF(82,400,-4600);
+                    spawnTypeH(83,300,-4600);
+                    //wave 13
+                    spawnTypeI(84,200,-5100);
+                    spawnTypeI(85,300,-5100);
+                    spawnTypeI(86,400,-5100);
+                    //wave 14
+                    //boss wave
+                    spawnTypeX(99,0,-8500);
                     bossSpawnNumber =99;
                 }
                         
@@ -1062,22 +1072,28 @@ int main(int argc, char **argv)
                                     GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
                                     enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
 
-                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                    if (GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
                                                                                                     Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
                                     {
                                         Falcon.life -= 1;
                                         enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    if (enemyCount.ennemybase[i].yposition >= 480){
+                                        enemyCount.ennemybase[i].active = -1;
                                     }
                                     break;
                                 case 'B':
                                     GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
                                     enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
 
-                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                    if (GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
                                                                                                     Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
                                     {
                                         Falcon.life -= 1;
                                         enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    if (enemyCount.ennemybase[i].yposition >= 480){
+                                        enemyCount.ennemybase[i].active = -1;
                                     }
 
                                     break;
@@ -1097,11 +1113,14 @@ int main(int argc, char **argv)
                                         }
                                     }
                                     enemyCount.ennemybase[i].xposition += enemyCount.ennemybase[i].speedY;
-                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                    if (GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
                                                                                                     Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
                                     {
                                         Falcon.life -= 1;
                                         enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    if (enemyCount.ennemybase[i].yposition >= 480){
+                                        enemyCount.ennemybase[i].active = -1;
                                     }
                                     break;
 
@@ -1131,6 +1150,7 @@ int main(int argc, char **argv)
                                         Falcon.life -= 1;
                                         enemyCount.ennemybase[i].active = 0;
                                     }
+                                    
                                     break;
 
                                 case 'E':
@@ -1176,11 +1196,14 @@ int main(int argc, char **argv)
                                         enemyCount.ennemybase[i].time = 0;
                                     }
 
-                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                    if (GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
                                                                                                     Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
                                     {
                                         Falcon.life -= 1;
                                         enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    if (enemyCount.ennemybase[i].yposition >= 480){
+                                        enemyCount.ennemybase[i].active = -1;
                                     }
                                     break;
                                     case 'G':
@@ -1218,11 +1241,14 @@ int main(int argc, char **argv)
                                     }
                                     
 
-                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                    if (GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
                                                                                                     Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
                                     {
                                         Falcon.life -= 1;
                                         enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    if (enemyCount.ennemybase[i].yposition >= 480){
+                                        enemyCount.ennemybase[i].active = -1;
                                     }
                                     break;
                                 case 'H':
@@ -1249,11 +1275,14 @@ int main(int argc, char **argv)
                                         enemyCount.ennemybase[i].time = 0;
                                     }
 
-                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                    if (GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
                                                                                                     Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
                                     {
                                         Falcon.life -= 1;
                                         enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    if (enemyCount.ennemybase[i].yposition >= 480){
+                                        enemyCount.ennemybase[i].active = -1;
                                     }
                                     break;
 
@@ -1283,11 +1312,14 @@ int main(int argc, char **argv)
                                         enemyCount.ennemybase[i].time = 0;
                                     }
 
-                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
+                                    if (GRRLIB_RectOnRect(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize,
                                                                                                     Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize))
                                     {
                                         Falcon.life -= 1;
                                         enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    if (enemyCount.ennemybase[i].yposition >= 480){
+                                        enemyCount.ennemybase[i].active = -1;
                                     }
                                     break;
                                 case 'X':
@@ -1410,11 +1442,14 @@ int main(int argc, char **argv)
                                     GRRLIB_DrawImg(enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].imgName, 0, 1, 1, 0xFFFFFFFF);
                                     enemyCount.ennemybase[i].yposition += enemyCount.ennemybase[i].speed;
 
-                                    if (enemyCount.ennemybase[i].yposition >= 480 || GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
+                                    if (GRRLIB_RectOnRect(Falcon.xposition, Falcon.yposition, Falcon.xsize, Falcon.ysize,
                                                                                                     enemyCount.ennemybase[i].xposition, enemyCount.ennemybase[i].yposition, enemyCount.ennemybase[i].xsize, enemyCount.ennemybase[i].ysize))
                                     {
                                         Falcon.life -= 1;
                                         enemyCount.ennemybase[i].active = 0;
+                                    }
+                                    if (enemyCount.ennemybase[i].yposition >= 480){
+                                        enemyCount.ennemybase[i].active = -1;
                                     }
 
                                     break;
@@ -1760,7 +1795,7 @@ int main(int argc, char **argv)
                                 {
                                     if (bulletCount.box[j].active == 0)
                                     {
-                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.7 + (Falcon.power*0.7), 1, 'R', BulletRIMG,1};
+                                        struct bullet r = {Falcon.xposition + Falcon.xsize / 3, (Falcon.yposition - Falcon.ysize / 4) - 5, 8, 16, 10,angle[i], 0.4 + (Falcon.power*0.4), 1, 'R', BulletRIMG,1};
                                         bulletCount.box[j] = r;
                                         break;
 

@@ -10,6 +10,7 @@
 #include <wiiuse/wpad.h>
 #include <ogc/lwp_watchdog.h>
 #include "OlivettiThin_ttf.h"
+#include "Rakelo_ttf.h"
 #include "expo_it.h"
 
 u32 MALLOC_MEM2 = 1;
@@ -239,7 +240,8 @@ int main(int argc, char **argv)
     WPAD_SetDataFormat(WPAD_CHAN_0, WPAD_FMT_BTNS_ACC_IR);
     WPAD_SetVRes(WPAD_CHAN_0, 640, 480);
 
-    GRRLIB_ttfFont *font = GRRLIB_LoadTTF(OlivettiThin_ttf, OlivettiThin_ttf_size);
+    //GRRLIB_ttfFont *font = GRRLIB_LoadTTF(OlivettiThin_ttf, OlivettiThin_ttf_size);
+    GRRLIB_ttfFont *font = GRRLIB_LoadTTF(Rakelo_ttf, Rakelo_ttf_size);
     /*
     ?Button skins
     */
@@ -1048,9 +1050,56 @@ int main(int argc, char **argv)
                     spawnTypeI(85,300,-5100);
                     spawnTypeI(86,400,-5100);
                     //wave 14
+                    spawnTypeZ(87,200,-5500);
+                    spawnTypeZ(88,300,-5500);
+                    spawnTypeZ(89,400,-5500);
+                    spawnTypeI(90,200,-5600);
+                    spawnTypeI(91,420,-5600);
+                    //wave 15
+                    spawnTypeH(92,150,-6400);
+                    spawnTypeH(93,200,-6400);
+                    spawnTypeH(94,250,-6400);
+                    spawnTypeH(95,300,-6400);
+                    spawnTypeE2(96,200,-6400);
+                    //wave 16
+                    spawnTypeH(97,500,-6900);
+                    spawnTypeH(98,450,-6900);
+                    spawnTypeH(99,400,-6900);
+                    spawnTypeH(100,350,-6900);
+                    spawnTypeE2(101,200,-6900);
+                    //wave 17
+                    spawnTypeF(102,150,-7600);
+                    spawnTypeF(103,275,-7600);
+                    spawnTypeF(104,300,-7700);
+                    spawnTypeF(105,100,-7500);
+                    spawnTypeF(106,400,-7600);
+                    spawnTypeF(107,350,-7750);
+                    spawnTypeF(108,150,-7400);
+                    spawnTypeF(109,275,-7800);
+                    spawnTypeF(110,300,-7500);
+                    spawnTypeF(111,450,-7800);
+                    spawnTypeF(112,450,-7600);
+                    spawnTypeF(113,400,-7500);
+                    spawnTypeF(114,450,-7500);
+                    //wave 18
+                    spawnTypeG(115,200,-8800);
+                    spawnTypeG(116,400,-8800);
+                    spawnTypeG(117,250,-8800);
+                    spawnTypeG(118,350,-8800);
+                    spawnTypeI(119,200,-9000);
+                    spawnTypeI(120,400,-9000);
+                    //wave 19
+                    spawnTypeZ(121,150,-9500);
+                    spawnTypeZ(122,200,-9500);
+                    spawnTypeZ(123,250,-9500);
+                    spawnTypeZ(124,300,-9500);
+                    spawnTypeZ(125,350,-9500);
+                    spawnTypeZ(126,400,-9500);
+                    spawnTypeZ(127,450,-9500);
+                    spawnTypeZ(128,500,-9500);
                     //boss wave
-                    spawnTypeX(99,0,-8500);
-                    bossSpawnNumber =99;
+                    spawnTypeX(129,0,-11000);
+                    bossSpawnNumber =129;
                 }
                         
                     

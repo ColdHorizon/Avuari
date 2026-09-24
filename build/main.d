@@ -82,6 +82,7 @@ main.o: C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/source/main.c \
  C:/devkitPro/libogc/include/ogcsys.h \
  C:/devkitPro/libogc/include/tuxedo/ppc/clock.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/OlivettiThin_ttf.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Rakelo_ttf.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/expo_it.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/button_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonF3_png.h \
@@ -207,6 +208,7 @@ C:/devkitPro/libogc/include/ogc/lwp_watchdog.h:
 C:/devkitPro/libogc/include/ogcsys.h:
 C:/devkitPro/libogc/include/tuxedo/ppc/clock.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/OlivettiThin_ttf.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Rakelo_ttf.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/expo_it.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/button_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/buttonF3_png.h:

@@ -72,6 +72,8 @@ u32 MALLOC_MEM2 = 1;
 #include "Bullet2_png.h"
 #include "BulletUltimate_png.h"
 #include "Star_png.h"
+#include "UsaFlag_png.h"
+#include "AvaliFlag_png.h"
 /*
 ?Creation of the object items
 */
@@ -185,6 +187,7 @@ struct sky
 {
     struct star starrySky[20];
 };
+void SelectLanguage();
 void stars();
 void bullet();
 void enemy();
@@ -216,6 +219,8 @@ int main(int argc, char **argv)
 {
     
 
+    
+
     /*
     ?Initilisation of the values
     */
@@ -235,13 +240,14 @@ int main(int argc, char **argv)
 
     GRRMOD_SetMOD(tracker_memory, expo_it_size);
     GRRMOD_SetVolume(64, 64);
-    GRRMOD_Start();
-
+    
     WPAD_SetDataFormat(WPAD_CHAN_0, WPAD_FMT_BTNS_ACC_IR);
     WPAD_SetVRes(WPAD_CHAN_0, 640, 480);
 
-    //GRRLIB_ttfFont *font = GRRLIB_LoadTTF(OlivettiThin_ttf, OlivettiThin_ttf_size);
-    GRRLIB_ttfFont *font = GRRLIB_LoadTTF(Rakelo_ttf, Rakelo_ttf_size);
+    
+
+
+    
     /*
     ?Button skins
     */
@@ -304,6 +310,12 @@ int main(int argc, char **argv)
     GRRLIB_texImg *Bullet2IMG = GRRLIB_LoadTexture(Bullet2_png);
     GRRLIB_texImg *BulletUltimateIMG = GRRLIB_LoadTexture(BulletUltimate_png);
     GRRLIB_texImg *StarIMG = GRRLIB_LoadTexture(Star_png);
+
+    GRRLIB_ttfFont *font = GRRLIB_LoadTTF(OlivettiThin_ttf, OlivettiThin_ttf_size);
+    GRRLIB_ttfFont *englishFont = GRRLIB_LoadTTF(OlivettiThin_ttf, OlivettiThin_ttf_size);
+    GRRLIB_ttfFont *rakeloFont = GRRLIB_LoadTTF(Rakelo_ttf, Rakelo_ttf_size);
+
+
     // changes the rotation spot
     GRRLIB_SetHandle(FalconIMG, 10, 12);
     GRRLIB_SetHandle(Falcon4IMG, 10, 12);
@@ -356,6 +368,7 @@ int main(int argc, char **argv)
     int sizeOfItems = sizeof(enemyCount.itemsBox) / sizeof(enemyCount.itemsBox[0]);
 
     int skinRotation = 0;
+    int languages =1;
     //// DO NOT CHANGE THE BULLET AMOUNT BEFORE CHANGING THIS
     for (int i = 0; i < count; i++)
     {
@@ -392,54 +405,63 @@ int main(int argc, char **argv)
     void exitTheGame()
     {
 
-        GRRLIB_FreeTTF(font);
-        GRRLIB_FreeTexture(button);
-        GRRLIB_FreeTexture(buttonF4);
-        GRRLIB_FreeTexture(buttonF3);
-        GRRLIB_FreeTexture(buttonF7);
-        GRRLIB_FreeTexture(buttonF9);
-        GRRLIB_FreeTexture(buttonS);
-        GRRLIB_FreeTexture(buttonSF4);
-        GRRLIB_FreeTexture(buttonSF3);
-        GRRLIB_FreeTexture(buttonSF7);
-        GRRLIB_FreeTexture(buttonSF9);
-        GRRLIB_FreeTexture(titleLogo);
-        GRRLIB_FreeTexture(titleLogoF4);
-        GRRLIB_FreeTexture(titleLogoF3);
-        GRRLIB_FreeTexture(titleLogoF7);
-        GRRLIB_FreeTexture(titleLogoF9);
-        GRRLIB_FreeTexture(FalconIMG);
-        GRRLIB_FreeTexture(Falcon4IMG);
-        GRRLIB_FreeTexture(Falcon3IMG);
-        GRRLIB_FreeTexture(Falcon7IMG);
-        GRRLIB_FreeTexture(Falcon9IMG);
-        GRRLIB_FreeTexture(FalconSIMG);
-        GRRLIB_FreeTexture(TypeAIMG);
-        GRRLIB_FreeTexture(TypeBIMG);
-        GRRLIB_FreeTexture(TypeCIMG);
-        GRRLIB_FreeTexture(TypeDIMG);
-        GRRLIB_FreeTexture(TypeEIMG);
-        GRRLIB_FreeTexture(TypeE2IMG);
-        GRRLIB_FreeTexture(TypeFIMG);
-        GRRLIB_FreeTexture(TypeXIMG);
-        GRRLIB_FreeTexture(TypeZIMG);
-        GRRLIB_FreeTexture(WallIMG);
-        GRRLIB_FreeTexture(UpgradeIMG);
-        GRRLIB_FreeTexture(PointsIMG);
-        GRRLIB_FreeTexture(BulletIMG);
-        GRRLIB_FreeTexture(Bullet2IMG);
-        GRRLIB_FreeTexture(BulletUltimateIMG);
-        GRRLIB_FreeTexture(StarIMG);
         GRRMOD_Unload();
         GRRMOD_End();
         GRRLIB_Exit();
     }
 
+
+
+
+
     while (SYS_MainLoop())
     {
+    void SelectLanguage(){
+        struct buttoncollisions english = {100,200,160,80};
+        struct buttoncollisions rakelo = {400,200,160,80};
+        GRRLIB_texImg *usaFlagIMG = GRRLIB_LoadTexture(UsaFlag_png);
+        GRRLIB_texImg *avaliFlagIMG = GRRLIB_LoadTexture(AvaliFlag_png);
+
+        while(true){
+            GRRLIB_DrawImg(english.xposition, english.yposition,usaFlagIMG, 0, 1, 1, 0xFFFFFFFF);
+            GRRLIB_DrawImg(rakelo.xposition, rakelo.yposition, avaliFlagIMG, 0, 1, 1, 0xFFFFFFFF);
+            WPAD_ScanPads();
+            ir_t ir;
+            WPAD_IR(0, &ir);
+            u32 pressed = WPAD_ButtonsDown(0);
+            if (pressed & WPAD_BUTTON_A)
+            {
+                if(GRRLIB_RectOnRect(english.xposition,english.yposition,english.xsize,english.ysize, ir.x, ir.y, 20, 20)){
+                    font = englishFont;
+                    break;
+                }
+                if(GRRLIB_RectOnRect(rakelo.xposition, rakelo.yposition, rakelo.xsize, rakelo.ysize, ir.x, ir.y, 20, 20)){
+                    font = rakeloFont;
+                    break;
+                }
+            }
+            if (ir.valid)
+            {
+                GRRLIB_Rectangle(ir.x, ir.y, 20, 20, 0xFF10F0FF, 1);
+            }
+            GRRLIB_Render();
+        }
+        GRRLIB_FreeTexture(usaFlagIMG);
+        GRRLIB_FreeTexture(avaliFlagIMG);
+        GRRMOD_Start();
+        
+        languages =0;
+
+    }
+
+    
         /*
         ?Reset system for restart of the game
         */
+        if(languages ==1)
+        {
+            SelectLanguage();
+        }
 
         while (reset == 1)
         {
@@ -1089,17 +1111,18 @@ int main(int argc, char **argv)
                     spawnTypeI(119,200,-9000);
                     spawnTypeI(120,400,-9000);
                     //wave 19
-                    spawnTypeZ(121,150,-9500);
-                    spawnTypeZ(122,200,-9500);
-                    spawnTypeZ(123,250,-9500);
-                    spawnTypeZ(124,300,-9500);
-                    spawnTypeZ(125,350,-9500);
-                    spawnTypeZ(126,400,-9500);
-                    spawnTypeZ(127,450,-9500);
-                    spawnTypeZ(128,500,-9500);
+                    spawnTypeZ(121,100,-9500);
+                    spawnTypeZ(122,150,-9500);
+                    spawnTypeZ(123,200,-9500);
+                    spawnTypeZ(124,250,-9500);
+                    spawnTypeZ(125,300,-9500);
+                    spawnTypeZ(126,350,-9500);
+                    spawnTypeZ(127,400,-9500);
+                    spawnTypeZ(128,450,-9500);
+                    spawnTypeZ(129,500,-9500);
                     //boss wave
-                    spawnTypeX(129,0,-11000);
-                    bossSpawnNumber =129;
+                    spawnTypeX(130,0,-11000);
+                    bossSpawnNumber =130;
                 }
                         
                     

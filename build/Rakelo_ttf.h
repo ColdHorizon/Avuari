@@ -6,7 +6,7 @@
 extern const uint8_t Rakelo_ttf[];
 extern const uint8_t Rakelo_ttf_end[];
 #if __cplusplus >= 201103L
-static constexpr size_t Rakelo_ttf_size=7156;
+static constexpr size_t Rakelo_ttf_size=7148;
 #else
-static const size_t Rakelo_ttf_size=7156;
+static const size_t Rakelo_ttf_size=7148;
 #endif

@@ -404,15 +404,10 @@ int main(int argc, char **argv)
 
     void exitTheGame()
     {
-
         GRRMOD_Unload();
         GRRMOD_End();
         GRRLIB_Exit();
     }
-
-
-
-
 
     while (SYS_MainLoop())
     {
@@ -423,6 +418,9 @@ int main(int argc, char **argv)
         GRRLIB_texImg *avaliFlagIMG = GRRLIB_LoadTexture(AvaliFlag_png);
 
         while(true){
+            GRRLIB_PrintfTTF(155, 300, font, "English", 16, 0xFFFFFFFF);
+            GRRLIB_PrintfTTF(455, 300, font, "Rakelo", 16, 0xFFFFFFFF);
+            GRRLIB_PrintfTTF(250, 100, font, "Choose a language", 22, 0xFFFFFFFF);
             GRRLIB_DrawImg(english.xposition, english.yposition,usaFlagIMG, 0, 1, 1, 0xFFFFFFFF);
             GRRLIB_DrawImg(rakelo.xposition, rakelo.yposition, avaliFlagIMG, 0, 1, 1, 0xFFFFFFFF);
             WPAD_ScanPads();

@@ -74,6 +74,8 @@ u32 MALLOC_MEM2 = 1;
 #include "Star_png.h"
 #include "UsaFlag_png.h"
 #include "AvaliFlag_png.h"
+#include "Mouse_png.h"
+
 /*
 ?Creation of the object items
 */
@@ -310,6 +312,7 @@ int main(int argc, char **argv)
     GRRLIB_texImg *Bullet2IMG = GRRLIB_LoadTexture(Bullet2_png);
     GRRLIB_texImg *BulletUltimateIMG = GRRLIB_LoadTexture(BulletUltimate_png);
     GRRLIB_texImg *StarIMG = GRRLIB_LoadTexture(Star_png);
+    GRRLIB_texImg *MouseIMG = GRRLIB_LoadTexture(Mouse_png);
 
     GRRLIB_ttfFont *font = GRRLIB_LoadTTF(OlivettiThin_ttf, OlivettiThin_ttf_size);
     GRRLIB_ttfFont *englishFont = GRRLIB_LoadTTF(OlivettiThin_ttf, OlivettiThin_ttf_size);
@@ -429,18 +432,18 @@ int main(int argc, char **argv)
             u32 pressed = WPAD_ButtonsDown(0);
             if (pressed & WPAD_BUTTON_A)
             {
-                if(GRRLIB_RectOnRect(english.xposition,english.yposition,english.xsize,english.ysize, ir.x, ir.y, 20, 20)){
+                if(GRRLIB_PtInRect(english.xposition,english.yposition,english.xsize,english.ysize, ir.x+17, ir.y+3)){
                     font = englishFont;
                     break;
                 }
-                if(GRRLIB_RectOnRect(rakelo.xposition, rakelo.yposition, rakelo.xsize, rakelo.ysize, ir.x, ir.y, 20, 20)){
+                if(GRRLIB_PtInRect(rakelo.xposition, rakelo.yposition, rakelo.xsize, rakelo.ysize, ir.x+17, ir.y+3)){
                     font = rakeloFont;
                     break;
                 }
             }
             if (ir.valid)
             {
-                GRRLIB_Rectangle(ir.x, ir.y, 20, 20, 0xFF10F0FF, 1);
+                GRRLIB_DrawImg(ir.x, ir.y,MouseIMG,0,1,1, 0xFFFFFFFF);
             }
             GRRLIB_Render();
         }
@@ -610,12 +613,12 @@ int main(int argc, char **argv)
 
                 if (pressed & WPAD_BUTTON_A)
                 {
-                    if (GRRLIB_RectOnRect(credits.xposition, credits.yposition, credits.xsize, credits.ysize, ir.x, ir.y, 20, 20))
+                    if (GRRLIB_PtInRect(credits.xposition, credits.yposition, credits.xsize, credits.ysize, ir.x+17, ir.y+3))
                     {
                         mainMenu = 0;
                         creditsMenu = 1;
                     }
-                    if (GRRLIB_RectOnRect(music.xposition, music.yposition, music.xsize, music.ysize, ir.x, ir.y, 20, 20))
+                    if (GRRLIB_PtInRect(music.xposition, music.yposition, music.xsize, music.ysize, ir.x+17, ir.y+3))
                     {
                         if (musicActivation == 1)
                         {
@@ -628,12 +631,12 @@ int main(int argc, char **argv)
                             GRRMOD_Start();
                         }
                     }
-                    if (GRRLIB_RectOnRect(plus.xposition, plus.yposition, plus.xsize, plus.ysize, ir.x, ir.y, 20, 20) && falconSkin <= 4)
+                    if (GRRLIB_PtInRect(plus.xposition, plus.yposition, plus.xsize, plus.ysize, ir.x+17, ir.y+3) && falconSkin <= 4)
                     {
                         falconSkin += 1;
                         falconSkins();
                     }
-                    if (GRRLIB_RectOnRect(minus.xposition, minus.yposition, minus.xsize, minus.ysize, ir.x, ir.y, 20, 20) && falconSkin >= 2)
+                    if (GRRLIB_PtInRect(minus.xposition, minus.yposition, minus.xsize, minus.ysize, ir.x+17, ir.y+3) && falconSkin >= 2)
                     {
                         falconSkin -= 1;
                         falconSkins();
@@ -671,7 +674,7 @@ int main(int argc, char **argv)
                 GRRLIB_PrintfTTF(285, 320, font, "Back", 20, 0xFFFFFFFF);
                 if (pressed & WPAD_BUTTON_A)
                 {
-                    if (GRRLIB_RectOnRect(back.xposition, back.yposition, back.xsize, back.ysize, ir.x, ir.y, 20, 20))
+                    if (GRRLIB_PtInRect(back.xposition, back.yposition, back.xsize, back.ysize, ir.x+17, ir.y+3))
                     {
                         mainMenu = 1;
                         creditsMenu = 0;
@@ -680,7 +683,7 @@ int main(int argc, char **argv)
             }
             if (ir.valid)
             {
-                GRRLIB_Rectangle(ir.x, ir.y, 20, 20, 0xFF10F0FF, 1);
+                GRRLIB_DrawImg(ir.x, ir.y,MouseIMG,0,1,1, 0xFFFFFFFF);
             }
 
             /*

@@ -126,7 +126,8 @@ main.o: C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/source/main.c \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/BulletUltimate_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Star_png.h \
  C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/UsaFlag_png.h \
- C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/AvaliFlag_png.h
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/AvaliFlag_png.h \
+ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Mouse_png.h
 C:/devkitPro/portlibs/wii/include/grrlib.h:
 C:/devkitPro/libogc/include/gccore.h:
 C:/devkitPro/libogc/include/ogc/dsp.h:
@@ -255,3 +256,4 @@ C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/BulletUltimate_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Star_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/UsaFlag_png.h:
 C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/AvaliFlag_png.h:
+C:/grr/GRRLIB-4.6.1/AvuariGitHub/Avuari/build/Mouse_png.h:
